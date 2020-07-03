@@ -11,8 +11,9 @@ class _MachineListState extends State<MachineList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.blue,
         bottomNavigationBar: BottomAppBar(
-          color: Colors.blue,
+          color: Colors.white,
           child: Row(
             children: [
               IconButton(
@@ -21,13 +22,8 @@ class _MachineListState extends State<MachineList> {
             ],
             mainAxisAlignment: MainAxisAlignment.start,
           ),
-          notchMargin: 5.0,
+          notchMargin: 0.0,
           shape: CircularNotchedRectangle(),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Icon(Icons.add),
         ),
         body: _myListView(context));
   }

@@ -45,8 +45,16 @@ class _QrPageState extends State<QrPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: IconButton(icon: Icon(Icons.camera_alt), onPressed: _scanQR),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        child: IconButton(
+            icon: Icon(
+              Icons.camera_alt,
+              size: 50,
+            ),
+            onPressed: _scanQR),
+      ),
     );
   }
 }

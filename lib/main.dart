@@ -68,15 +68,17 @@ class WelcomeScreen extends StatelessWidget {
     return Scaffold(
       key: _scaffoldKey,
       drawer: Drawer(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Text(
-                'FAQ',
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 36),
-              ),
-            ],
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(.0),
+            child: Column(
+              children: [
+                Text(
+                  'FAQ',
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 36),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -107,7 +109,7 @@ class WelcomeScreen extends StatelessWidget {
             builder: (BuildContext context) {
               return Container(
                 height: 500,
-                color: Colors.blue,
+                color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
