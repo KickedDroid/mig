@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
 import './graph.dart';
 
+const greenPercent = Color(0xFF14FF00);
+
 class MachineList extends StatefulWidget {
   @override
   _MachineListState createState() => _MachineListState();
@@ -104,7 +106,7 @@ class MachineItem extends StatelessWidget {
                 children: [
                   Text(last_updated),
                   Card(
-                    color: Colors.green,
+                    color: greenPercent,
                     child: Center(
                         child: Padding(
                       padding: const EdgeInsets.all(8.0),

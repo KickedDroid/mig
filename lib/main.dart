@@ -8,6 +8,7 @@ import 'package:splashscreen/splashscreen.dart';
 import 'package:majascan/majascan.dart';
 import './machines.dart';
 import './qr.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 void main() {
   runApp(MyApp());
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: new SplashScreen(
-        seconds: 14,
+        seconds: 3,
         navigateAfterSeconds: new SignInPage(),
         title: new Text(
           'Welcome In SplashScreen',
@@ -48,11 +49,17 @@ class MyApp extends StatelessWidget {
         styleTextUnderTheLoader: new TextStyle(),
         photoSize: 100.0,
         onClick: () => print("Flutter Egypt"),
-        loaderColor: Colors.red,
+        loaderColor: Colors.blue,
       ),
       routes: <String, WidgetBuilder>{
         '/HomePage': (BuildContext) => WelcomeScreen(),
         '/Machines': (BuildContext) => MachineList(),
+        '/FAQ': (BuildContext) => WebviewScaffold(
+              url: 'https://168mfg.com/system/',
+              appBar: AppBar(
+                title: Text('Webview'),
+              ),
+            )
       },
     );
   }
@@ -73,10 +80,15 @@ class WelcomeScreen extends StatelessWidget {
             padding: const EdgeInsets.all(.0),
             child: Column(
               children: [
-                Text(
-                  'FAQ',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 36),
-                ),
+                DrawerHeader(child: Image.asset('assets/168.png')),
+                FlatButton(
+                    onPressed: () => Navigator.pushNamed(context, '/FAQ'),
+                    child: Text('FAQ')),
+                MaterialButton(
+                  onPressed: () {},
+                  child: Text("Log Out"),
+                  color: Colors.blueGrey,
+                )
               ],
             ),
           ),
@@ -84,12 +96,12 @@ class WelcomeScreen extends StatelessWidget {
       ),
       appBar: AppBar(
         elevation: 0,
+        backgroundColor: Colors.blueAccent[700],
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.white,
         child: Row(
           children: [
-            IconButton(icon: Icon(Icons.menu), onPressed: () => {}),
             IconButton(icon: Icon(Icons.history), onPressed: null),
             IconButton(
                 icon: Icon(Icons.list),
@@ -108,7 +120,7 @@ class WelcomeScreen extends StatelessWidget {
             context: context,
             builder: (BuildContext context) {
               return Container(
-                height: 500,
+                height: 250,
                 color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -120,8 +132,16 @@ class WelcomeScreen extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 36, fontWeight: FontWeight.bold),
                       ),
-                      QrPage(),
-                      Text(result),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          QrPage(),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [GenerateButton()],
+                      )
                     ],
                   ),
                 ),
@@ -132,7 +152,7 @@ class WelcomeScreen extends StatelessWidget {
           color: Colors.black,
         ),
       ),
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.blueAccent[700],
       body: Center(
         child: Column(
           children: [
