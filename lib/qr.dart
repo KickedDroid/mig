@@ -9,6 +9,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:io';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
 
 class QrPage extends StatefulWidget {
   QrPage({Key key}) : super(key: key);
@@ -96,26 +97,70 @@ class UpdateMachinePage extends StatelessWidget {
 
   UpdateMachinePage(this.name);
 
+  var time = new DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Container(
           color: Colors.white,
-          child: Column(
-            children: [
-              Text(
-                name,
-                style: TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-              Container(
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.blue[900])),
-              )
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Text(
+                  name,
+                  style: TextStyle(
+                      fontSize: 46,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Enter Coolant Percentage",
+                    style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.blue[900])),
+                    child: TextField(),
+                  ),
+                ),
+                Text(time.toString()),
+                Container(
+                    height: 50,
+                    width: 300,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: LinearGradient(
+                            colors: [Colors.blueAccent[700], Colors.blue])),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.cloud_upload,
+                          color: Colors.white,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Update',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )
+                      ],
+                    )),
+              ],
+            ),
           ),
         ),
       ),
@@ -181,6 +226,8 @@ class GenerateScreenState extends State<GenerateScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('QR Code Generator'),
+        elevation: 0,
+        backgroundColor: Colors.blueAccent[700],
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.share),
@@ -204,8 +251,7 @@ class GenerateScreenState extends State<GenerateScreen> {
       final file = await new File('${tempDir.path}/image.png').create();
       await file.writeAsBytes(pngBytes);
 
-      final channel = const MethodChannel('channel:me.alfian.share/share');
-      channel.invokeMethod('shareFile', 'image.png');
+      await Share.file(_dataString, '$_dataString.png', pngBytes, 'image/png');
     } catch (e) {
       print(e.toString());
     }
@@ -215,7 +261,7 @@ class GenerateScreenState extends State<GenerateScreen> {
     final bodyHeight = MediaQuery.of(context).size.height -
         MediaQuery.of(context).viewInsets.bottom;
     return Container(
-      color: const Color(0xFFFFFFFF),
+      color: Colors.blueAccent[700],
       child: Column(
         children: <Widget>[
           Padding(
@@ -235,11 +281,12 @@ class GenerateScreenState extends State<GenerateScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
                           border: Border.all(color: Colors.blueAccent)),
                       child: TextField(
                         controller: _textController,
                         decoration: InputDecoration(
-                          hintText: "Enter a custom message",
+                          hintText: "Enter a machine name",
                           errorText: _inputErrorText,
                         ),
                       ),
@@ -248,10 +295,10 @@ class GenerateScreenState extends State<GenerateScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: FlatButton(
-                      color: Colors.blue,
+                      color: Colors.white,
                       child: Text(
                         "SUBMIT",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.black),
                       ),
                       onPressed: () {
                         setState(() {
@@ -267,11 +314,22 @@ class GenerateScreenState extends State<GenerateScreen> {
           ),
           Expanded(
             child: Center(
-              child: RepaintBoundary(
-                key: globalKey,
-                child: QrImage(
-                  data: _dataString,
-                  size: 0.5 * bodyHeight,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: RepaintBoundary(
+                      key: globalKey,
+                      child: QrImage(
+                        data: _dataString,
+                        size: 0.5 * bodyHeight,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),

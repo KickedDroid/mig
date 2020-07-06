@@ -13,7 +13,7 @@ class _MachineListState extends State<MachineList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.blueAccent[700],
         bottomNavigationBar: BottomAppBar(
           color: Colors.white,
           child: Row(
