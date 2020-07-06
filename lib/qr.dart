@@ -102,24 +102,51 @@ class UpdateMachinePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        title: Text(
+          'Update Machine',
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
+      ),
       body: SafeArea(
         child: Container(
           color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  name,
-                  style: TextStyle(
-                      fontSize: 46,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    'Name: $name',
+                    style: TextStyle(
+                        fontSize: 46,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    'Timestamp',
+                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "Enter Coolant Percentage",
+                    time.toString(),
+                    style: TextStyle(fontSize: 28),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    "Coolant Percentage",
                     style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
@@ -132,33 +159,45 @@ class UpdateMachinePage extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: Colors.blue[900])),
-                    child: TextField(),
+                    child: TextField(
+                      decoration:
+                          InputDecoration(hintText: 'Enter Coolant Percentage'),
+                    ),
                   ),
                 ),
-                Text(time.toString()),
-                Container(
-                    height: 50,
-                    width: 300,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(
-                            colors: [Colors.blueAccent[700], Colors.blue])),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.cloud_upload,
-                          color: Colors.white,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Update',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        )
-                      ],
-                    )),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          height: 50,
+                          width: 300,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: LinearGradient(colors: [
+                                Colors.blueAccent[700],
+                                Colors.blue
+                              ])),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.cloud_upload,
+                                color: Colors.white,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Update',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              )
+                            ],
+                          )),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -227,10 +266,15 @@ class GenerateScreenState extends State<GenerateScreen> {
       appBar: AppBar(
         title: Text('QR Code Generator'),
         elevation: 0,
-        backgroundColor: Colors.blueAccent[700],
+        iconTheme: IconThemeData(color: Colors.black),
+        actionsIconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.share),
+            icon: Icon(
+              Icons.share,
+              color: Colors.black,
+            ),
             onPressed: _captureAndSharePng,
           )
         ],
@@ -261,7 +305,7 @@ class GenerateScreenState extends State<GenerateScreen> {
     final bodyHeight = MediaQuery.of(context).size.height -
         MediaQuery.of(context).viewInsets.bottom;
     return Container(
-      color: Colors.blueAccent[700],
+      color: Colors.white,
       child: Column(
         children: <Widget>[
           Padding(
@@ -295,10 +339,10 @@ class GenerateScreenState extends State<GenerateScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: FlatButton(
-                      color: Colors.white,
+                      color: Colors.blueAccent[700],
                       child: Text(
                         "SUBMIT",
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
                         setState(() {
@@ -319,12 +363,16 @@ class GenerateScreenState extends State<GenerateScreen> {
                 child: Container(
                   decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(
+                        10,
+                      )),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: RepaintBoundary(
                       key: globalKey,
                       child: QrImage(
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black,
                         data: _dataString,
                         size: 0.5 * bodyHeight,
                       ),
