@@ -81,7 +81,7 @@ class _QrPageState extends State<QrPage> {
                     color: Colors.white,
                   ),
                   Text(
-                    'Scan',
+                    ' Scan Machine QR Code',
                     style: TextStyle(color: Colors.white),
                   )
                 ],
@@ -235,7 +235,7 @@ class GenerateButton extends StatelessWidget {
                   color: Colors.white,
                 ),
                 Text(
-                  'Generate QR Code',
+                  ' Generate QR Code',
                   style: TextStyle(color: Colors.white),
                 )
               ],

@@ -4,7 +4,7 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueAccent[700],
+      backgroundColor: Colors.blueGrey[100],
       body: SafeArea(
         child: Center(
           child: Column(
@@ -29,23 +29,23 @@ class SignInPage extends StatelessWidget {
                           ),
                           Container(
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: Colors.black)),
+                                borderRadius: BorderRadius.circular(2),
+                                border: Border.all(color: Colors.grey)),
                             width: 300,
                             child: TextField(
-                              decoration: InputDecoration(hintText: 'Email'),
+                              decoration: InputDecoration(hintText: '   Email'),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: Colors.black)),
+                                  borderRadius: BorderRadius.circular(2),
+                                  border: Border.all(color: Colors.grey)),
                               width: 300,
                               child: TextField(
                                 decoration:
-                                    InputDecoration(hintText: 'Password'),
+                                    InputDecoration(hintText: '   Password'),
                               ),
                             ),
                           ),
@@ -54,9 +54,9 @@ class SignInPage extends StatelessWidget {
                                 Navigator.pushNamed(context, "/HomePage"),
                             onLongPress: () => {},
                             child: Padding(
-                              padding: const EdgeInsets.all(15.0),
+                              padding: const EdgeInsets.all(30.0),
                               child: Container(
-                                  height: 50,
+                                  height: 60,
                                   width: 300,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
@@ -80,9 +80,9 @@ class SignInPage extends StatelessWidget {
                                 Navigator.pushNamed(context, "/HomePage"),
                             onLongPress: () => {},
                             child: Padding(
-                              padding: const EdgeInsets.all(15.0),
+                              padding: const EdgeInsets.all(5.0),
                               child: Container(
-                                  height: 50,
+                                  height: 60,
                                   width: 300,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),

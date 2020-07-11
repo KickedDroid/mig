@@ -57,6 +57,14 @@ class MyApp extends StatelessWidget {
         '/FAQ': (BuildContext) => WebviewScaffold(
               url: 'https://168mfg.com/system/',
               appBar: AppBar(
+                title: Text('Webview'))),
+        '/PPO': (BuildContext) => WebviewScaffold(
+              url: 'https://cncdirt.com/privacypolicy/',
+              appBar: AppBar(
+                title: Text('Webview'))),
+        '/TDC': (BuildContext) => WebviewScaffold(
+              url: 'https://www.termsfeed.com/blog/sample-terms-and-conditions-template/',
+              appBar: AppBar(
                 title: Text('Webview'),
               ),
             )
@@ -80,10 +88,16 @@ class WelcomeScreen extends StatelessWidget {
             padding: const EdgeInsets.all(.0),
             child: Column(
               children: [
-                DrawerHeader(child: Image.asset('assets/168.png')),
+                DrawerHeader(child: Image.asset('assets/168Tan.png')),
                 FlatButton(
                     onPressed: () => Navigator.pushNamed(context, '/FAQ'),
                     child: Text('FAQ')),
+                FlatButton(
+                    onPressed: () => Navigator.pushNamed(context, '/PPO'),
+                    child: Text('Privacy Policy')),
+                FlatButton(
+                    onPressed: () => Navigator.pushNamed(context, '/TDC'),
+                    child: Text('Terms & Conditions')),
                 MaterialButton(
                   onPressed: () {},
                   child: Text("Log Out"),
@@ -96,12 +110,15 @@ class WelcomeScreen extends StatelessWidget {
       ),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.blueAccent[700],
+        backgroundColor: Colors.blueAccent[200],
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.white,
         child: Row(
           children: [
+            IconButton(icon: Icon(Icons.cloud), onPressed: null),
+            IconButton(icon: Icon(Icons.settings), onPressed: null),
+            IconButton(icon: Icon(Icons.create), onPressed: null),
             IconButton(icon: Icon(Icons.history), onPressed: null),
             IconButton(
                 icon: Icon(Icons.list),
@@ -128,9 +145,9 @@ class WelcomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Add Info',
+                        'Enter Coolant Concentration',
                         style: TextStyle(
-                            fontSize: 36, fontWeight: FontWeight.bold),
+                            fontSize: 24, fontWeight: FontWeight.bold),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -152,7 +169,7 @@ class WelcomeScreen extends StatelessWidget {
           color: Colors.black,
         ),
       ),
-      backgroundColor: Colors.blueAccent[700],
+      backgroundColor: Colors.blueGrey[100],
       body: Center(
         child: Column(
           children: [
@@ -184,13 +201,23 @@ class WelcomeScreen extends StatelessWidget {
                           child: Image.asset('assets/168.png'),
                         ),
                         Text(
-                          'User ID',
+                          'Shane Anderson',
                           style: TextStyle(
-                              fontSize: 36, fontWeight: FontWeight.w600),
+                              fontSize: 30, fontWeight: FontWeight.w600, color: Colors.black),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
                         ),
                         Text(
-                          'Company ID',
-                          style: TextStyle(fontSize: 28.0),
+                          'Powill Manufacturing',
+                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.black38),
+                        ),
+                                                Padding(
+                          padding: const EdgeInsets.all(20.0),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset('assets/User.png'),
                         ),
                       ],
                     )),

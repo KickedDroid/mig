@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
 import './graph.dart';
 
-const greenPercent = Color(0xFF14FF00);
+const greenPercent = Color(0xff14c4f7);
 
 class MachineList extends StatefulWidget {
   @override
@@ -13,7 +13,7 @@ class _MachineListState extends State<MachineList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.blueAccent[700],
+        backgroundColor: Colors.blueAccent[300],
         bottomNavigationBar: BottomAppBar(
           color: Colors.white,
           child: Row(
@@ -51,7 +51,7 @@ Widget _myListView(BuildContext context) {
           c_percent: 7.1,
         ),
         MachineItem(
-          name: "Willy ",
+          name: "Okuma LB15 ",
           last_updated: "June 12, 2020",
           c_percent: 8.6,
         ),
@@ -66,7 +66,7 @@ Widget _myListView(BuildContext context) {
           c_percent: 7.5,
         ),
         MachineItem(
-          name: "Willy 3",
+          name: "Mori 5 axis 2",
           last_updated: "June 6, 2020",
           c_percent: 7.5,
         ),

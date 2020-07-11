@@ -9,7 +9,7 @@ class LineChartSample2 extends StatefulWidget {
 class _LineChartSample2State extends State<LineChartSample2> {
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
-    const Color(0xff02d39a),
+    const Color(0xff23b6e6),
   ];
 
   bool showAvg = false;
@@ -23,9 +23,9 @@ class _LineChartSample2State extends State<LineChartSample2> {
           child: Container(
             decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(18),
+                  Radius.circular(4),
                 ),
-                color: Color(0xff232d37)),
+                color: Color(0xffffffff)),
             child: Padding(
               padding: const EdgeInsets.only(
                   right: 18.0, left: 12.0, top: 24, bottom: 12),
@@ -45,11 +45,11 @@ class _LineChartSample2State extends State<LineChartSample2> {
               });
             },
             child: Text(
-              'avg',
+              'AVG',
               style: TextStyle(
                   fontSize: 12,
                   color:
-                      showAvg ? Colors.white.withOpacity(0.5) : Colors.white),
+                      showAvg ? Colors.blue.withOpacity(0.5) : Colors.blue),
             ),
           ),
         ),
@@ -64,13 +64,13 @@ class _LineChartSample2State extends State<LineChartSample2> {
         drawVerticalLine: true,
         getDrawingHorizontalLine: (value) {
           return FlLine(
-            color: const Color(0xff37434d),
+            color: const Color(0xffffffff),
             strokeWidth: 1,
           );
         },
         getDrawingVerticalLine: (value) {
           return FlLine(
-            color: const Color(0xff37434d),
+            color: const Color(0xffffffff),
             strokeWidth: 1,
           );
         },
@@ -83,15 +83,17 @@ class _LineChartSample2State extends State<LineChartSample2> {
           textStyle: const TextStyle(
               color: Color(0xff68737d),
               fontWeight: FontWeight.bold,
-              fontSize: 16),
+              fontSize: 14),
           getTitles: (value) {
             switch (value.toInt()) {
               case 2:
-                return 'MAR';
+                return '7/02';
               case 5:
-                return 'JUN';
+                return '7/05';
               case 8:
-                return 'SEP';
+                return '7/08';
+              case 11:
+                return '7/11';
             }
             return '';
           },
@@ -107,11 +109,13 @@ class _LineChartSample2State extends State<LineChartSample2> {
           getTitles: (value) {
             switch (value.toInt()) {
               case 1:
-                return '10k';
-              case 3:
-                return '30k';
+                return '0%';
               case 5:
-                return '50k';
+                return '5%';
+              case 10:
+                return '10%'; 
+              case 15:
+                return '15%'; 
             }
             return '';
           },
@@ -123,23 +127,30 @@ class _LineChartSample2State extends State<LineChartSample2> {
           show: true,
           border: Border.all(color: const Color(0xff37434d), width: 1)),
       minX: 0,
-      maxX: 11,
+      maxX: 14,
       minY: 0,
-      maxY: 6,
+      maxY: 20,
       lineBarsData: [
         LineChartBarData(
           spots: [
-            FlSpot(0, 3),
-            FlSpot(2.6, 2),
-            FlSpot(4.9, 5),
-            FlSpot(6.8, 3.1),
-            FlSpot(8, 4),
-            FlSpot(9.5, 3),
-            FlSpot(11, 4),
+            FlSpot(0, 7),
+            FlSpot(2, 6),
+            FlSpot(3, 5),
+            FlSpot(4, 7),
+            FlSpot(5, 8),
+            FlSpot(6, 10),
+            FlSpot(7, 12),
+            FlSpot(8, 11),
+            FlSpot(9, 10),
+            FlSpot(10, 8),
+            FlSpot(11, 6),
+            FlSpot(12, 7),
+            FlSpot(13, 8),
+            FlSpot(14, 9),
           ],
-          isCurved: true,
+          isCurved: false,
           colors: gradientColors,
-          barWidth: 5,
+          barWidth: 2,
           isStrokeCapRound: true,
           dotData: FlDotData(
             show: false,
@@ -162,13 +173,13 @@ class _LineChartSample2State extends State<LineChartSample2> {
         drawHorizontalLine: true,
         getDrawingVerticalLine: (value) {
           return FlLine(
-            color: const Color(0xff37434d),
+            color: const Color(0xffffffff),
             strokeWidth: 1,
           );
         },
         getDrawingHorizontalLine: (value) {
           return FlLine(
-            color: const Color(0xff37434d),
+            color: const Color(0xffffffff),
             strokeWidth: 1,
           );
         },
@@ -181,15 +192,17 @@ class _LineChartSample2State extends State<LineChartSample2> {
           textStyle: const TextStyle(
               color: Color(0xff68737d),
               fontWeight: FontWeight.bold,
-              fontSize: 16),
+              fontSize: 14),
           getTitles: (value) {
             switch (value.toInt()) {
               case 2:
-                return 'MAR';
+                return '7/02';
               case 5:
-                return 'JUN';
+                return '7/05';
               case 8:
-                return 'SEP';
+                return '7/08';
+              case 11:
+                return '7/11';
             }
             return '';
           },
@@ -205,11 +218,13 @@ class _LineChartSample2State extends State<LineChartSample2> {
           getTitles: (value) {
             switch (value.toInt()) {
               case 1:
-                return '10k';
-              case 3:
-                return '30k';
+                return '0%';
               case 5:
-                return '50k';
+                return '5%';
+              case 10:
+                return '10%'; 
+              case 15:
+                return '15%';
             }
             return '';
           },
@@ -221,19 +236,26 @@ class _LineChartSample2State extends State<LineChartSample2> {
           show: true,
           border: Border.all(color: const Color(0xff37434d), width: 1)),
       minX: 0,
-      maxX: 11,
+      maxX: 14,
       minY: 0,
-      maxY: 6,
+      maxY: 20,
       lineBarsData: [
         LineChartBarData(
           spots: [
-            FlSpot(0, 3.44),
-            FlSpot(2.6, 3.44),
-            FlSpot(4.9, 3.44),
-            FlSpot(6.8, 3.44),
-            FlSpot(8, 3.44),
-            FlSpot(9.5, 3.44),
-            FlSpot(11, 3.44),
+            FlSpot(0, 7),
+            FlSpot(2, 7),
+            FlSpot(3, 7),
+            FlSpot(4, 7),
+            FlSpot(5, 7),
+            FlSpot(6, 7),
+            FlSpot(7, 7),
+            FlSpot(8, 7),
+            FlSpot(9, 7),
+            FlSpot(10, 7),
+            FlSpot(11, 7),
+            FlSpot(12, 7),
+            FlSpot(13, 7),
+            FlSpot(14, 7),
           ],
           isCurved: true,
           colors: [
