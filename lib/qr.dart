@@ -159,9 +159,12 @@ class UpdateMachinePage extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: Colors.blue[900])),
-                    child: TextField(
-                      decoration:
-                          InputDecoration(hintText: 'Enter Coolant Percentage'),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        decoration: InputDecoration(
+                            hintText: 'Enter Coolant Percentage'),
+                      ),
                     ),
                   ),
                 ),
@@ -327,11 +330,14 @@ class GenerateScreenState extends State<GenerateScreen> {
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.white,
                           border: Border.all(color: Colors.blueAccent)),
-                      child: TextField(
-                        controller: _textController,
-                        decoration: InputDecoration(
-                          hintText: "Enter a machine name",
-                          errorText: _inputErrorText,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          controller: _textController,
+                          decoration: InputDecoration(
+                            hintText: "Enter a machine name",
+                            errorText: _inputErrorText,
+                          ),
                         ),
                       ),
                     ),
@@ -371,6 +377,7 @@ class GenerateScreenState extends State<GenerateScreen> {
                     child: RepaintBoundary(
                       key: globalKey,
                       child: QrImage(
+                        gapless: true,
                         backgroundColor: Colors.white,
                         foregroundColor: Colors.black,
                         data: _dataString,

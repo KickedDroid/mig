@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
 import './graph.dart';
 
-const greenPercent = Color(0xFF14FF00);
+const greenPercent = Colors.lightBlueAccent;
 
 class MachineList extends StatefulWidget {
   @override
@@ -13,7 +13,7 @@ class _MachineListState extends State<MachineList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.blueAccent[700],
+        backgroundColor: Colors.white,
         bottomNavigationBar: BottomAppBar(
           color: Colors.white,
           child: Row(

@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       ),
       home: new SplashScreen(
         seconds: 3,
-        navigateAfterSeconds: new SignInPage(),
+        navigateAfterSeconds: new SignInOne(),
         title: new Text(
           'Welcome In SplashScreen',
           style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
@@ -84,6 +84,7 @@ class WelcomeScreen extends StatelessWidget {
                 FlatButton(
                     onPressed: () => Navigator.pushNamed(context, '/FAQ'),
                     child: Text('FAQ')),
+                GenerateButton(),
                 MaterialButton(
                   onPressed: () {},
                   child: Text("Log Out"),
