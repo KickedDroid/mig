@@ -156,15 +156,14 @@ class UpdateMachinePage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.blue[900])),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        decoration: InputDecoration(
-                            hintText: 'Enter Coolant Percentage'),
-                      ),
+                    color: Color(0xfff5f5f5),
+                    child: TextFormField(
+                      style: TextStyle(
+                          color: Colors.black, fontFamily: 'SFUIDisplay'),
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter Coolant Percentage',
+                          labelStyle: TextStyle(fontSize: 15)),
                     ),
                   ),
                 ),
@@ -238,7 +237,7 @@ class GenerateButton extends StatelessWidget {
                   color: Colors.white,
                 ),
                 Text(
-                  'Generate QR Code',
+                  'Add New Machine',
                   style: TextStyle(color: Colors.white),
                 )
               ],
@@ -311,6 +310,7 @@ class GenerateScreenState extends State<GenerateScreen> {
       color: Colors.white,
       child: Column(
         children: <Widget>[
+          Text("New Machine"),
           Padding(
             padding: const EdgeInsets.only(
               top: _topSectionTopPadding,
@@ -326,19 +326,14 @@ class GenerateScreenState extends State<GenerateScreen> {
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                          border: Border.all(color: Colors.blueAccent)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextField(
-                          controller: _textController,
-                          decoration: InputDecoration(
-                            hintText: "Enter a machine name",
-                            errorText: _inputErrorText,
-                          ),
-                        ),
+                      color: Color(0xfff5f5f5),
+                      child: TextFormField(
+                        style: TextStyle(
+                            color: Colors.black, fontFamily: 'SFUIDisplay'),
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Machine Name',
+                            labelStyle: TextStyle(fontSize: 15)),
                       ),
                     ),
                   ),

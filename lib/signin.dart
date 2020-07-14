@@ -173,6 +173,19 @@ class SignInOne extends StatelessWidget {
                           labelStyle: TextStyle(fontSize: 15)),
                     ),
                   ),
+                  Container(
+                    color: Color(0xfff5f5f5),
+                    child: TextFormField(
+                      obscureText: true,
+                      style: TextStyle(
+                          color: Colors.black, fontFamily: 'SFUIDisplay'),
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Password',
+                          prefixIcon: Icon(Icons.lock_outline),
+                          labelStyle: TextStyle(fontSize: 15)),
+                    ),
+                  ),
                   Padding(
                     padding: EdgeInsets.only(top: 20),
                     child: MaterialButton(
