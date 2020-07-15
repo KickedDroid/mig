@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:mig/main.dart';
 
 class SignInPage extends StatelessWidget {
   @override
@@ -120,6 +124,37 @@ class SignInPage extends StatelessWidget {
 }
 
 class SignInOne extends StatelessWidget {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  Future<String> signInWithGoogle() async {
+    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+
+    final AuthResult authResult = await _auth.signInWithCredential(credential);
+    final FirebaseUser user = authResult.user;
+
+    assert(!user.isAnonymous);
+    assert(await user.getIdToken() != null);
+
+    final FirebaseUser currentUser = await _auth.currentUser();
+    assert(user.uid == currentUser.uid);
+
+    return 'signInWithGoogle succeeded: $user';
+  }
+
+  void signOutGoogle() async {
+    await googleSignIn.signOut();
+
+    print("User Sign Out");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -191,6 +226,31 @@ class SignInOne extends StatelessWidget {
                     child: MaterialButton(
                       onPressed: () {
                         Navigator.pushNamed(context, "/HomePage");
+                      }, //since this is only a UI app
+                      child: Text(
+                        'SIGN IN',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: 'SFUIDisplay',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      color: Colors.blueAccent[700],
+                      elevation: 0,
+                      minWidth: 400,
+                      height: 50,
+                      textColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 20),
+                    child: MaterialButton(
+                      onPressed: () {
+                        signInWithGoogle().whenComplete(() {
+                          Navigator.pushNamed(context, "/HomePage");
+                        });
                       }, //since this is only a UI app
                       child: Text(
                         'SIGN IN',
