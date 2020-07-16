@@ -9,12 +9,17 @@ import 'package:majascan/majascan.dart';
 import './machines.dart';
 import './qr.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -55,15 +60,14 @@ class MyApp extends StatelessWidget {
         '/HomePage': (BuildContext) => WelcomeScreen(),
         '/Machines': (BuildContext) => MachineList(),
         '/FAQ': (BuildContext) => WebviewScaffold(
-              url: 'https://168mfg.com/system/',
-              appBar: AppBar(
-                title: Text('Webview'))),
+            url: 'https://168mfg.com/system/',
+            appBar: AppBar(title: Text('Webview'))),
         '/PPO': (BuildContext) => WebviewScaffold(
-              url: 'https://cncdirt.com/privacypolicy/',
-              appBar: AppBar(
-                title: Text('Webview'))),
+            url: 'https://cncdirt.com/privacypolicy/',
+            appBar: AppBar(title: Text('Webview'))),
         '/TDC': (BuildContext) => WebviewScaffold(
-              url: 'https://www.termsfeed.com/blog/sample-terms-and-conditions-template/',
+              url:
+                  'https://www.termsfeed.com/blog/sample-terms-and-conditions-template/',
               appBar: AppBar(
                 title: Text('Webview'),
               ),
@@ -77,6 +81,15 @@ class WelcomeScreen extends StatelessWidget {
   final GlobalKey _scaffoldKey = new GlobalKey();
 
   String result = "Scan a Qr Code to begin";
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  void signOutGoogle() async {
+    await googleSignIn.signOut();
+
+    print("User Sign Out");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +112,9 @@ class WelcomeScreen extends StatelessWidget {
                     onPressed: () => Navigator.pushNamed(context, '/TDC'),
                     child: Text('Terms & Conditions')),
                 MaterialButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    signOutGoogle();
+                  },
                   child: Text("Log Out"),
                   color: Colors.blueGrey,
                 )
@@ -118,9 +133,8 @@ class WelcomeScreen extends StatelessWidget {
           children: [
             IconButton(icon: Icon(Icons.cloud), onPressed: null),
             IconButton(
-              icon: Icon(Icons.settings),
-                onPressed: () async =>
-                    Navigator.pushNamed(context, "/Setup")),
+                icon: Icon(Icons.settings),
+                onPressed: () async => Navigator.pushNamed(context, "/Setup")),
             IconButton(icon: Icon(Icons.create), onPressed: null),
             IconButton(icon: Icon(Icons.history), onPressed: null),
             IconButton(
@@ -206,16 +220,21 @@ class WelcomeScreen extends StatelessWidget {
                         Text(
                           'Shane Anderson',
                           style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.w600, color: Colors.black),
+                              fontSize: 30,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                         ),
                         Text(
                           'Powill Manufacturing',
-                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.black38),
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black38),
                         ),
-                                                Padding(
+                        Padding(
                           padding: const EdgeInsets.all(20.0),
                         ),
                         Padding(

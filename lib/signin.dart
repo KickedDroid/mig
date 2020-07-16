@@ -1,14 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
+final GoogleSignIn googleSignIn = GoogleSignIn();
 
 class SignInPage extends StatelessWidget {
+  Future<String> signInWithGoogle() async {
+    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+
+    final AuthResult authResult = await _auth.signInWithCredential(credential);
+    final FirebaseUser user = authResult.user;
+
+    assert(!user.isAnonymous);
+    assert(await user.getIdToken() != null);
+
+    final FirebaseUser currentUser = await _auth.currentUser();
+    assert(user.uid == currentUser.uid);
+
+    return 'signInWithGoogle succeeded: $user';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blueGrey[100],
       body: SafeArea(
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: ListView(
             children: [
               Expanded(
                 child: Padding(
@@ -50,8 +76,10 @@ class SignInPage extends StatelessWidget {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () =>
-                                Navigator.pushNamed(context, "/HomePage"),
+                            onTap: () {
+                              signInWithGoogle();
+                              Navigator.pushNamed(context, "/HomePage");
+                            },
                             onLongPress: () => {},
                             child: Padding(
                               padding: const EdgeInsets.all(30.0),
@@ -101,6 +129,15 @@ class SignInPage extends StatelessWidget {
                                   )),
                             ),
                           ),
+                          GestureDetector(
+                            onTap: () {
+                              signInWithGoogle();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Sign in with Google"),
+                            ),
+                          )
                         ],
                       )),
                 ),
