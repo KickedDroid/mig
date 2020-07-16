@@ -28,6 +28,37 @@ class SignInPage extends StatelessWidget {
     return 'signInWithGoogle succeeded: $user';
   }
 
+  Future<FirebaseUser> signUp(email, password) async {
+    try {
+      FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
+          email: email, password: password)) as FirebaseUser;
+      assert(user != null);
+      assert(await user.getIdToken() != null);
+      return user;
+    } catch (e) {
+      handleError(e);
+      return null;
+    }
+  }
+
+  Future<FirebaseUser> signIn(String email, String password) async {
+    try {
+      FirebaseUser user = (await _auth.signInWithEmailAndPassword(
+          email: email, password: password)) as FirebaseUser;
+      assert(user != null);
+      assert(await user.getIdToken() != null);
+      final FirebaseUser currentUser = await _auth.currentUser();
+      assert(user.uid == currentUser.uid);
+      return user;
+    } catch (e) {
+      handleError(e);
+      return null;
+    }
+  }
+
+  TextEditingController email;
+  TextEditingController pass;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +90,7 @@ class SignInPage extends StatelessWidget {
                                 border: Border.all(color: Colors.grey)),
                             width: 300,
                             child: TextField(
+                              controller: email,
                               decoration: InputDecoration(hintText: '   Email'),
                             ),
                           ),
@@ -70,6 +102,7 @@ class SignInPage extends StatelessWidget {
                                   border: Border.all(color: Colors.grey)),
                               width: 300,
                               child: TextField(
+                                controller: pass,
                                 decoration:
                                     InputDecoration(hintText: '   Password'),
                               ),
@@ -77,7 +110,7 @@ class SignInPage extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              signInWithGoogle();
+                              signIn(email.toString(), pass.toString());
                               Navigator.pushNamed(context, "/HomePage");
                             },
                             onLongPress: () => {},
@@ -104,8 +137,9 @@ class SignInPage extends StatelessWidget {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () =>
-                                Navigator.pushNamed(context, "/HomePage"),
+                            onTap: () {
+                              signUp(email.toString(), pass.toString());
+                            },
                             onLongPress: () => {},
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
@@ -148,4 +182,6 @@ class SignInPage extends StatelessWidget {
       ),
     );
   }
+
+  void handleError(e) {}
 }
