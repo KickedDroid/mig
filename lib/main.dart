@@ -117,7 +117,10 @@ class WelcomeScreen extends StatelessWidget {
         child: Row(
           children: [
             IconButton(icon: Icon(Icons.cloud), onPressed: null),
-            IconButton(icon: Icon(Icons.settings), onPressed: null),
+            IconButton(
+              icon: Icon(Icons.settings),
+                onPressed: () async =>
+                    Navigator.pushNamed(context, "/Setup")),
             IconButton(icon: Icon(Icons.create), onPressed: null),
             IconButton(icon: Icon(Icons.history), onPressed: null),
             IconButton(
