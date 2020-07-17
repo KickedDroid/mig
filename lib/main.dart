@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mig/qr.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       ),
       home: new SplashScreen(
         seconds: 3,
-        navigateAfterSeconds: new SignInPage(),
+        navigateAfterSeconds: _handleWidget(),
         title: new Text(
           'Welcome In SplashScreen',
           style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
@@ -55,15 +56,14 @@ class MyApp extends StatelessWidget {
         '/HomePage': (BuildContext) => WelcomeScreen(),
         '/Machines': (BuildContext) => MachineList(),
         '/FAQ': (BuildContext) => WebviewScaffold(
-              url: 'https://168mfg.com/system/',
-              appBar: AppBar(
-                title: Text('Webview'))),
+            url: 'https://168mfg.com/system/',
+            appBar: AppBar(title: Text('Webview'))),
         '/PPO': (BuildContext) => WebviewScaffold(
-              url: 'https://cncdirt.com/privacypolicy/',
-              appBar: AppBar(
-                title: Text('Webview'))),
+            url: 'https://cncdirt.com/privacypolicy/',
+            appBar: AppBar(title: Text('Webview'))),
         '/TDC': (BuildContext) => WebviewScaffold(
-              url: 'https://www.termsfeed.com/blog/sample-terms-and-conditions-template/',
+              url:
+                  'https://www.termsfeed.com/blog/sample-terms-and-conditions-template/',
               appBar: AppBar(
                 title: Text('Webview'),
               ),
@@ -71,6 +71,24 @@ class MyApp extends StatelessWidget {
       },
     );
   }
+}
+
+Widget _handleWidget() {
+  return StreamBuilder(
+      stream: FirebaseAuth.instance.onAuthStateChanged,
+      builder: (BuildContext context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: Text('Loading'),
+          );
+        } else {
+          if (snapshot.hasData) {
+            return WelcomeScreen();
+          } else {
+            return SignInPage();
+          }
+        }
+      });
 }
 
 class WelcomeScreen extends StatelessWidget {
@@ -110,7 +128,7 @@ class WelcomeScreen extends StatelessWidget {
       ),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.blueAccent[200],
+        backgroundColor: Colors.blueAccent[700],
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.white,
@@ -169,7 +187,7 @@ class WelcomeScreen extends StatelessWidget {
           color: Colors.black,
         ),
       ),
-      backgroundColor: Colors.blueGrey[100],
+      backgroundColor: Colors.blueAccent[700],
       body: Center(
         child: Column(
           children: [
@@ -203,16 +221,21 @@ class WelcomeScreen extends StatelessWidget {
                         Text(
                           'Shane Anderson',
                           style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.w600, color: Colors.black),
+                              fontSize: 30,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                         ),
                         Text(
                           'Powill Manufacturing',
-                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.black38),
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black38),
                         ),
-                                                Padding(
+                        Padding(
                           padding: const EdgeInsets.all(20.0),
                         ),
                         Padding(

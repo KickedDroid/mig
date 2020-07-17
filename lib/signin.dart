@@ -111,7 +111,6 @@ class SignInPage extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               signIn(email.toString(), pass.toString());
-                              Navigator.pushNamed(context, "/HomePage");
                             },
                             onLongPress: () => {},
                             child: Padding(
