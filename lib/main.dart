@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -73,6 +74,12 @@ class MyApp extends StatelessWidget {
   }
 }
 
+void signOutGoogle() async {
+  await googleSignIn.signOut();
+
+  print("User Sign Out");
+}
+
 Widget _handleWidget() {
   return StreamBuilder(
       stream: FirebaseAuth.instance.onAuthStateChanged,
@@ -117,7 +124,9 @@ class WelcomeScreen extends StatelessWidget {
                     onPressed: () => Navigator.pushNamed(context, '/TDC'),
                     child: Text('Terms & Conditions')),
                 MaterialButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    signOutGoogle();
+                  },
                   child: Text("Log Out"),
                   color: Colors.blueGrey,
                 )
@@ -134,7 +143,18 @@ class WelcomeScreen extends StatelessWidget {
         color: Colors.white,
         child: Row(
           children: [
-            IconButton(icon: Icon(Icons.cloud), onPressed: null),
+            IconButton(
+                icon: Icon(Icons.cloud),
+                onPressed: () {
+                  Firestore.instance
+                      .collection("companies")
+                      .getDocuments()
+                      .then((value) {
+                    value.documents.forEach((element) {
+                      print(element.data);
+                    });
+                  });
+                }),
             IconButton(icon: Icon(Icons.settings), onPressed: null),
             IconButton(icon: Icon(Icons.create), onPressed: null),
             IconButton(icon: Icon(Icons.history), onPressed: null),

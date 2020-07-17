@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
 import './graph.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 const greenPercent = Color(0xff14c4f7);
 
@@ -27,7 +28,49 @@ class _MachineListState extends State<MachineList> {
           notchMargin: 0.0,
           shape: CircularNotchedRectangle(),
         ),
-        body: _myListView(context));
+        body: SafeArea(
+          child: StreamBuilder(
+            stream: Firestore.instance.collection("companies").snapshots(),
+            builder: (context, snapshot) {
+              assert(snapshot != null);
+              if (!snapshot.hasData) {
+                return Text('PLease Wait');
+              } else {
+                return ListView.builder(
+                  itemCount: snapshot.data.documents.length,
+                  itemBuilder: (context, index) {
+                    DocumentSnapshot machines = snapshot.data.documents[index];
+                    return MachineItem(
+                      name: machines['name'],
+                      c_percent: machines['coolant-percent'],
+                      last_updated: machines['last-updated'],
+                    );
+                  },
+                );
+              }
+            },
+          ),
+        ));
+  }
+}
+
+class MountainList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new StreamBuilder(
+      stream: Firestore.instance.collection('machines').snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (!snapshot.hasData) return new Text('Loading...');
+        return new ListView(
+          children: snapshot.data.documents.map((document) {
+            return new ListTile(
+              title: new Text(document['name']),
+              subtitle: new Text(document['coolant-percent']),
+            );
+          }).toList(),
+        );
+      },
+    );
   }
 }
 
@@ -111,7 +154,7 @@ class MachineItem extends StatelessWidget {
                         child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "$c_percent",
+                        c_percent,
                         style: TextStyle(fontSize: 24.0, color: Colors.white),
                       ),
                     )),
