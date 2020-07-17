@@ -74,59 +74,10 @@ class MountainList extends StatelessWidget {
   }
 }
 
-Widget _myListView(BuildContext context) {
-  return SafeArea(
-    child: ListView(
-      children: <Widget>[
-        MachineItem(
-          name: "Mori 1",
-          last_updated: "June 6, 2020",
-          c_percent: 7.5,
-        ),
-        MachineItem(
-          name: "Mori 2",
-          last_updated: "June 3, 2020",
-          c_percent: 8.2,
-        ),
-        MachineItem(
-          name: "Citizen 2",
-          last_updated: "June 6, 2020",
-          c_percent: 7.1,
-        ),
-        MachineItem(
-          name: "Okuma LB15 ",
-          last_updated: "June 12, 2020",
-          c_percent: 8.6,
-        ),
-        MachineItem(
-          name: "Haas 4",
-          last_updated: "June 6, 2020",
-          c_percent: 7.5,
-        ),
-        MachineItem(
-          name: "Citizen 1",
-          last_updated: "June 6, 2020",
-          c_percent: 7.5,
-        ),
-        MachineItem(
-          name: "Mori 5 axis 2",
-          last_updated: "June 6, 2020",
-          c_percent: 7.5,
-        ),
-        MachineItem(
-          name: "Haas 2",
-          last_updated: "June 6, 2020",
-          c_percent: 7.5,
-        ),
-      ],
-    ),
-  );
-}
-
 class MachineItem extends StatelessWidget {
   final String name;
   final String last_updated;
-  final double c_percent;
+  final String c_percent;
 
   MachineItem({this.name, this.last_updated, this.c_percent});
 
@@ -141,20 +92,20 @@ class MachineItem extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: ExpandablePanel(
               header: Text(
-                name,
+                name != null ? name : 'Name',
                 style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w700),
               ),
               collapsed: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(last_updated),
+                  Text(last_updated != null ? last_updated : 'LastUpdated'),
                   Card(
                     color: greenPercent,
                     child: Center(
                         child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        c_percent,
+                        c_percent != null ? c_percent : 'Coolant Percent',
                         style: TextStyle(fontSize: 24.0, color: Colors.white),
                       ),
                     )),

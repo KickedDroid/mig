@@ -143,18 +143,7 @@ class WelcomeScreen extends StatelessWidget {
         color: Colors.white,
         child: Row(
           children: [
-            IconButton(
-                icon: Icon(Icons.cloud),
-                onPressed: () {
-                  Firestore.instance
-                      .collection("companies")
-                      .getDocuments()
-                      .then((value) {
-                    value.documents.forEach((element) {
-                      print(element.data);
-                    });
-                  });
-                }),
+            IconButton(icon: Icon(Icons.cloud), onPressed: () {}),
             IconButton(icon: Icon(Icons.settings), onPressed: null),
             IconButton(icon: Icon(Icons.create), onPressed: null),
             IconButton(icon: Icon(Icons.history), onPressed: null),
