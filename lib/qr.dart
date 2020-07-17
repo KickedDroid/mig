@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -98,6 +99,7 @@ class UpdateMachinePage extends StatelessWidget {
   UpdateMachinePage(this.name);
 
   var time = new DateTime.now();
+  TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -160,6 +162,7 @@ class UpdateMachinePage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: Colors.blue[900])),
                     child: TextField(
+                      controller: controller,
                       decoration:
                           InputDecoration(hintText: 'Enter Coolant Percentage'),
                     ),
@@ -170,31 +173,43 @@ class UpdateMachinePage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                          height: 50,
-                          width: 300,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(colors: [
-                                Colors.blueAccent[700],
-                                Colors.blue
-                              ])),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.cloud_upload,
-                                color: Colors.white,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  'Update',
-                                  style: TextStyle(color: Colors.white),
+                      GestureDetector(
+                        onTap: () {
+                          Firestore.instance
+                              .collection("companies")
+                              .document("$name")
+                              .updateData({
+                            "name": "$name",
+                            "coolant-percent": "7.4",
+                            "last-updated": "$time"
+                          });
+                        },
+                        child: Container(
+                            height: 50,
+                            width: 300,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                gradient: LinearGradient(colors: [
+                                  Colors.blueAccent[700],
+                                  Colors.blue
+                                ])),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.cloud_upload,
+                                  color: Colors.white,
                                 ),
-                              )
-                            ],
-                          )),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'Update',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                )
+                              ],
+                            )),
+                      ),
                     ],
                   ),
                 ),
