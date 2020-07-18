@@ -93,13 +93,21 @@ class _QrPageState extends State<QrPage> {
   }
 }
 
-class UpdateMachinePage extends StatelessWidget {
+class UpdateMachinePage extends StatefulWidget {
   final String name;
 
   UpdateMachinePage(this.name);
 
+  @override
+  _UpdateMachinePageState createState() => _UpdateMachinePageState();
+}
+
+class _UpdateMachinePageState extends State<UpdateMachinePage> {
   var time = new DateTime.now();
+
   TextEditingController controller;
+
+  String data;
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +132,7 @@ class UpdateMachinePage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    'Name: $name',
+                    'Name: ${widget.name}',
                     style: TextStyle(
                         fontSize: 46,
                         fontWeight: FontWeight.bold,
@@ -162,6 +170,12 @@ class UpdateMachinePage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: Colors.blue[900])),
                     child: TextField(
+                      onSubmitted: (value) {
+                        setState(() {
+                          value = data;
+                        });
+                      },
+                      keyboardType: TextInputType.number,
                       controller: controller,
                       decoration:
                           InputDecoration(hintText: 'Enter Coolant Percentage'),
@@ -177,10 +191,10 @@ class UpdateMachinePage extends StatelessWidget {
                         onTap: () {
                           Firestore.instance
                               .collection("companies")
-                              .document("$name")
+                              .document("${widget.name}")
                               .updateData({
-                            "name": "$name",
-                            "coolant-percent": "7.4",
+                            "name": "${widget.name}",
+                            "coolant-percent": "$data",
                             "last-updated": "$time"
                           });
                         },
