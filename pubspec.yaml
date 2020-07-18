@@ -70,6 +70,8 @@ flutter:
      - assets/logosb.png
      - assets/CoolantTrack.png
      - assets/logosb168.png
+     - assets/droplogo.png
+
        #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

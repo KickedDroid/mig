@@ -81,8 +81,8 @@ class SignInPage extends StatelessWidget {
                       child: Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(110.0,20.0,110.0,30.0),
-                            child: Image.asset('assets/CoolantTrack.png'),
+                            padding: const EdgeInsets.fromLTRB(110.0,30.0,110.0,30.0),
+                            child: Image.asset('assets/logosb.png'),
                           ),
                           Container(
                             decoration: BoxDecoration(
@@ -134,7 +134,7 @@ class SignInPage extends StatelessWidget {
                             },
                             onLongPress: () => {},
                             child: Padding(
-                              padding: const EdgeInsets.all(20.0),
+                              padding: const EdgeInsets.fromLTRB(20.0,40.0,20.0,10.0),
                               child: Container(
                                   height: 60,
                                   width: 300,
@@ -147,12 +147,15 @@ class SignInPage extends StatelessWidget {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        'Sign In',
-                                        style: TextStyle(color: Colors.white),
-                                      )
-                                    ],
-                                  )),
+                                  Text(
+                                   'Login',
+                                    style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white),
+                                  ),
+                                ],
+                              )),
                             ),
                           ),
                           GestureDetector(
@@ -161,22 +164,25 @@ class SignInPage extends StatelessWidget {
                             },
                             onLongPress: () => {},
                             child: Padding(
-                              padding: const EdgeInsets.all(5.0),
+                              padding: const EdgeInsets.all(3.0),
                               child: Container(
                                   height: 60,
                                   width: 300,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       gradient: LinearGradient(colors: [
-                                        Colors.blueAccent,
-                                        Colors.blue
+                                        Colors.orangeAccent,
+                                        Colors.orange
                                       ])),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        'Register',
-                                        style: TextStyle(color: Colors.white),
+                                  Text(
+                                   'Create an account',
+                                    style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white),
                                       )
                                     ],
                                   )),
@@ -187,7 +193,7 @@ class SignInPage extends StatelessWidget {
                               signInWithGoogle();
                             },
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(15.0),
                               child: Text("Sign in with Google"),
                             ),
                             
