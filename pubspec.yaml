@@ -66,6 +66,10 @@ flutter:
      - assets/168.png
      - assets/168Tan.png
      - assets/User.png
+     - assets/Main168.png
+     - assets/logosb.png
+     - assets/CoolantTrack.png
+     - assets/logosb168.png
        #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         seconds: 3,
         navigateAfterSeconds: _handleWidget(),
         title: new Text(
-          'Welcome In SplashScreen',
+          'Welcome To 168 Manufacturing',
           style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
         ),
         image: new Image.asset('assets/168.png'),

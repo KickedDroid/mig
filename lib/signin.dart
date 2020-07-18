@@ -62,36 +62,47 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey[100],
-      body: SafeArea(
+      backgroundColor: Colors.white,
+      body: Container(
         child: Center(
           child: ListView(
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.fromLTRB(0.0,0.0,0.0,0.0),
                   child: new Container(
-                      height: 500.0,
+                      height: 700.0,
                       width: 500.0,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(00.0),
                         // the box shawdow property allows for fine tuning as aposed to shadowColor
                       ),
                       child: Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(30.0),
-                            child: Image.asset('assets/168.png'),
+                            padding: const EdgeInsets.fromLTRB(110.0,20.0,110.0,30.0),
+                            child: Image.asset('assets/CoolantTrack.png'),
                           ),
                           Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(2),
                                 border: Border.all(color: Colors.grey)),
                             width: 300,
-                            child: TextField(
+                            child: TextFormField(
                               controller: email,
-                              decoration: InputDecoration(hintText: '   Email'),
+                              style: TextStyle(
+                               color: Colors.black,
+                                fontFamily: 'SFUIDisplay'
+                              ),
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Username',
+                                prefixIcon: Icon(Icons.person_outline),
+                                labelStyle: TextStyle(
+                                  fontSize: 15
+                                )
+                              ),
                             ),
                           ),
                           Padding(
@@ -101,12 +112,21 @@ class SignInPage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(2),
                                   border: Border.all(color: Colors.grey)),
                               width: 300,
-                              child: TextField(
+                              child: TextFormField(
                                 controller: pass,
-                                decoration:
-                                    InputDecoration(hintText: '   Password'),
+                                style: TextStyle(
+                                 color: Colors.black,
+                                  fontFamily: 'SFUIDisplay'
                               ),
-                            ),
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Password',
+                                  prefixIcon: Icon(Icons.lock_outline),
+                                  labelStyle: TextStyle(
+                                    fontSize: 15
+                                  ))
+                                ),
+                              ),
                           ),
                           GestureDetector(
                             onTap: () {
@@ -114,7 +134,7 @@ class SignInPage extends StatelessWidget {
                             },
                             onLongPress: () => {},
                             child: Padding(
-                              padding: const EdgeInsets.all(30.0),
+                              padding: const EdgeInsets.all(20.0),
                               child: Container(
                                   height: 60,
                                   width: 300,
@@ -170,6 +190,7 @@ class SignInPage extends StatelessWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Sign in with Google"),
                             ),
+                            
                           )
                         ],
                       )),
