@@ -93,6 +93,7 @@ Widget _handleWidget() {
             return WelcomeScreen();
           } else {
             return SignInPage();
+            //return WelcomeScreen();
           }
         }
       });
@@ -108,33 +109,84 @@ class WelcomeScreen extends StatelessWidget {
     return Scaffold(
       key: _scaffoldKey,
       drawer: Drawer(
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(.0),
-            child: Column(
-              children: [
-                DrawerHeader(child: Image.asset('assets/168Tan.png')),
-                FlatButton(
-                    onPressed: () => Navigator.pushNamed(context, '/FAQ'),
-                    child: Text('FAQ')),
-                FlatButton(
-                    onPressed: () => Navigator.pushNamed(context, '/PPO'),
-                    child: Text('Privacy Policy')),
-                FlatButton(
-                    onPressed: () => Navigator.pushNamed(context, '/TDC'),
-                    child: Text('Terms & Conditions')),
-                MaterialButton(
-                  onPressed: () {
+        child: Column(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Container(
+                width: MediaQuery.of(context).size.width * .5,
+                child: DrawerHeader(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/logosb.png"),
+                          fit: BoxFit.cover)),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: ListView(children: [
+                ListTile(
+                  leading: Icon(Icons.people),
+                  title: Text("User Account"),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.question_answer),
+                  title: Text("FAQ"),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/FAQ');
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.description),
+                  title: Text("Privacy Policy"),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/PPO');
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.description),
+                  title: Text("Terms & Conditions"),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/TDC');
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.settings),
+                  title: Text("Settings"),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                                ListTile(
+                  leading: Icon(Icons.add),
+                  title: Text("Machine Setup"),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                                ListTile(
+                  leading: Icon(Icons.history),
+                  title: Text("History"),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.exit_to_app),
+                  title: Text("Log Out"),
+                  onTap: () {
                     signOutGoogle();
                   },
-                  child: Text("Log Out"),
-                  color: Colors.blueGrey,
                 )
-              ],
-            ),
-          ),
+              ]),
+            )
+          ],
         ),
-      ),
+  ),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.blueAccent[700],
