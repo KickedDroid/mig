@@ -7,7 +7,6 @@ import 'package:mig/qr.dart';
 import './signin.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:splashscreen/splashscreen.dart';
-import 'package:majascan/majascan.dart';
 import './machines.dart';
 import './qr.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
@@ -161,14 +160,14 @@ class WelcomeScreen extends StatelessWidget {
                     Navigator.of(context).pop();
                   },
                 ),
-                                ListTile(
+                ListTile(
                   leading: Icon(Icons.add),
                   title: Text("Machine Setup"),
                   onTap: () {
                     Navigator.of(context).pop();
                   },
                 ),
-                                ListTile(
+                ListTile(
                   leading: Icon(Icons.history),
                   title: Text("History"),
                   onTap: () {
@@ -186,7 +185,7 @@ class WelcomeScreen extends StatelessWidget {
             )
           ],
         ),
-  ),
+      ),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.blueAccent[700],
