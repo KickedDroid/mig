@@ -194,7 +194,8 @@ class WelcomeScreen extends StatelessWidget {
       ))),
       
       bottomNavigationBar: BottomAppBar(
-        color: Colors.white,
+        elevation: 10.0,
+        color: Colors.white70,
         child: Row(
           children: [
             IconButton(icon: Icon(Icons.cloud), onPressed: () {}),
@@ -213,6 +214,7 @@ class WelcomeScreen extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
+        elevation: 5.0,
         backgroundColor: Colors.white,
         onPressed: () => showModalBottomSheet<void>(
             context: context,
@@ -250,58 +252,143 @@ class WelcomeScreen extends StatelessWidget {
           color: Colors.black,
         ),
       ),
-      backgroundColor: Colors.lightBlue[50],
-      body: Center(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: new Container(
-                    height: 580.0,
-                    width: 400.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.0),
-                      // the box shawdow property allows for fine tuning as aposed to shadowColor
-                      boxShadow: [
-                        new BoxShadow(
-                            color: Colors.black45,
-                            // offset, the X,Y coordinates to offset the shadow
-                            offset: new Offset(0.0, 10.0),
-                            // blurRadius, the higher the number the more smeared look
-                            blurRadius: 10.0,
-                            spreadRadius: 1.0)
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-                          child: Image.asset('assets/User.png'),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+    scrollDirection: Axis.vertical,
+    child: FittedBox(
+      child: DataTable(
+        columns: <DataColumn>[
+          DataColumn(
+            label: Text('Name', style: TextStyle(color: Colors.green,fontSize: 20.0,),
                         ),
-                        Text(
-                          'Latest Entry: Okuma LB15',
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.blueGrey),
+          ),
+          DataColumn(
+            label: Text('Coolant %', style: TextStyle(color: Colors.green,fontSize: 16.0,),
                         ),
-                                                Text(
-                          '6% Concentration, 07/24/20',
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.blueGrey),
+          ),
+          DataColumn(
+            label: Text('Last Entry', style: TextStyle(color: Colors.green,fontSize: 16.0,),
                         ),
-                      ],
-                    )),
-              ),
-            ),
-          ],
-        ),
+          ),
+          DataColumn(
+            label: Text('Last Cleaned', style: TextStyle(color: Colors.green,fontSize: 16.0,),
+                        ),
+          ),
+        ],
+        rows: <DataRow>[
+          DataRow(cells: [
+            DataCell(Text('Mori 1', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('8.0%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('0 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('18 Months', style: TextStyle(color: Colors.red,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Mori 2', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('7.2%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('1 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('14 Months', style: TextStyle(color: Colors.red,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Mori 3', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('10.2%', style: TextStyle(color: Colors.orange,fontSize: 16.0,),)),
+            DataCell(Text('1 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('5 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Citizen 2', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('6.4%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('3 Days', style: TextStyle(color: Colors.orange,fontSize: 16.0,),)),
+            DataCell(Text('1 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Miyano 4', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('7.6%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('1 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('7 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Miyano 5', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('7.1%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('2 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('8 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Citizen 3', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('9.3%', style: TextStyle(color: Colors.orange,fontSize: 16.0,),)),
+            DataCell(Text('1 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('4 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Okuma 1', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('8.5%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('1 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('5 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Okuma 2', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('6.5%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('2 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('12 Months', style: TextStyle(color: Colors.red,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Okuma 3', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('7.9%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('10 Days', style: TextStyle(color: Colors.red,fontSize: 16.0,),)),
+            DataCell(Text('1 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Okuma 4', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('7.3%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('1 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('2 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Haas 1', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('7.6%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('20 Days', style: TextStyle(color: Colors.red,fontSize: 16.0,),)),
+            DataCell(Text('7 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Haas 2', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('9.2%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('1 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('7 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Haas 3', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('8.5%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('1 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('6 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Haas 4', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('2.5%', style: TextStyle(color: Colors.red,fontSize: 16.0,),)),
+            DataCell(Text('1 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('6 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Matsura 1', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('7.6%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('4 Days', style: TextStyle(color: Colors.red,fontSize: 16.0,),)),
+            DataCell(Text('2 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Matsura 2', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('7.6%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('2 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('8 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Matsura 3', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('7.6%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('5 Days', style: TextStyle(color: Colors.red,fontSize: 16.0,),)),
+            DataCell(Text('7 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+        ],
       ),
-    );
+    ),
+  ),
+);
+    
   }
 }
