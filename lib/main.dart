@@ -188,9 +188,11 @@ class WelcomeScreen extends StatelessWidget {
         ),
   ),
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.blueAccent[700],
-      ),
+        title: Text('Full Shop - Coolant Log', 
+		    style: TextStyle(color: Color(0xffFFFFFF),
+        backgroundColor: Colors.lightBlue[600],
+      ))),
+      
       bottomNavigationBar: BottomAppBar(
         color: Colors.white,
         child: Row(
@@ -248,17 +250,17 @@ class WelcomeScreen extends StatelessWidget {
           color: Colors.black,
         ),
       ),
-      backgroundColor: Colors.blueAccent[700],
+      backgroundColor: Colors.lightBlue[50],
       body: Center(
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(2.0),
                 child: new Container(
-                    height: 500.0,
-                    width: 350.0,
+                    height: 580.0,
+                    width: 400.0,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10.0),
@@ -276,32 +278,22 @@ class WelcomeScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.asset('assets/168.png'),
-                        ),
-                        Text(
-                          'Shane Anderson',
-                          style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                        ),
-                        Text(
-                          'Powill Manufacturing',
-                          style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black38),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
                           child: Image.asset('assets/User.png'),
+                        ),
+                        Text(
+                          'Latest Entry: Okuma LB15',
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.blueGrey),
+                        ),
+                                                Text(
+                          '6% Concentration, 07/24/20',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.blueGrey),
                         ),
                       ],
                     )),
