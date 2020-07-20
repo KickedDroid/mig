@@ -91,8 +91,8 @@ Widget _handleWidget() {
           if (snapshot.hasData) {
             return WelcomeScreen();
           } else {
-            return SignInPage();
-            //return WelcomeScreen();
+            //return SignInPage();
+            return WelcomeScreen();
           }
         }
       });
@@ -194,7 +194,7 @@ class WelcomeScreen extends StatelessWidget {
       
       bottomNavigationBar: BottomAppBar(
         elevation: 10.0,
-        color: Colors.white70,
+        color: Colors.lightBlue[600],
         child: Row(
           children: [
             IconButton(icon: Icon(Icons.cloud), onPressed: () {}),
@@ -252,25 +252,52 @@ class WelcomeScreen extends StatelessWidget {
         ),
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-    scrollDirection: Axis.vertical,
+      body: Container(
+          child: Center(
+            
+            child: ListView(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: new Container(
+                        height: 365.0,
+                        width: 500.0,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10.0),// the box shawdow property allows for fine tuning as aposed to shadowColor
+
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              spreadRadius: 3,
+                              blurRadius: 3,
+                              offset: Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+      
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
     child: FittedBox(
       child: DataTable(
         columns: <DataColumn>[
           DataColumn(
-            label: Text('Name', style: TextStyle(color: Colors.green,fontSize: 20.0,),
+            label: Text('Name', style: TextStyle(color: Colors.black,fontSize: 18.0,),
                         ),
           ),
           DataColumn(
-            label: Text('Coolant %', style: TextStyle(color: Colors.green,fontSize: 16.0,),
+            label: Text('Coolant %', style: TextStyle(color: Colors.black,fontSize: 18.0,),
                         ),
           ),
           DataColumn(
-            label: Text('Last Entry', style: TextStyle(color: Colors.green,fontSize: 16.0,),
+            label: Text('Last Entry', style: TextStyle(color: Colors.black,fontSize: 18.0,),
                         ),
           ),
           DataColumn(
-            label: Text('Last Cleaned', style: TextStyle(color: Colors.green,fontSize: 16.0,),
+            label: Text('Last Cleaned', style: TextStyle(color: Colors.black,fontSize: 18.0,),
                         ),
           ),
         ],
@@ -387,7 +414,52 @@ class WelcomeScreen extends StatelessWidget {
       ),
     ),
   ),
-);
-    
+      ),
+),
+                  ), 
+                ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10.0),
+                      boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              spreadRadius: 3,
+                              blurRadius: 3,
+                              offset: Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        ListTile(
+                          title: Text("Latest Entries", style: TextStyle(color: Colors.black,fontSize: 18.0,),),
+                        ),
+                        Divider(),
+                        ListTile(
+                          title: Text("Machine: Mori 3"),
+                          subtitle: Text("07/20/20, 10.2% Concentration"),
+                          leading: Icon(Icons.assessment),
+                           ),
+                      
+                        ListTile(
+                          title: Text("Machine: Mori 3"),
+                          subtitle: Text("07/19/20, 9.6% Concentration"),
+                          leading: Icon(Icons.assessment),
+                        ),
+                      ],
+                    ),
+                  )
+                          )
+
+
+              ],
+            ),
+          )
+        )
+    );
   }
 }
