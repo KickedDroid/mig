@@ -33,10 +33,11 @@ class _QrPageState extends State<QrPage> {
         result = qrResult;
       });
       Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => UpdateMachinePage(result),
-          ));
+        context,
+        MaterialPageRoute(
+          builder: (context) => UpdateMachinePage(result),
+        ),
+      );
     } on PlatformException catch (ex) {
       if (ex.code == MajaScan.CameraAccessDenied) {
         setState(() {
@@ -132,7 +133,7 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    'Name: ${widget.name}',
+                    '${widget.name}',
                     style: TextStyle(
                         fontSize: 46,
                         fontWeight: FontWeight.bold,
@@ -142,23 +143,9 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    'Timestamp',
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    time.toString(),
-                    style: TextStyle(fontSize: 28),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    "Coolant Percentage",
+                    "Enter Coolant Percentage",
                     style: TextStyle(
-                        fontSize: 28,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
                   ),

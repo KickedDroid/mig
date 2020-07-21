@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
 import './graph.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'qr.dart';
 
 const greenPercent = Color(0xff14c4f7);
 
@@ -112,7 +113,43 @@ class MachineItem extends StatelessWidget {
                   )
                 ],
               ),
-              expanded: LineChartSample2(),
+              expanded: Column(
+                children: <Widget>[
+                  LineChartSample2(),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UpdateMachinePage(name),
+                        ),
+                      );
+                    },
+                    onLongPress: () => {},
+                    child: Container(
+                        height: 40,
+                        width: 150,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: LinearGradient(colors: [
+                              Colors.blueGrey[300],
+                              Colors.blueGrey
+                            ])),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Edit Machine',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white),
+                            )
+                          ],
+                        )),
+                  )
+                ],
+              ),
             ),
           ),
         ),
