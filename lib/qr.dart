@@ -166,9 +166,6 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.blue[900])),
                     child: TextField(
                       onChanged: (value) {
                         setState(() {
