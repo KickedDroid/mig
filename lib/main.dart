@@ -106,251 +106,153 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      drawer: Drawer(
-        child: Column(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Container(
-                width: MediaQuery.of(context).size.width * .5,
-                child: DrawerHeader(
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/logosb.png"),
-                          fit: BoxFit.cover)),
-                  child: null,
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: ListView(children: [
-                ListTile(
-                  leading: Icon(Icons.people),
-                  title: Text("User Account"),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.question_answer),
-                  title: Text("FAQ"),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/FAQ');
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.description),
-                  title: Text("Privacy Policy"),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/PPO');
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.description),
-                  title: Text("Terms & Conditions"),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/TDC');
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.settings),
-                  title: Text("Settings"),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.add),
-                  title: Text("Machine Setup"),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.history),
-                  title: Text("History"),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.exit_to_app),
-                  title: Text("Log Out"),
-                  onTap: () {
-                    signOutGoogle();
-                  },
-                )
-              ]),
-            )
-          ],
-        ),
-      ),
-      appBar: AppBar(
-          title: Text('Full Shop - Coolant Log',
-              style: TextStyle(
-                color: Color(0xffFFFFFF),
-                backgroundColor: Colors.lightBlue[600],
-              ))),
-      bottomNavigationBar: BottomAppBar(
-        elevation: 10.0,
-        color: Colors.lightBlue[600],
-        child: Row(
-          children: [
-            IconButton(icon: Icon(Icons.cloud), onPressed: () {}),
-            IconButton(icon: Icon(Icons.settings), onPressed: null),
-            IconButton(icon: Icon(Icons.create), onPressed: null),
-            IconButton(icon: Icon(Icons.history), onPressed: null),
-            IconButton(
-                icon: Icon(Icons.list),
-                onPressed: () async =>
-                    Navigator.pushNamed(context, "/Machines")),
-          ],
-          mainAxisAlignment: MainAxisAlignment.start,
-        ),
-        notchMargin: 5.0,
-        shape: CircularNotchedRectangle(),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: FloatingActionButton(
-        elevation: 5.0,
-        backgroundColor: Colors.white,
-        onPressed: () => showModalBottomSheet<void>(
-            context: context,
-            builder: (BuildContext context) {
-              return Container(
-                height: 250,
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Enter Coolant Concentration',
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          QrPage(),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [GenerateButton()],
-                      )
-                    ],
+        key: _scaffoldKey,
+        drawer: Drawer(
+          child: Column(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Container(
+                  width: MediaQuery.of(context).size.width * .5,
+                  child: DrawerHeader(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage("assets/logosb.png"),
+                            fit: BoxFit.cover)),
+                    child: null,
                   ),
                 ),
-              );
-            }),
-        child: Icon(
-          Icons.add,
-          color: Colors.black,
+              ),
+              Expanded(
+                flex: 2,
+                child: ListView(children: [
+                  ListTile(
+                    leading: Icon(Icons.people),
+                    title: Text("User Account"),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.question_answer),
+                    title: Text("FAQ"),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/FAQ');
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.description),
+                    title: Text("Privacy Policy"),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/PPO');
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.description),
+                    title: Text("Terms & Conditions"),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/TDC');
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.settings),
+                    title: Text("Settings"),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.add),
+                    title: Text("Machine Setup"),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.history),
+                    title: Text("History"),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.exit_to_app),
+                    title: Text("Log Out"),
+                    onTap: () {
+                      signOutGoogle();
+                    },
+                  )
+                ]),
+              )
+            ],
+          ),
         ),
-      ),
-      backgroundColor: Colors.white,
-      body: Container(
-          child: Center(
-            
-            child: ListView(
-              children: [
-                Expanded(
+        appBar: AppBar(
+            title: Text('Full Shop - Coolant Log',
+                style: TextStyle(
+                  color: Color(0xffFFFFFF),
+                  backgroundColor: Colors.lightBlue[600],
+                ))),
+        bottomNavigationBar: BottomAppBar(
+          elevation: 10.0,
+          color: Colors.lightBlue[600],
+          child: Row(
+            children: [
+              IconButton(icon: Icon(Icons.cloud), onPressed: () {}),
+              IconButton(icon: Icon(Icons.settings), onPressed: null),
+              IconButton(icon: Icon(Icons.create), onPressed: null),
+              IconButton(icon: Icon(Icons.history), onPressed: null),
+              IconButton(
+                  icon: Icon(Icons.list),
+                  onPressed: () async =>
+                      Navigator.pushNamed(context, "/Machines")),
+            ],
+            mainAxisAlignment: MainAxisAlignment.start,
+          ),
+          notchMargin: 5.0,
+          shape: CircularNotchedRectangle(),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButton: FloatingActionButton(
+          elevation: 5.0,
+          backgroundColor: Colors.white,
+          onPressed: () => showModalBottomSheet<void>(
+              context: context,
+              builder: (BuildContext context) {
+                return Container(
+                  height: 250,
+                  color: Colors.white,
                   child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: new Container(
-                        height: 365.0,
-                        width: 500.0,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10.0),// the box shawdow property allows for fine tuning as aposed to shadowColor
-
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
-                              spreadRadius: 3,
-                              blurRadius: 3,
-                              offset: Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-      
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-    child: FittedBox(
-      child: DataTable(
-        columns: <DataColumn>[
-          DataColumn(
-            label: Text('Name', style: TextStyle(color: Colors.black,fontSize: 18.0,),
-                        ),
-          ),
-          DataColumn(
-            label: Text('Coolant %', style: TextStyle(color: Colors.black,fontSize: 18.0,),
-                        ),
-          ),
-          DataColumn(
-            label: Text('Last Entry', style: TextStyle(color: Colors.black,fontSize: 18.0,),
-                        ),
-          ),
-          DataColumn(
-            label: Text('Last Cleaned', style: TextStyle(color: Colors.black,fontSize: 18.0,),
-                        ),
-          ),
-        ),
-      ),
-    ),
-  ),
-      ),
-),
-                  ), 
-                ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.0),
-                      boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
-                              spreadRadius: 3,
-                              blurRadius: 3,
-                              offset: Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                    ),
+                    padding: const EdgeInsets.all(8.0),
                     child: Column(
-                      children: <Widget>[
-                        ListTile(
-                          title: Text("Latest Entries", style: TextStyle(color: Colors.black,fontSize: 18.0,),),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Enter Coolant Concentration',
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
                         ),
-                        Divider(),
-                        ListTile(
-                          title: Text("Machine: Mori 3"),
-                          subtitle: Text("07/20/20, 10.2% Concentration"),
-                          leading: Icon(Icons.assessment),
-                           ),
-                      
-                        ListTile(
-                          title: Text("Machine: Mori 3"),
-                          subtitle: Text("07/19/20, 9.6% Concentration"),
-                          leading: Icon(Icons.assessment),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            QrPage(),
+                          ],
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [GenerateButton()],
+                        )
                       ],
                     ),
-                  )
-                          )
-
-
-              ],
-            ),
-          )
-        )
-    );
+                  ),
+                );
+              }),
+          child: Icon(
+            Icons.add,
+            color: Colors.black,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        body: Text("Fix"));
   }
 }
