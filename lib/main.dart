@@ -8,6 +8,7 @@ import './signin.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:splashscreen/splashscreen.dart';
 import './machines.dart';
+import './addmachine.dart';
 import './qr.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/HomePage': (BuildContext) => WelcomeScreen(),
         '/Machines': (BuildContext) => MachineList(),
+        '/Addmachines': (BuildContext) => AddMachineList(),
         '/FAQ': (BuildContext) => WebviewScaffold(
             url: 'https://168mfg.com/system/',
             appBar: AppBar(title: Text('Webview'))),
@@ -91,8 +93,8 @@ Widget _handleWidget() {
           if (snapshot.hasData) {
             return WelcomeScreen();
           } else {
-            //return SignInPage();
-            return WelcomeScreen();
+            return SignInPage();
+            //return WelcomeScreen();
           }
         }
       });
@@ -197,9 +199,12 @@ class WelcomeScreen extends StatelessWidget {
         color: Colors.lightBlue[600],
         child: Row(
           children: [
-            IconButton(icon: Icon(Icons.cloud), onPressed: () {}),
+            IconButton(icon: Icon(Icons.cloud), onPressed: null),
             IconButton(icon: Icon(Icons.settings), onPressed: null),
-            IconButton(icon: Icon(Icons.create), onPressed: null),
+            IconButton(
+              icon: Icon(Icons.create), 
+              onPressed: () async =>
+                    Navigator.pushNamed(context, "/Addmachines")),
             IconButton(icon: Icon(Icons.history), onPressed: null),
             IconButton(
                 icon: Icon(Icons.list),
@@ -213,8 +218,8 @@ class WelcomeScreen extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
-        elevation: 5.0,
-        backgroundColor: Colors.white,
+        elevation: 0.0,
+        backgroundColor: Colors.lightBlue[600],
         onPressed: () => showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
@@ -248,7 +253,7 @@ class WelcomeScreen extends StatelessWidget {
             }),
         child: Icon(
           Icons.add,
-          color: Colors.black,
+          color: Colors.white,
         ),
       ),
       backgroundColor: Colors.white,
