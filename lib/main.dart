@@ -8,6 +8,7 @@ import './signin.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:splashscreen/splashscreen.dart';
 import './machines.dart';
+import './addmachine.dart';
 import './qr.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/HomePage': (BuildContext) => WelcomeScreen(),
         '/Machines': (BuildContext) => MachineList(),
+        '/Addmachines': (BuildContext) => AddMachineList(),
         '/FAQ': (BuildContext) => WebviewScaffold(
             url: 'https://168mfg.com/system/',
             appBar: AppBar(title: Text('Webview'))),
@@ -91,8 +93,8 @@ Widget _handleWidget() {
           if (snapshot.hasData) {
             return WelcomeScreen();
           } else {
-            //return SignInPage();
-            return WelcomeScreen();
+            return SignInPage();
+            //return WelcomeScreen();
           }
         }
       });
@@ -108,83 +110,85 @@ class WelcomeScreen extends StatelessWidget {
     return Scaffold(
         key: _scaffoldKey,
         drawer: Drawer(
-          child: Column(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Container(
-                  width: MediaQuery.of(context).size.width * .5,
-                  child: DrawerHeader(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage("assets/logosb.png"),
-                            fit: BoxFit.cover)),
-                    child: null,
+          child: SafeArea(
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * .5,
+                    child: DrawerHeader(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage("assets/logosb.png"),
+                              fit: BoxFit.cover)),
+                      child: null,
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 2,
-                child: ListView(children: [
-                  ListTile(
-                    leading: Icon(Icons.people),
-                    title: Text("User Account"),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.question_answer),
-                    title: Text("FAQ"),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/FAQ');
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.description),
-                    title: Text("Privacy Policy"),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/PPO');
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.description),
-                    title: Text("Terms & Conditions"),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/TDC');
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text("Settings"),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.add),
-                    title: Text("Machine Setup"),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.history),
-                    title: Text("History"),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.exit_to_app),
-                    title: Text("Log Out"),
-                    onTap: () {
-                      signOutGoogle();
-                    },
-                  )
-                ]),
-              )
-            ],
+                Expanded(
+                  flex: 2,
+                  child: ListView(children: [
+                    ListTile(
+                      leading: Icon(Icons.people),
+                      title: Text("User Account"),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.question_answer),
+                      title: Text("FAQ"),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/FAQ');
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.description),
+                      title: Text("Privacy Policy"),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/PPO');
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.description),
+                      title: Text("Terms & Conditions"),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/TDC');
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.settings),
+                      title: Text("Settings"),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.add),
+                      title: Text("Machine Setup"),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.history),
+                      title: Text("History"),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.exit_to_app),
+                      title: Text("Log Out"),
+                      onTap: () {
+                        signOutGoogle();
+                      },
+                    )
+                  ]),
+                )
+              ],
+            ),
           ),
         ),
         appBar: AppBar(
