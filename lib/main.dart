@@ -202,12 +202,26 @@ class WelcomeScreen extends StatelessWidget {
           color: Colors.lightBlue[600],
           child: Row(
             children: [
-              IconButton(icon: Icon(Icons.cloud), onPressed: () {}),
-              IconButton(icon: Icon(Icons.settings), onPressed: null),
-              IconButton(icon: Icon(Icons.create), onPressed: null),
-              IconButton(icon: Icon(Icons.history), onPressed: null),
+              IconButton(
+                icon: Icon(Icons.cloud),
+                color: Colors.white,
+                onPressed: null),
+              IconButton(
+                icon: Icon(Icons.settings),
+                color: Colors.white,
+                onPressed: null),
+              IconButton(
+                  icon: Icon(Icons.create),
+                  color: Colors.white,
+                  onPressed:() async =>
+                      Navigator.pushNamed(context, "/Addmachines")),
+              IconButton(
+                  icon: Icon(Icons.history),
+                  color: Colors.white,
+                  onPressed: null),
               IconButton(
                   icon: Icon(Icons.list),
+                  color: Colors.white,
                   onPressed: () async =>
                       Navigator.pushNamed(context, "/Machines")),
             ],
@@ -219,7 +233,7 @@ class WelcomeScreen extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: FloatingActionButton(
           elevation: 5.0,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.lightBlue[600],
           onPressed: () => showModalBottomSheet<void>(
               context: context,
               builder: (BuildContext context) {
@@ -253,10 +267,219 @@ class WelcomeScreen extends StatelessWidget {
               }),
           child: Icon(
             Icons.add,
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
         backgroundColor: Colors.white,
-        body: Text("Fix"));
+        body:Container(
+          child: Center(
+            
+            child: ListView(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: new Container(
+                        height: 365.0,
+                        width: 500.0,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10.0),// the box shawdow property allows for fine tuning as aposed to shadowColor
+
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              spreadRadius: 3,
+                              blurRadius: 3,
+                              offset: Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+      
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+    child: FittedBox(
+      child: DataTable(
+        columns: <DataColumn>[
+          DataColumn(
+            label: Text('Name', style: TextStyle(color: Colors.black,fontSize: 18.0,),
+                        ),
+          ),
+          DataColumn(
+            label: Text('Coolant %', style: TextStyle(color: Colors.black,fontSize: 18.0,),
+                        ),
+          ),
+          DataColumn(
+            label: Text('Last Entry', style: TextStyle(color: Colors.black,fontSize: 18.0,),
+                        ),
+          ),
+          DataColumn(
+            label: Text('Last Cleaned', style: TextStyle(color: Colors.black,fontSize: 18.0,),
+                        ),
+          ),
+        ],
+        rows: <DataRow>[
+          DataRow(cells: [
+            DataCell(Text('Mori 1', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('8.0%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('0 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('18 Months', style: TextStyle(color: Colors.red,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Mori 2', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('7.2%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('1 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('14 Months', style: TextStyle(color: Colors.red,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Mori 3', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('10.2%', style: TextStyle(color: Colors.orange,fontSize: 16.0,),)),
+            DataCell(Text('1 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('5 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Citizen 2', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('6.4%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('3 Days', style: TextStyle(color: Colors.orange,fontSize: 16.0,),)),
+            DataCell(Text('1 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Miyano 4', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('7.6%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('1 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('7 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Miyano 5', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('7.1%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('2 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('8 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Citizen 3', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('9.3%', style: TextStyle(color: Colors.orange,fontSize: 16.0,),)),
+            DataCell(Text('1 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('4 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Okuma 1', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('8.5%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('1 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('5 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Okuma 2', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('6.5%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('2 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('12 Months', style: TextStyle(color: Colors.red,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Okuma 3', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('7.9%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('10 Days', style: TextStyle(color: Colors.red,fontSize: 16.0,),)),
+            DataCell(Text('1 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Okuma 4', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('7.3%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('1 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('2 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Haas 1', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('7.6%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('20 Days', style: TextStyle(color: Colors.red,fontSize: 16.0,),)),
+            DataCell(Text('7 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Haas 2', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('9.2%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('1 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('7 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Haas 3', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('8.5%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('1 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('6 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Haas 4', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('2.5%', style: TextStyle(color: Colors.red,fontSize: 16.0,),)),
+            DataCell(Text('1 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('6 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Matsura 1', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('7.6%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('4 Days', style: TextStyle(color: Colors.red,fontSize: 16.0,),)),
+            DataCell(Text('2 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Matsura 2', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('7.6%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('2 Days', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('8 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Matsura 3', style: TextStyle(color: Colors.black,fontSize: 16.0,),)),
+            DataCell(Text('7.6%', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+            DataCell(Text('5 Days', style: TextStyle(color: Colors.red,fontSize: 16.0,),)),
+            DataCell(Text('7 Months', style: TextStyle(color: Colors.green,fontSize: 16.0,),)),
+          ]),
+        ],
+      ),
+    ),
+  ),
+      ),
+),
+                  ), 
+                ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10.0),
+                      boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              spreadRadius: 3,
+                              blurRadius: 3,
+                              offset: Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        ListTile(
+                          title: Text("Latest Entries", style: TextStyle(color: Colors.black,fontSize: 18.0,),),
+                        ),
+                        Divider(),
+                        ListTile(
+                          title: Text("Machine: Mori 3"),
+                          subtitle: Text("07/20/20, 10.2% Concentration"),
+                          leading: Icon(Icons.assessment),
+                           ),
+                      
+                        ListTile(
+                          title: Text("Machine: Mori 3"),
+                          subtitle: Text("07/19/20, 9.6% Concentration"),
+                          leading: Icon(Icons.assessment),
+                        ),
+                      ],
+                    ),
+                  )
+                          )
+
+
+              ],
+            ),
+          )
+        )
+    );
+
   }
 }
