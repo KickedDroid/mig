@@ -55,26 +55,6 @@ class _MachineListState extends State<MachineList> {
   }
 }
 
-class MountainList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return new StreamBuilder(
-      stream: Firestore.instance.collection('machines').snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (!snapshot.hasData) return new Text('Loading...');
-        return new ListView(
-          children: snapshot.data.documents.map((document) {
-            return new ListTile(
-              title: new Text(document['name']),
-              subtitle: new Text(document['coolant-percent']),
-            );
-          }).toList(),
-        );
-      },
-    );
-  }
-}
-
 class MachineItem extends StatelessWidget {
   final String name;
   final String last_updated;
