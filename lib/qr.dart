@@ -114,12 +114,12 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0.0,
+        elevation: 2.0,
         title: Text(
-          'Update Machine',
+          'Add Refractometer Reading',
           style: TextStyle(color: Colors.black),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.green[50],
         iconTheme: IconThemeData(color: Colors.black),
       ),
       body: SafeArea(
@@ -169,7 +169,7 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

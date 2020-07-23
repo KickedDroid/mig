@@ -108,18 +108,18 @@ class MachineItem extends StatelessWidget {
                     onLongPress: () => {},
                     child: Container(
                         height: 40,
-                        width: 150,
+                        width: 180,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(20),
                             gradient: LinearGradient(colors: [
-                              Colors.blueGrey[300],
-                              Colors.blueGrey
+                              Colors.orange,
+                              Colors.orange[500]
                             ])),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Edit Machine',
+                              'Enter Coolant %',
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
