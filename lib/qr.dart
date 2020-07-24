@@ -109,6 +109,7 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
   TextEditingController controller;
 
   String data;
+  String notes;
 
   @override
   Widget build(BuildContext context) {
@@ -169,6 +170,23 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                   ),
                 ),
                 Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    child: TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          notes = value;
+                        });
+                      },
+                      controller: controller,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Add any notes',
+                          labelStyle: TextStyle(fontSize: 15)),
+                    ),
+                  ),
+                ),
+                Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -182,6 +200,18 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                             "name": "${widget.name}",
                             "coolant-percent": "$data",
                             "last-updated": "$time"
+                          });
+                          Firestore.instance
+                              .collection("companies")
+                              .document("${widget.name}")
+                              .updateData({
+                            "history": {"$time": "$data"}
+                          });
+                          Firestore.instance
+                              .collection("companies")
+                              .document("${widget.name}")
+                              .updateData({
+                            "notes": {"$time": "$notes"}
                           });
                           Navigator.pop(context);
                         },

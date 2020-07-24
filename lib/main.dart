@@ -894,7 +894,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
               Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0,5.0,20.0,10.0),
+                  padding: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10.0),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -920,15 +920,30 @@ class WelcomeScreen extends StatelessWidget {
                           ),
                         ),
                         Divider(),
-                        ListTile(
-                          title: Text("Machine: Mori 3"),
-                          subtitle: Text("07/20/20, 10.2% Concentration"),
-                          leading: Icon(Icons.assessment),
-                        ),
-                        ListTile(
-                          title: Text("Machine: Mori 3"),
-                          subtitle: Text("07/19/20, 9.6% Concentration"),
-                          leading: Icon(Icons.assessment),
+                        StreamBuilder(
+                          stream: Firestore.instance
+                              .collection("companies")
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            assert(snapshot != null);
+                            if (!snapshot.hasData) {
+                              return Text('PLease Wait');
+                            } else {
+                              return ListView.builder(
+                                itemCount: snapshot.data.documents.length,
+                                itemBuilder: (context, index) {
+                                  DocumentSnapshot machines =
+                                      snapshot.data.documents[index];
+                                  return ListTile(
+                                    title: Text(machines['name']),
+                                    subtitle: Text(
+                                        "${machines['last-updated']}, ${machines['coolant-percent']} Concentration"),
+                                    leading: Icon(Icons.assessment),
+                                  );
+                                },
+                              );
+                            }
+                          },
                         ),
                       ],
                     ),
