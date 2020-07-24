@@ -205,14 +205,18 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                               .collection("companies")
                               .document("${widget.name}")
                               .updateData({
-                            "history": {"$time": "$data"}
+                            "history": FieldValue.arrayUnion([
+                              {"$time": "$data"}
+                            ])
                           });
-                          Firestore.instance
-                              .collection("companies")
-                              .document("${widget.name}")
-                              .updateData({
-                            "notes": {"$time": "$notes"}
-                          });
+                          if (notes != null) {
+                            Firestore.instance
+                                .collection("companies")
+                                .document("${widget.name}")
+                                .updateData({
+                              "notes": {"$time": "$notes"}
+                            });
+                          }
                           Navigator.pop(context);
                         },
                         child: Container(
