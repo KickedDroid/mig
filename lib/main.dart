@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:splashscreen/splashscreen.dart';
 import './machines.dart';
 import './addmachine.dart';
+import './useraccount.dart';
 import './qr.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
         '/HomePage': (BuildContext) => WelcomeScreen(),
         '/Machines': (BuildContext) => MachineList(),
         '/Addmachines': (BuildContext) => AddMachineList(),
+        '/Useraccount': (BuildContext) => new UserAccount(),
         '/FAQ': (BuildContext) => WebviewScaffold(
             url: 'https://168mfg.com/system/',
             appBar: AppBar(title: Text('Webview'))),
@@ -134,6 +136,7 @@ class WelcomeScreen extends StatelessWidget {
                       title: Text("User Account"),
                       onTap: () {
                         Navigator.of(context).pop();
+                        Navigator.of(context).pushNamed('/Useraccount');
                       },
                     ),
                     ListTile(
@@ -159,7 +162,7 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                     ListTile(
                       leading: Icon(Icons.settings),
-                      title: Text("Settings"),
+                      title: new Text("Settings"),
                       onTap: () {
                         Navigator.of(context).pop();
                       },
@@ -169,6 +172,7 @@ class WelcomeScreen extends StatelessWidget {
                       title: Text("Machine Setup"),
                       onTap: () {
                         Navigator.of(context).pop();
+                        Navigator.of(context).pushNamed('/Addmachines');
                       },
                     ),
                     ListTile(
