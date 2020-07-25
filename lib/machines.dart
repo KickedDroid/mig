@@ -1,3 +1,6 @@
+import 'dart:collection';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
 import './graph.dart';
@@ -45,6 +48,7 @@ class _MachineListState extends State<MachineList> {
                       name: machines['name'],
                       c_percent: machines['coolant-percent'],
                       last_updated: machines['last-updated'],
+                      notes: machines['history'],
                     );
                   },
                 );
@@ -59,8 +63,9 @@ class MachineItem extends StatelessWidget {
   final String name;
   final String last_updated;
   final String c_percent;
+  final dynamic notes;
 
-  MachineItem({this.name, this.last_updated, this.c_percent});
+  MachineItem({this.name, this.last_updated, this.c_percent, this.notes});
 
   @override
   Widget build(BuildContext context) {
@@ -95,36 +100,73 @@ class MachineItem extends StatelessWidget {
               ),
               expanded: Column(
                 children: <Widget>[
-                  LineChartSample2(),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UpdateMachinePage(name),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: <Widget>[
+                        Text(last_updated != null
+                            ? last_updated
+                            : 'LastUpdated'),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          'Coolant Percent',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w300),
                         ),
-                      );
-                    },
-                    onLongPress: () => {},
-                    child: Container(
-                        height: 40,
-                        width: 180,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            gradient: LinearGradient(
-                                colors: [Colors.orange, Colors.orange[500]])),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Enter Coolant %',
+                        Card(
+                          color: greenPercent,
+                          child: Center(
+                              child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              c_percent != null
+                                  ? "$c_percent%"
+                                  : 'Coolant Percent',
                               style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white),
-                            )
-                          ],
-                        )),
+                                  fontSize: 24.0, color: Colors.white),
+                            ),
+                          )),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UpdateMachinePage(name),
+                          ),
+                        );
+                      },
+                      onLongPress: () => {},
+                      child: Container(
+                          height: 40,
+                          width: 180,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              gradient: LinearGradient(
+                                  colors: [Colors.orange, Colors.orange[500]])),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Enter Coolant %',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white),
+                              )
+                            ],
+                          )),
+                    ),
                   )
                 ],
               ),
@@ -133,5 +175,16 @@ class MachineItem extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class Notes {
+  final String note;
+  final String date;
+
+  Notes({this.date, this.note});
+
+  factory Notes.fromMap(Map data) {
+    return Notes(note: data['note'], date: data['time']);
   }
 }

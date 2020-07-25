@@ -246,7 +246,7 @@ class _AddMachinePageState extends State<AddMachinePage> {
                         controller: controller,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            labelText: 'Enter Coolant Percentage',
+                            labelText: 'Add Machine Name',
                             labelStyle: TextStyle(fontSize: 15)),
                       ),
                     ),

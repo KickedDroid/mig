@@ -193,28 +193,30 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Firestore.instance
-                              .collection("companies")
-                              .document("${widget.name}")
-                              .updateData({
-                            "name": "${widget.name}",
-                            "coolant-percent": "$data",
-                            "last-updated": "$time"
-                          });
-                          Firestore.instance
-                              .collection("companies")
-                              .document("${widget.name}")
-                              .updateData({
-                            "history": FieldValue.arrayUnion([
-                              {"$time": "$data"}
-                            ])
-                          });
+                          if (data != null) {
+                            Firestore.instance
+                                .collection("companies")
+                                .document("${widget.name}")
+                                .updateData({
+                              "name": "${widget.name}",
+                              "coolant-percent": "$data",
+                              "last-updated": "$time"
+                            });
+                            Firestore.instance
+                                .collection("companies")
+                                .document("${widget.name}")
+                                .updateData({
+                              "history": FieldValue.arrayUnion([
+                                {"time": "$time", "data": "$data"},
+                              ])
+                            });
+                          }
                           if (notes != null) {
                             Firestore.instance
                                 .collection("companies")
                                 .document("${widget.name}")
                                 .updateData({
-                              "notes": {"$time": "$notes"}
+                              "notes": {"time": "$time", "note": "$notes"}
                             });
                           }
                           Navigator.pop(context);
