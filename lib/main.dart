@@ -10,6 +10,7 @@ import 'package:splashscreen/splashscreen.dart';
 import './machines.dart';
 import './addmachine.dart';
 import './useraccount.dart';
+import './overview.dart';
 import './qr.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
         '/Machines': (BuildContext) => MachineList(),
         '/Addmachines': (BuildContext) => AddMachineList(),
         '/Useraccount': (BuildContext) => new UserAccount(),
+        '/Overview': (BuildContext) => new Overview(),
         '/FAQ': (BuildContext) => WebviewScaffold(
             url: 'https://168mfg.com/system/',
             appBar: AppBar(title: Text('Webview'))),
@@ -95,8 +97,8 @@ Widget _handleWidget() {
           if (snapshot.hasData) {
             return WelcomeScreen();
           } else {
-            //return SignInPage();
-            return WelcomeScreen();
+            return SignInPage();
+            //return WelcomeScreen();
           }
         }
       });
@@ -214,9 +216,10 @@ class WelcomeScreen extends StatelessWidget {
           child: Row(
             children: [
               IconButton(
-                  icon: Icon(Icons.cloud),
+                  icon: Icon(Icons.grid_on),
                   color: Colors.white,
-                  onPressed: null),
+                  onPressed: () async =>
+                      Navigator.pushNamed(context, "/Overview")),
               IconButton(
                   icon: Icon(Icons.settings),
                   color: Colors.white,
@@ -227,7 +230,7 @@ class WelcomeScreen extends StatelessWidget {
                   onPressed: () async =>
                       Navigator.pushNamed(context, "/Addmachines")),
               IconButton(
-                  icon: Icon(Icons.history),
+                  icon: Icon(Icons.timeline),
                   color: Colors.white,
                   onPressed: null),
               IconButton(
@@ -282,623 +285,19 @@ class WelcomeScreen extends StatelessWidget {
           ),
         ),
         backgroundColor: Colors.grey[50],
-        body: Container(
-            child: Center(
+        body: 
+        Container(
+          decoration: new BoxDecoration(
+            image: new DecorationImage(
+              image: new AssetImage("assets/Coolantbg.png"),
+              fit: BoxFit.fill,
+            ),
+          ),
+        child: Center(
           child: ListView(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: new Container(
-                    height: 350.0,
-                    width: 500.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          spreadRadius: 3,
-                          blurRadius: 3,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: FittedBox(
-                          child: DataTable(
-                            columns: <DataColumn>[
-                              DataColumn(
-                                label: Text(
-                                  'Name',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18.0,
-                                  ),
-                                ),
-                              ),
-                              DataColumn(
-                                label: Text(
-                                  'Coolant %',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18.0,
-                                  ),
-                                ),
-                              ),
-                              DataColumn(
-                                label: Text(
-                                  'Last Entry',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18.0,
-                                  ),
-                                ),
-                              ),
-                              DataColumn(
-                                label: Text(
-                                  'Last Cleaned',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18.0,
-                                  ),
-                                ),
-                              ),
-                            ],
-                            rows: <DataRow>[
-                              DataRow(cells: [
-                                DataCell(Text(
-                                  'Mori 1',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '8.0%',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '0 Days',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '18 Months',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                              ]),
-                              DataRow(cells: [
-                                DataCell(Text(
-                                  'Mori 2',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '7.2%',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '1 Days',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '14 Months',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                              ]),
-                              DataRow(cells: [
-                                DataCell(Text(
-                                  'Mori 3',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '10.2%',
-                                  style: TextStyle(
-                                    color: Colors.orange,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '1 Days',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '5 Months',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                              ]),
-                              DataRow(cells: [
-                                DataCell(Text(
-                                  'Citizen 2',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '6.4%',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '3 Days',
-                                  style: TextStyle(
-                                    color: Colors.orange,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '1 Months',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                              ]),
-                              DataRow(cells: [
-                                DataCell(Text(
-                                  'Miyano 4',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '7.6%',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '1 Days',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '7 Months',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                              ]),
-                              DataRow(cells: [
-                                DataCell(Text(
-                                  'Miyano 5',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '7.1%',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '2 Days',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '8 Months',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                              ]),
-                              DataRow(cells: [
-                                DataCell(Text(
-                                  'Citizen 3',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '9.3%',
-                                  style: TextStyle(
-                                    color: Colors.orange,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '1 Days',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '4 Months',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                              ]),
-                              DataRow(cells: [
-                                DataCell(Text(
-                                  'Okuma 1',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '8.5%',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '1 Days',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '5 Months',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                              ]),
-                              DataRow(cells: [
-                                DataCell(Text(
-                                  'Okuma 2',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '6.5%',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '2 Days',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '12 Months',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                              ]),
-                              DataRow(cells: [
-                                DataCell(Text(
-                                  'Okuma 3',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '7.9%',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '10 Days',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '1 Months',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                              ]),
-                              DataRow(cells: [
-                                DataCell(Text(
-                                  'Okuma 4',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '7.3%',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '1 Days',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '2 Months',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                              ]),
-                              DataRow(cells: [
-                                DataCell(Text(
-                                  'Haas 1',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '7.6%',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '20 Days',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '7 Months',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                              ]),
-                              DataRow(cells: [
-                                DataCell(Text(
-                                  'Haas 2',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '9.2%',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '1 Days',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '7 Months',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                              ]),
-                              DataRow(cells: [
-                                DataCell(Text(
-                                  'Haas 3',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '8.5%',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '1 Days',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '6 Months',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                              ]),
-                              DataRow(cells: [
-                                DataCell(Text(
-                                  'Haas 4',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '2.5%',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '1 Days',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '6 Months',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                              ]),
-                              DataRow(cells: [
-                                DataCell(Text(
-                                  'Matsura 1',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '7.6%',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '4 Days',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '2 Months',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                              ]),
-                              DataRow(cells: [
-                                DataCell(Text(
-                                  'Matsura 2',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '7.6%',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '2 Days',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '8 Months',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                              ]),
-                              DataRow(cells: [
-                                DataCell(Text(
-                                  'Matsura 3',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '7.6%',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '5 Days',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '7 Months',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                              ]),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+            children:[
               Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10.0),
+                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 50.0),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -915,7 +314,7 @@ class WelcomeScreen extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         ListTile(
-                          title: Text(
+                         title: Text(
                             "Latest Entries",
                             style: TextStyle(
                               color: Colors.black,
@@ -923,6 +322,23 @@ class WelcomeScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+                        Divider(),
+                        ListTile(
+                          title: Text("Machine: Mori 3"),
+                          subtitle: Text("07/20/20, 10.2% Concentration"),
+                          leading: Icon(Icons.assessment),
+                          trailing: Icon(Icons.menu),
+                        ),
+                        ListTile(
+                          title: Text("Machine: Mori 3"),
+                          subtitle: Text("07/19/20, 9.6% Concentration"),
+                          leading: Icon(Icons.assessment),
+                          trailing: Icon(Icons.menu),
+                        ),
+                      ]
+                  ),
+              ),
+              ),
                         Divider(),
                         StreamBuilder(
                           stream: Firestore.instance
@@ -952,8 +368,6 @@ class WelcomeScreen extends StatelessWidget {
                       ],
                     ),
                   ))
-            ],
-          ),
-        )));
+        );
   }
 }

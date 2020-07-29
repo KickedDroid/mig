@@ -25,16 +25,17 @@ class _AddMachineListState extends State<AddMachineList> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BottomAppBar(
-        color: Colors.white,
+        color: Colors.lightBlue[600],
         child: Row(
           children: [
             IconButton(
                 icon: Icon(Icons.arrow_back),
+                color: Colors.white,
                 onPressed: () => Navigator.of(context).pop()),
           ],
           mainAxisAlignment: MainAxisAlignment.start,
         ),
-        notchMargin: 0.0,
+        notchMargin: 5.0,
         shape: CircularNotchedRectangle(),
       ),
       appBar: AppBar(

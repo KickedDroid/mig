@@ -24,11 +24,12 @@ class _UserAccountState extends State<UserAccount> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BottomAppBar(
-        color: Colors.white,
+        color: Colors.lightBlue[600],
         child: Row(
           children: [
             IconButton(
                 icon: Icon(Icons.arrow_back),
+                color: Colors.white,
                 onPressed: () => Navigator.of(context).pop()),
           ],
           mainAxisAlignment: MainAxisAlignment.start,
