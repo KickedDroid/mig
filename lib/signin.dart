@@ -74,6 +74,17 @@ class SignInPage extends StatelessWidget {
                       height: 700.0,
                       width: 500.0,
                       decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          stops: [0.1,0.5,0.7,0.9],
+                          colors: [
+                            Colors.white,
+                            Colors.blue[50],
+                            Colors.lightBlue[100],
+                            Colors.lightBlue[200],
+                          ],
+                        ),
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(00.0),
                         // the box shawdow property allows for fine tuning as aposed to shadowColor
@@ -86,10 +97,12 @@ class SignInPage extends StatelessWidget {
                           ),
                           Container(
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2),
+                              color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
                                 border: Border.all(color: Colors.grey)),
                             width: 300,
                             child: TextFormField(
+                              
                               controller: email,
                               style: TextStyle(
                                color: Colors.black,
@@ -109,7 +122,8 @@ class SignInPage extends StatelessWidget {
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(2),
+                                color: Colors.white,
+                                  borderRadius: BorderRadius.circular(5),
                                   border: Border.all(color: Colors.grey)),
                               width: 300,
                               child: TextFormField(

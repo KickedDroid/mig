@@ -17,14 +17,29 @@ class MachineList extends StatefulWidget {
 class _MachineListState extends State<MachineList> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.blueAccent[300],
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          stops: [0.1,0.5,0.7,0.9],
+          colors: [
+            Colors.blue[50],
+            Colors.blue[100],
+            Colors.blue[200],
+            Colors.blue[300],
+          ],
+        ),
+    ),
+    child: Scaffold(
+        backgroundColor: Color(0x00000000),
         bottomNavigationBar: BottomAppBar(
-          color: Colors.white,
+          color: Colors.lightBlue[600],
           child: Row(
             children: [
               IconButton(
                   icon: Icon(Icons.arrow_back),
+                  color: Colors.white,
                   onPressed: () => Navigator.of(context).pop()),
             ],
             mainAxisAlignment: MainAxisAlignment.start,
@@ -55,7 +70,7 @@ class _MachineListState extends State<MachineList> {
               }
             },
           ),
-        ));
+        )));
   }
 }
 
