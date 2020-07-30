@@ -77,6 +77,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
+void signOut() async {
+  FirebaseAuth.instance.signOut();
+}
+
 void signOutGoogle() async {
   await googleSignIn.signOut();
 
@@ -95,8 +99,8 @@ Widget _handleWidget() {
           if (snapshot.hasData) {
             return WelcomeScreen();
           } else {
-            //return SignInPage();
-            return WelcomeScreen();
+            return SignInPage();
+            //return WelcomeScreen();
           }
         }
       });
@@ -194,6 +198,7 @@ class WelcomeScreen extends StatelessWidget {
                       title: Text("Log Out"),
                       onTap: () {
                         signOutGoogle();
+                        signOut();
                       },
                     )
                   ]),
