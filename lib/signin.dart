@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hive/hive.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -58,6 +59,7 @@ class SignInPage extends StatelessWidget {
 
   TextEditingController email;
   TextEditingController pass;
+  TextEditingController company;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +71,7 @@ class SignInPage extends StatelessWidget {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0,0.0,0.0,0.0),
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
                   child: new Container(
                       height: 700.0,
                       width: 500.0,
@@ -77,7 +79,7 @@ class SignInPage extends StatelessWidget {
                         gradient: LinearGradient(
                           begin: Alignment.topRight,
                           end: Alignment.bottomLeft,
-                          stops: [0.1,0.5,0.7,0.9],
+                          stops: [0.1, 0.5, 0.7, 0.9],
                           colors: [
                             Colors.white,
                             Colors.blue[50],
@@ -92,63 +94,81 @@ class SignInPage extends StatelessWidget {
                       child: Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(110.0,30.0,110.0,30.0),
+                            padding: const EdgeInsets.fromLTRB(
+                                110.0, 30.0, 110.0, 30.0),
                             child: Image.asset('assets/logosb.png'),
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                                color: Colors.white,
                                 borderRadius: BorderRadius.circular(5),
                                 border: Border.all(color: Colors.grey)),
                             width: 300,
                             child: TextFormField(
-                              
                               controller: email,
                               style: TextStyle(
-                               color: Colors.black,
-                                fontFamily: 'SFUIDisplay'
-                              ),
+                                  color: Colors.black,
+                                  fontFamily: 'SFUIDisplay'),
                               decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Username',
-                                prefixIcon: Icon(Icons.person_outline),
-                                labelStyle: TextStyle(
-                                  fontSize: 15
-                                )
-                              ),
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Username',
+                                  prefixIcon: Icon(Icons.person_outline),
+                                  labelStyle: TextStyle(fontSize: 15)),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                  color: Colors.white,
                                   borderRadius: BorderRadius.circular(5),
                                   border: Border.all(color: Colors.grey)),
                               width: 300,
                               child: TextFormField(
-                                controller: pass,
-                                style: TextStyle(
-                                 color: Colors.black,
-                                  fontFamily: 'SFUIDisplay'
-                              ),
-                                decoration: InputDecoration(
+                                  controller: pass,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'SFUIDisplay'),
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'Password',
+                                      prefixIcon: Icon(Icons.lock_outline),
+                                      labelStyle: TextStyle(fontSize: 15))),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                                110.0, 30.0, 110.0, 30.0),
+                            child: Image.asset('assets/logosb.png'),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(color: Colors.grey)),
+                            width: 300,
+                            child: TextFormField(
+                              controller: company,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'SFUIDisplay'),
+                              decoration: InputDecoration(
                                   border: OutlineInputBorder(),
-                                  labelText: 'Password',
-                                  prefixIcon: Icon(Icons.lock_outline),
-                                  labelStyle: TextStyle(
-                                    fontSize: 15
-                                  ))
-                                ),
-                              ),
+                                  labelText: 'Username',
+                                  prefixIcon: Icon(Icons.person_outline),
+                                  labelStyle: TextStyle(fontSize: 15)),
+                            ),
                           ),
                           GestureDetector(
                             onTap: () {
-                              signIn(email.toString(), pass.toString());
+                              signIn(email.text, pass.text);
+                              var box = Hive.box('myBox');
+                              box.put('companyId', company.text);
                             },
                             onLongPress: () => {},
                             child: Padding(
-                              padding: const EdgeInsets.fromLTRB(20.0,40.0,20.0,10.0),
+                              padding: const EdgeInsets.fromLTRB(
+                                  20.0, 40.0, 20.0, 10.0),
                               child: Container(
                                   height: 60,
                                   width: 300,
@@ -161,20 +181,22 @@ class SignInPage extends StatelessWidget {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                  Text(
-                                   'Login',
-                                    style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white),
-                                  ),
-                                ],
-                              )),
+                                      Text(
+                                        'Login',
+                                        style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  )),
                             ),
                           ),
                           GestureDetector(
                             onTap: () {
-                              signUp(email.toString(), pass.toString());
+                              signUp(email.text, pass.text);
+                              var box = Hive.box('myBox');
+                              box.put('companyId', company.text);
                             },
                             onLongPress: () => {},
                             child: Padding(
@@ -191,12 +213,12 @@ class SignInPage extends StatelessWidget {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                  Text(
-                                   'Create an account',
-                                    style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white),
+                                      Text(
+                                        'Create an account',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white),
                                       )
                                     ],
                                   )),
@@ -205,12 +227,13 @@ class SignInPage extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               signInWithGoogle();
+                              var box = Hive.box('myBox');
+                              box.put('companyId', company.text);
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(15.0),
                               child: Text("Sign in with Google"),
                             ),
-                            
                           )
                         ],
                       )),

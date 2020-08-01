@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
 import 'package:mig/qr.dart';
 import './signin.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,8 +14,11 @@ import './useraccount.dart';
 import './overview.dart';
 import './qr.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('myBox');
   runApp(MyApp());
 }
 
@@ -290,36 +294,34 @@ class WelcomeScreen extends StatelessWidget {
           ),
         ),
         backgroundColor: Colors.grey[50],
-        body: 
-        Container(
-          decoration: new BoxDecoration(
-            image: new DecorationImage(
-              image: new AssetImage("assets/Coolantbg.png"),
-              fit: BoxFit.fill,
+        body: Container(
+            decoration: new BoxDecoration(
+              image: new DecorationImage(
+                image: new AssetImage("assets/Coolantbg.png"),
+                fit: BoxFit.fill,
+              ),
             ),
-          ),
-        child: Center(
-          child: ListView(
-            children:[
-              Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 50.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          spreadRadius: 3,
-                          blurRadius: 3,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: <Widget>[
+            child: Center(
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 50.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            spreadRadius: 3,
+                            blurRadius: 3,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: Column(children: <Widget>[
                         ListTile(
-                         title: Text(
+                          title: Text(
                             "Latest Entries",
                             style: TextStyle(
                               color: Colors.black,
@@ -340,39 +342,36 @@ class WelcomeScreen extends StatelessWidget {
                           leading: Icon(Icons.assessment),
                           trailing: Icon(Icons.menu),
                         ),
-                      ]
-                  ),
-              ),
-              ),
-                        Divider(),
-                        StreamBuilder(
-                          stream: Firestore.instance
-                              .collection("companies")
-                              .snapshots(),
-                          builder: (context, snapshot) {
-                            assert(snapshot != null);
-                            if (!snapshot.hasData) {
-                              return Text('PLease Wait');
-                            } else {
-                              return ListView.builder(
-                                itemCount: snapshot.data.documents.length,
-                                itemBuilder: (context, index) {
-                                  DocumentSnapshot machines =
-                                      snapshot.data.documents[index];
-                                  return ListTile(
-                                    title: Text(machines['name']),
-                                    subtitle: Text(
-                                        "${machines['last-updated']}, ${machines['coolant-percent']} Concentration"),
-                                    leading: Icon(Icons.assessment),
-                                  );
-                                },
-                              );
-                            }
-                          },
-                        ),
-                      ],
+                      ]),
                     ),
-                  ))
-        );
+                  ),
+                  Divider(),
+                  StreamBuilder(
+                    stream:
+                        Firestore.instance.collection("companies").snapshots(),
+                    builder: (context, snapshot) {
+                      assert(snapshot != null);
+                      if (!snapshot.hasData) {
+                        return Text('PLease Wait');
+                      } else {
+                        return ListView.builder(
+                          itemCount: snapshot.data.documents.length,
+                          itemBuilder: (context, index) {
+                            DocumentSnapshot machines =
+                                snapshot.data.documents[index];
+                            return ListTile(
+                              title: Text(machines['name']),
+                              subtitle: Text(
+                                  "${machines['last-updated']}, ${machines['coolant-percent']} Concentration"),
+                              leading: Icon(Icons.assessment),
+                            );
+                          },
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ),
+            )));
   }
 }

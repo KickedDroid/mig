@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
 import 'package:majascan/majascan.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:io';
@@ -110,6 +111,8 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
 
   String data;
   String notes;
+
+  var box = Hive.openBox('myBox');
 
   @override
   Widget build(BuildContext context) {
