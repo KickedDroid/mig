@@ -40,8 +40,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<key>NSCameraUsageDescription</key>  
-		<string>Camera permission is required for qrcode scanning.</string>  
 	<false/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Need to upload images</string>
