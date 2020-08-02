@@ -136,34 +136,11 @@ class SignInPage extends StatelessWidget {
                                       labelStyle: TextStyle(fontSize: 15))),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                                110.0, 30.0, 110.0, 30.0),
-                            child: Image.asset('assets/logosb.png'),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(color: Colors.grey)),
-                            width: 300,
-                            child: TextFormField(
-                              controller: company,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontFamily: 'SFUIDisplay'),
-                              decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Username',
-                                  prefixIcon: Icon(Icons.person_outline),
-                                  labelStyle: TextStyle(fontSize: 15)),
-                            ),
-                          ),
                           GestureDetector(
                             onTap: () {
-                              signIn(email.text, pass.text);
+                              signIn(email.toString(), pass.toString());
                               var box = Hive.box('myBox');
-                              box.put('companyId', company.text);
+                              box.put('companyId', company.toString());
                             },
                             onLongPress: () => {},
                             child: Padding(
@@ -194,7 +171,7 @@ class SignInPage extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              signUp(email.text, pass.text);
+                              signUp(email.toString(), pass.toString());
                               var box = Hive.box('myBox');
                               box.put('companyId', company.text);
                             },
