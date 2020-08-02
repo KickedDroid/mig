@@ -72,6 +72,7 @@ class _SignInPageState extends State<SignInPage> {
   String emailData;
 
   @override
+  bool _showPassword = false;
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -83,8 +84,8 @@ class _SignInPageState extends State<SignInPage> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
                   child: new Container(
-                      height: 700.0,
-                      width: 500.0,
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topRight,
@@ -126,7 +127,7 @@ class _SignInPageState extends State<SignInPage> {
                                   fontFamily: 'SFUIDisplay'),
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(),
-                                  labelText: 'Username',
+                                  labelText: 'Email',
                                   prefixIcon: Icon(Icons.person_outline),
                                   labelStyle: TextStyle(fontSize: 15)),
                             ),
@@ -149,6 +150,7 @@ class _SignInPageState extends State<SignInPage> {
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontFamily: 'SFUIDisplay'),
+                                  obscureText: !this._showPassword,
                                   decoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       labelText: 'Password',
