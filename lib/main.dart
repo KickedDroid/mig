@@ -345,31 +345,19 @@ class WelcomeScreen extends StatelessWidget {
                       ]),
                     ),
                   ),
-                  Divider(),
-                  StreamBuilder(
-                    stream:
-                        Firestore.instance.collection("companies").snapshots(),
-                    builder: (context, snapshot) {
-                      assert(snapshot != null);
-                      if (!snapshot.hasData) {
-                        return Text('PLease Wait');
-                      } else {
-                        return ListView.builder(
-                          itemCount: snapshot.data.documents.length,
-                          itemBuilder: (context, index) {
-                            DocumentSnapshot machines =
-                                snapshot.data.documents[index];
-                            return ListTile(
-                              title: Text(machines['name']),
-                              subtitle: Text(
-                                  "${machines['last-updated']}, ${machines['coolant-percent']} Concentration"),
-                              leading: Icon(Icons.assessment),
-                            );
-                          },
-                        );
-                      }
-                    },
-                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      child: Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('CompanyID'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
                 ],
               ),
             )));

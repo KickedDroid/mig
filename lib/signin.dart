@@ -6,7 +6,12 @@ import 'package:hive/hive.dart';
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
+  @override
+  _SignInPageState createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
   Future<String> signInWithGoogle() async {
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
@@ -58,8 +63,13 @@ class SignInPage extends StatelessWidget {
   }
 
   TextEditingController email;
+
   TextEditingController pass;
+
   TextEditingController company;
+
+  String passData;
+  String emailData;
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +115,11 @@ class SignInPage extends StatelessWidget {
                                 border: Border.all(color: Colors.grey)),
                             width: 300,
                             child: TextFormField(
+                              onChanged: (value) {
+                                setState(() {
+                                  emailData = value;
+                                });
+                              },
                               controller: email,
                               style: TextStyle(
                                   color: Colors.black,
@@ -125,6 +140,11 @@ class SignInPage extends StatelessWidget {
                                   border: Border.all(color: Colors.grey)),
                               width: 300,
                               child: TextFormField(
+                                  onChanged: (value) {
+                                    setState(() {
+                                      passData = value;
+                                    });
+                                  },
                                   controller: pass,
                                   style: TextStyle(
                                       color: Colors.black,
@@ -138,7 +158,7 @@ class SignInPage extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              signIn(email.toString(), pass.toString());
+                              signIn(emailData, passData);
                               var box = Hive.box('myBox');
                               box.put('companyId', company.toString());
                             },
@@ -171,7 +191,7 @@ class SignInPage extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              signUp(email.toString(), pass.toString());
+                              signUp(emailData, passData);
                               var box = Hive.box('myBox');
                               box.put('companyId', company.text);
                             },

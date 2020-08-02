@@ -6,10 +6,12 @@ import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/rendering.dart';
+import 'package:hive/hive.dart';
 import 'package:mig/qr.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 const greenPercent = Color(0xff14c4f7);
 
@@ -43,7 +45,7 @@ class _UserAccountState extends State<UserAccount> {
                 color: Color(0xffFFFFFF),
                 backgroundColor: Colors.lightBlue[600],
               ))),
-    backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       body: Theme(
         data: Theme.of(context).copyWith(
           brightness: Brightness.dark,
@@ -66,7 +68,8 @@ class _UserAccountState extends State<UserAccount> {
                       decoration: BoxDecoration(
                         color: Colors.grey,
                         shape: BoxShape.circle,
-                        image: DecorationImage( image: AssetImage ('assets/User2.png'),
+                        image: DecorationImage(
+                          image: AssetImage('assets/User2.png'),
                           fit: BoxFit.cover,
                         ),
                         border: Border.all(
@@ -130,17 +133,23 @@ class _UserAccountState extends State<UserAccount> {
                   ),
                   onTap: () {},
                 ),
-                SwitchListTile(
-                  title: Text(
-                    "Administrator",
-                    //style: whiteBoldText,
-                  ),
-                  subtitle: Text(
-                    "On",
-                    //style: greyTExt,
-                  ),
-                  value: true,
-                  onChanged: (val) {},
+                ValueListenableBuilder(
+                  valueListenable: Hive.box('myBox').listenable(),
+                  builder: (context, box, widget) {
+                    return SwitchListTile(
+                        title: Text(
+                          "Administrator",
+                          //style: whiteBoldText,
+                        ),
+                        subtitle: Text(
+                          "On",
+                          //style: greyTExt,
+                        ),
+                        value: box.get('admin') ?? false,
+                        onChanged: (val) {
+                          box.put('admin', val);
+                        });
+                  },
                 ),
                 SwitchListTile(
                   title: Text(
