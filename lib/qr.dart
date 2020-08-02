@@ -112,8 +112,6 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
   String data;
   String notes;
 
-  var box = Hive.openBox('myBox');
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -196,9 +194,10 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                     children: [
                       GestureDetector(
                         onTap: () {
+                          var box = Hive.box('myBox');
                           if (data != null) {
                             Firestore.instance
-                                .collection("companies")
+                                .collection(box.get('companyId'))
                                 .document("${widget.name}")
                                 .updateData({
                               "name": "${widget.name}",

@@ -246,5 +246,7 @@ class SignInPage extends StatelessWidget {
     );
   }
 
-  void handleError(e) {}
+  void handleError(e) {
+    print(e);
+  }
 }
