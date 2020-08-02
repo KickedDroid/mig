@@ -53,7 +53,7 @@ class _MachineListState extends State<MachineList> {
             builder: (context, snapshot) {
               assert(snapshot != null);
               if (!snapshot.hasData) {
-                return Text('PLease Wait');
+                return Text('Please Wait');
               } else {
                 return ListView.builder(
                   itemCount: snapshot.data.documents.length,
@@ -62,7 +62,7 @@ class _MachineListState extends State<MachineList> {
                     return MachineItem(
                       name: machines['name'],
                       c_percent: machines['coolant-percent'],
-                      last_updated: machines['last-updated'],
+                      last_updated: machines['last-updated'].substring(0,10),
                       notes: machines['history'],
                     );
                   },
