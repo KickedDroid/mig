@@ -105,8 +105,8 @@ Widget _handleWidget() {
           if (snapshot.hasData) {
             return WelcomeScreen();
           } else {
-            //return SignInPage();
-            return WelcomeScreen();
+            return SignInPage();
+            //return WelcomeScreen();
           }
         }
       });
@@ -120,207 +120,206 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      drawer: Drawer(
-        child: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Container(
-                  width: MediaQuery.of(context).size.width * .4,
-                  child: DrawerHeader(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage("assets/logosb.png"),
-                            fit: BoxFit.cover)),
-                    child: null,
+        key: _scaffoldKey,
+        drawer: Drawer(
+          child: SafeArea(
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * .4,
+                    child: DrawerHeader(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage("assets/logosb.png"),
+                              fit: BoxFit.cover)),
+                      child: null,
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 3,
-                child: ListView(children: [
-                  ListTile(
-                    leading: Icon(Icons.people),
-                    title: Text("User Account"),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pushNamed('/Useraccount');
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.question_answer),
-                    title: Text("FAQ"),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/FAQ');
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.description),
-                    title: Text("Privacy Policy"),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/PPO');
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.description),
-                    title: Text("Terms & Conditions"),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/TDC');
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.settings),
-                    title: new Text("Settings"),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.add),
-                    title: Text("Machine Setup"),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pushNamed('/Addmachines');
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.history),
-                    title: Text("History"),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.info_outline),
-                    title: Text("About"),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.exit_to_app),
-                    title: Text("Log Out"),
-                    onTap: () {
-                      signOutGoogle();
-                      signOut();
-                    },
-                  )
-                ]),
-              )
-            ],
-          ),
-        ),
-      ),
-      appBar: AppBar(
-          title: Text('Full Shop - Coolant Overview',
-              style: TextStyle(
-                color: Color(0xffFFFFFF),
-                backgroundColor: Colors.lightBlue[600],
-              ))),
-      bottomNavigationBar: BottomAppBar(
-        elevation: 10.0,
-        color: Colors.lightBlue[600],
-        child: Row(
-          children: [
-            IconButton(
-                icon: Icon(Icons.grid_on),
-                color: Colors.white,
-                onPressed: () async =>
-                    Navigator.pushNamed(context, "/Overview")),
-            IconButton(
-                icon: Icon(Icons.settings),
-                color: Colors.white,
-                onPressed: null),
-            IconButton(
-                icon: Icon(Icons.create),
-                color: Colors.white,
-                onPressed: () async =>
-                    Navigator.pushNamed(context, "/Addmachines")),
-            IconButton(
-                icon: Icon(Icons.timeline),
-                color: Colors.white,
-                onPressed: null),
-            IconButton(
-                icon: Icon(Icons.list),
-                color: Colors.white,
-                onPressed: () async =>
-                    Navigator.pushNamed(context, "/Machines")),
-          ],
-          mainAxisAlignment: MainAxisAlignment.start,
-        ),
-        notchMargin: 5.0,
-        shape: CircularNotchedRectangle(),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: FloatingActionButton(
-        elevation: 5.0,
-        backgroundColor: Colors.lightBlue[600],
-        onPressed: () => showModalBottomSheet<void>(
-            context: context,
-            builder: (BuildContext context) {
-              return Container(
-                height: 250,
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Enter Coolant Concentration',
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          QrPage(),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [GenerateButton()],
-                      )
-                    ],
-                  ),
-                ),
-              );
-            }),
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
-      backgroundColor: Colors.grey[50],
-      body: Container(
-          decoration: new BoxDecoration(
-            image: new DecorationImage(
-              image: new AssetImage("assets/Coolantbg.png"),
-              fit: BoxFit.fill,
+                Expanded(
+                  flex: 3,
+                  child: ListView(children: [
+                    ListTile(
+                      leading: Icon(Icons.people),
+                      title: Text("User Account"),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pushNamed('/Useraccount');
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.question_answer),
+                      title: Text("FAQ"),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/FAQ');
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.description),
+                      title: Text("Privacy Policy"),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/PPO');
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.description),
+                      title: Text("Terms & Conditions"),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/TDC');
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.settings),
+                      title: new Text("Settings"),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.add),
+                      title: Text("Machine Setup"),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pushNamed('/Addmachines');
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.history),
+                      title: Text("History"),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.info_outline),
+                      title: Text("About"),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.exit_to_app),
+                      title: Text("Log Out"),
+                      onTap: () {
+                        signOutGoogle();
+                        signOut();
+                      },
+                    )
+                  ]),
+                )
+              ],
             ),
           ),
-          child: Center(
-            child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 50.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          spreadRadius: 3,
-                          blurRadius: 3,
-                          offset: Offset(0, 5), // changes position of shadow
+        ),
+        appBar: AppBar(
+            title: Text('Full Shop - Coolant Overview',
+                style: TextStyle(
+                  color: Color(0xffFFFFFF),
+                  backgroundColor: Colors.lightBlue[600],
+                ))),
+        bottomNavigationBar: BottomAppBar(
+          elevation: 10.0,
+          color: Colors.lightBlue[600],
+          child: Row(
+            children: [
+              IconButton(
+                  icon: Icon(Icons.grid_on),
+                  color: Colors.white,
+                  onPressed: () async =>
+                      Navigator.pushNamed(context, "/Overview")),
+              IconButton(
+                  icon: Icon(Icons.settings),
+                  color: Colors.white,
+                  onPressed: null),
+              IconButton(
+                  icon: Icon(Icons.create),
+                  color: Colors.white,
+                  onPressed: () async =>
+                      Navigator.pushNamed(context, "/Addmachines")),
+              IconButton(
+                  icon: Icon(Icons.timeline),
+                  color: Colors.white,
+                  onPressed: null),
+              IconButton(
+                  icon: Icon(Icons.list),
+                  color: Colors.white,
+                  onPressed: () async =>
+                      Navigator.pushNamed(context, "/Machines")),
+            ],
+            mainAxisAlignment: MainAxisAlignment.start,
+          ),
+          notchMargin: 5.0,
+          shape: CircularNotchedRectangle(),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButton: FloatingActionButton(
+          elevation: 5.0,
+          backgroundColor: Colors.lightBlue[600],
+          onPressed: () => showModalBottomSheet<void>(
+              context: context,
+              builder: (BuildContext context) {
+                return Container(
+                  height: 250,
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Enter Coolant Concentration',
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            QrPage(),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [GenerateButton()],
+                        )
                       ],
                     ),
-                    child: Column(
-                      children: <Widget>[
+                  ),
+                );
+              }),
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.grey[50],
+        body: Container(
+            decoration: new BoxDecoration(
+              image: new DecorationImage(
+                image: new AssetImage("assets/Coolantbg.png"),
+                fit: BoxFit.fill,
+              ),
+            ),
+            child: Center(
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 50.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            spreadRadius: 3,
+                            blurRadius: 3,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: Column(children: <Widget>[
                         ListTile(
                           title: Text(
                             "Latest Entries",
@@ -331,39 +330,36 @@ class WelcomeScreen extends StatelessWidget {
                           ),
                         ),
                         Divider(),
-                        StreamBuilder(
-                          stream: Firestore.instance
-                              .collection("companies")
-                              .orderBy('last-updated', descending: true)
-                              .snapshots(),
-                          builder: (context, snapshot) {
-                            //assert(snapshot != null);
-                            if (!snapshot.hasData) {
-                              return Text('Please Wait');
-                            } else {
-                              return ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: 4,
-                                itemBuilder: (context, index) {
-                                  DocumentSnapshot machines =
-                                      snapshot.data.documents[index];
-                                  return ListTile(
-                                    title: Text('${machines['name']}:  ${machines['coolant-percent']}%  (${machines['last-updated'].substring(0,10)})',),
-                                    //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
-                                    leading: Icon(Icons.assessment),
-                                  );
-                                },
-                              );
-                            }
-                          },
+                        ListTile(
+                          title: Text("Machine: Mori 3"),
+                          subtitle: Text("07/20/20, 10.2% Concentration"),
+                          leading: Icon(Icons.assessment),
+                          trailing: Icon(Icons.menu),
                         ),
-                      ],
+                        ListTile(
+                          title: Text("Machine: Mori 3"),
+                          subtitle: Text("07/19/20, 9.6% Concentration"),
+                          leading: Icon(Icons.assessment),
+                          trailing: Icon(Icons.menu),
+                        ),
+                      ]),
                     ),
                   ),
-                ),
-              ],
-            ),
-          )),
-    );
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      child: Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('CompanyID'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )));
   }
 }

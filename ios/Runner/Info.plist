@@ -43,5 +43,11 @@
 	<key>NSCameraUsageDescription</key>  
 		<string>Camera permission is required for qrcode scanning.</string>  
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Need to upload images</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Need to upload images</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Need to upload images</string>
 </dict>
 </plist>
