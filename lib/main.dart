@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -328,20 +329,35 @@ class WelcomeScreen extends StatelessWidget {
                           ),
                         ),
                         Divider(),
-                        ListTile(
-                          title: Text("Machine: Mori 3"),
-                          subtitle: Text("07/20/20, 10.2% Concentration"),
-                          leading: Icon(Icons.assessment),
-                          trailing: Icon(Icons.menu),
+                         StreamBuilder(
+                          stream: Firestore.instance
+                              .collection("companies")
+                              .orderBy('last-updated', descending: true)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            //assert(snapshot != null);
+                            if (!snapshot.hasData) {
+                              return Text('Please Wait');
+                            } else {
+                              return ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: 4,
+                                itemBuilder: (context, index) {
+                                  DocumentSnapshot machines =
+                                      snapshot.data.documents[index];
+                                  return ListTile(
+                                    title: Text('${machines['name']}:  ${machines['coolant-percent']}%  (${machines['last-updated'].substring(0,10)})',),
+                                    //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
+                                    leading: Icon(Icons.assessment),
+                                  );
+                                },
+                              );
+                            }
+                          },
                         ),
-                        ListTile(
-                          title: Text("Machine: Mori 3"),
-                          subtitle: Text("07/19/20, 9.6% Concentration"),
-                          leading: Icon(Icons.assessment),
-                          trailing: Icon(Icons.menu),
-                        ),
-                      ]),
+                      ],
                     ),
+                  ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -357,7 +373,6 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   )
                 ],
-              ),
-            )));
+            ))));
   }
 }
