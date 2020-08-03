@@ -93,27 +93,30 @@ Widget _buildBody(BuildContext context) {
   return StreamBuilder<QuerySnapshot>(
     stream: Firestore.instance.collection('companies').snapshots(),
     builder: (context, snapshot) {
-      if (!snapshot.hasData) return LinearProgressIndicator();
-
-      return DataTable(columns: [
-        DataColumn(label: Text('Name')),
-        DataColumn(label: Text('Votes')),
-        DataColumn(label: Text('Rapper\nname')),
-      ], rows: _buildList(context, snapshot.data.documents));
+      assert(snapshot != null);
+      if (!snapshot.hasData) {
+        return LinearProgressIndicator();
+      } else {
+        return DataTable(columns: [
+          DataColumn(label: Text('Name')),
+          DataColumn(label: Text('Last Updated')),
+          DataColumn(label: Text('Coolant\nPercentage')),
+        ], rows: _buildList(context, snapshot.data.documents));
+      }
     },
   );
 }
 
-_buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+List _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
   return snapshot.map((data) => _buildListItem(context, data)).toList();
 }
 
-_buildListItem(BuildContext context, DocumentSnapshot snapshot) {
+DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
   DocumentSnapshot machines = snapshot;
 
   return DataRow(cells: [
     DataCell(Text(machines['name'])),
-    DataCell(Text(machines['last-updated'])),
-    DataCell(Text(machines['c-percentage'])),
+    DataCell(Text(machines['last-updated'].substring(0, 10))),
+    DataCell(Text(machines['coolant-percent'])),
   ]);
 }
