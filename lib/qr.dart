@@ -12,6 +12,7 @@ import 'dart:io';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class QrPage extends StatefulWidget {
   QrPage({Key key}) : super(key: key);
@@ -112,6 +113,8 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
   String data;
   String notes;
 
+  bool cleaned = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -187,6 +190,17 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                     ),
                   ),
                 ),
+                SwitchListTile(
+                    title: Text(
+                      "Ceeaned Sump",
+                      //style: whiteBoldText,
+                    ),
+                    value: cleaned,
+                    onChanged: (val) {
+                      setState(() {
+                        cleaned = val;
+                      });
+                    }),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Row(
@@ -205,7 +219,7 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                               "last-updated": "$time"
                             });
                             Firestore.instance
-                                .collection("companies")
+                                .collection(box.get('companyId'))
                                 .document("${widget.name}")
                                 .updateData({
                               "history": FieldValue.arrayUnion([
@@ -215,11 +229,18 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                           }
                           if (notes != null) {
                             Firestore.instance
-                                .collection("companies")
+                                .collection(box.get('companyId'))
                                 .document("${widget.name}")
                                 .updateData({
                               "notes": {"time": "$time", "note": "$notes"}
                             });
+                          }
+
+                          if (cleaned != false) {
+                            Firestore.instance
+                                .collection(box.get('companyId'))
+                                .document("${widget.name}")
+                                .updateData({"last-cleaned": "$time"});
                           }
                           Navigator.pop(context);
                         },

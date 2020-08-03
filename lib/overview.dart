@@ -6,6 +6,7 @@ import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/rendering.dart';
+import 'package:hive/hive.dart';
 import 'package:mig/qr.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -68,8 +69,9 @@ class _OverviewState extends State<Overview> {
 }
 
 Widget _buildBody(BuildContext context) {
+  var box = Hive.box('myBox');
   return StreamBuilder<QuerySnapshot>(
-    stream: Firestore.instance.collection('companies').snapshots(),
+    stream: Firestore.instance.collection(box.get('companyId')).snapshots(),
     builder: (context, snapshot) {
       assert(snapshot != null);
       if (!snapshot.hasData) {

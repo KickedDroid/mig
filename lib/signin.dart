@@ -229,7 +229,7 @@ class _SignInPageState extends State<SignInPage> {
                     onTap: () {
                       signInWithGoogle();
                       var box = Hive.box('myBox');
-                      box.put('companyId', company.text);
+                      box.put('companyId', companyId);
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),

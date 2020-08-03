@@ -3,6 +3,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
+import 'package:hive/hive.dart';
 import './graph.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'qr.dart';
@@ -15,62 +16,67 @@ class MachineList extends StatefulWidget {
 }
 
 class _MachineListState extends State<MachineList> {
+  var box = Hive.box('myBox');
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          stops: [0.1,0.5,0.7,0.9],
-          colors: [
-            Colors.blue[50],
-            Colors.blue[100],
-            Colors.blue[200],
-            Colors.blue[300],
-          ],
-        ),
-    ),
-    child: Scaffold(
-        backgroundColor: Color(0x00000000),
-        bottomNavigationBar: BottomAppBar(
-          color: Colors.lightBlue[600],
-          child: Row(
-            children: [
-              IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  color: Colors.white,
-                  onPressed: () => Navigator.of(context).pop()),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            stops: [0.1, 0.5, 0.7, 0.9],
+            colors: [
+              Colors.blue[50],
+              Colors.blue[100],
+              Colors.blue[200],
+              Colors.blue[300],
             ],
-            mainAxisAlignment: MainAxisAlignment.start,
           ),
-          notchMargin: 0.0,
-          shape: CircularNotchedRectangle(),
         ),
-        body: SafeArea(
-          child: StreamBuilder(
-            stream: Firestore.instance.collection("companies").snapshots(),
-            builder: (context, snapshot) {
-              assert(snapshot != null);
-              if (!snapshot.hasData) {
-                return Text('Please Wait');
-              } else {
-                return ListView.builder(
-                  itemCount: snapshot.data.documents.length,
-                  itemBuilder: (context, index) {
-                    DocumentSnapshot machines = snapshot.data.documents[index];
-                    return MachineItem(
-                      name: machines['name'],
-                      c_percent: machines['coolant-percent'],
-                      last_updated: machines['last-updated'].substring(0,10),
-                      notes: machines['history'],
+        child: Scaffold(
+            backgroundColor: Color(0x00000000),
+            bottomNavigationBar: BottomAppBar(
+              color: Colors.lightBlue[600],
+              child: Row(
+                children: [
+                  IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      color: Colors.white,
+                      onPressed: () => Navigator.of(context).pop()),
+                ],
+                mainAxisAlignment: MainAxisAlignment.start,
+              ),
+              notchMargin: 0.0,
+              shape: CircularNotchedRectangle(),
+            ),
+            body: SafeArea(
+              child: StreamBuilder(
+                stream: Firestore.instance
+                    .collection(box.get('companyId'))
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  assert(snapshot != null);
+                  if (!snapshot.hasData) {
+                    return Text('Please Wait');
+                  } else {
+                    return ListView.builder(
+                      itemCount: snapshot.data.documents.length,
+                      itemBuilder: (context, index) {
+                        DocumentSnapshot machines =
+                            snapshot.data.documents[index];
+                        return MachineItem(
+                          name: machines['name'],
+                          c_percent: machines['coolant-percent'],
+                          last_updated:
+                              machines['last-updated'].substring(0, 10),
+                          notes: machines['history'],
+                        );
+                      },
                     );
-                  },
-                );
-              }
-            },
-          ),
-        )));
+                  }
+                },
+              ),
+            )));
   }
 }
 

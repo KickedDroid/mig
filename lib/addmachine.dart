@@ -20,6 +20,7 @@ class AddMachineList extends StatefulWidget {
 }
 
 class _AddMachineListState extends State<AddMachineList> {
+  var box = Hive.box('myBox');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +47,8 @@ class _AddMachineListState extends State<AddMachineList> {
               ))),
       body: SafeArea(
         child: StreamBuilder(
-          stream: Firestore.instance.collection("companies").snapshots(),
+          stream:
+              Firestore.instance.collection(box.get('companies')).snapshots(),
           builder: (context, snapshot) {
             assert(snapshot != null);
             if (!snapshot.hasData) {
