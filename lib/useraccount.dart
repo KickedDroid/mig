@@ -33,6 +33,8 @@ class _UserAccountState extends State<UserAccount> {
     });
   }
 
+  final nameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,17 +86,14 @@ class _UserAccountState extends State<UserAccount> {
                         decoration: BoxDecoration(
                           color: Colors.grey,
                           shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: _image == null
-                                ? AssetImage('assets/User2.png')
-                                : Image.file(_image),
-                            fit: BoxFit.cover,
-                          ),
                           border: Border.all(
                             color: Colors.white,
                             width: 2.0,
                           ),
                         ),
+                        child: _image == null
+                            ? Image.asset('assets/User2.png')
+                            : ClipOval(child: Image.file(_image)),
                       ),
                     ),
                     const SizedBox(width: 10.0),
@@ -102,14 +101,29 @@ class _UserAccountState extends State<UserAccount> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            "John Smith",
-                            style: TextStyle(
-                              color: Colors.grey.shade400,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.0,
-                            ),
-                          ),
+                          GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => new AlertDialog(
+                                          title: new Text("Edit Name"),
+                                          content: new TextField(
+                                            controller: nameController,
+                                          ),
+                                          actions: <Widget>[
+                                            FlatButton(
+                                              child: Text('Close me!'),
+                                              onPressed: () {
+                                                var box = Hive.box('myBox');
+                                                box.put('name',
+                                                    nameController.text);
+                                                Navigator.of(context).pop();
+                                              },
+                                            )
+                                          ],
+                                        ));
+                              },
+                              child: _handleWidget()),
                           Text(
                             "Brainerd",
                             style: TextStyle(
@@ -196,4 +210,25 @@ class _UserAccountState extends State<UserAccount> {
       ),
     );
   }
+}
+
+Widget _handleWidget() {
+  return ValueListenableBuilder(
+    valueListenable: Hive.box('myBox').listenable(),
+    builder: (BuildContext context, box, Widget child) {
+      var name = box.get('name');
+      if (name == null) {
+        return Text(
+          "John Smith",
+          style: TextStyle(
+            color: Colors.grey.shade400,
+            fontWeight: FontWeight.bold,
+            fontSize: 20.0,
+          ),
+        );
+      } else {
+        return Text(name);
+      }
+    },
+  );
 }

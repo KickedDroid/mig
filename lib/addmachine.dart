@@ -318,7 +318,9 @@ Widget _handleWidget() {
     builder: (BuildContext context, box, Widget child) {
       var isAdmin = box.get('admin');
       if (isAdmin == false) {
-        return Scaffold(body: Center(child: Text('Only Admins can edit')));
+        return Scaffold(
+            appBar: AppBar(),
+            body: Center(child: Text('Only Admins can edit')));
       } else {
         return AddMachinePage();
       }
