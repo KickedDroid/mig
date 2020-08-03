@@ -43,123 +43,77 @@ class _OverviewState extends State<Overview> {
                 color: Color(0xffFFFFFF),
                 backgroundColor: Colors.lightBlue[600],
               ))),
-    backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       body: Container(
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-          image: new AssetImage("assets/Coolantbg.png"),
-          fit: BoxFit.fill,
-        ),
-      ),
-            child: Center(
-          child: ListView(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: new Container(
-                    height: 590.0,
-                    width: 500.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          spreadRadius: 3,
-                          blurRadius: 3,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: FittedBox(
-                          child: DataTable(
-                            columns: <DataColumn>[
-                              DataColumn(
-                                label: Text(
-                                  'Name',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18.0,
-                                  ),
-                                ),
-                              ),
-                              DataColumn(
-                                label: Text(
-                                  'Coolant %',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18.0,
-                                  ),
-                                ),
-                              ),
-                              DataColumn(
-                                label: Text(
-                                  'Last Entry',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18.0,
-                                  ),
-                                ),
-                              ),
-                              DataColumn(
-                                label: Text(
-                                  'Last Cleaned',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18.0,
-                                  ),
-                                ),
-                              ),
-                            ],
-                            rows: <DataRow>[
-                              DataRow(cells: [
-                                DataCell(Text(
-                                  'Mori 1',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '8.0%',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '0 Days',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  '18 Months',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 16.0,
-                                  ),
-                                )),
-                              ]),
-                              
-                          
-                            ],
+          decoration: new BoxDecoration(
+            image: new DecorationImage(
+              image: new AssetImage("assets/Coolantbg.png"),
+              fit: BoxFit.fill,
+            ),
+          ),
+          child: Center(
+            child: ListView(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: new Container(
+                      height: 590.0,
+                      width: 500.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            spreadRadius: 3,
+                            blurRadius: 3,
+                            offset: Offset(0, 3), // changes position of shadow
                           ),
+                        ],
+                      ),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: FittedBox(child: _buildBody(context)),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        )),
+              ],
+            ),
+          )),
     );
   }
+}
+
+Widget _buildBody(BuildContext context) {
+  return StreamBuilder<QuerySnapshot>(
+    stream: Firestore.instance.collection('companies').snapshots(),
+    builder: (context, snapshot) {
+      if (!snapshot.hasData) return LinearProgressIndicator();
+
+      return DataTable(columns: [
+        DataColumn(label: Text('Name')),
+        DataColumn(label: Text('Votes')),
+        DataColumn(label: Text('Rapper\nname')),
+      ], rows: _buildList(context, snapshot.data.documents));
+    },
+  );
+}
+
+_buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+  return snapshot.map((data) => _buildListItem(context, data)).toList();
+}
+
+_buildListItem(BuildContext context, DocumentSnapshot snapshot) {
+  DocumentSnapshot machines = snapshot;
+
+  return DataRow(cells: [
+    DataCell(Text(machines['name'])),
+    DataCell(Text(machines['last-updated'])),
+    DataCell(Text(machines['c-percentage'])),
+  ]);
 }
