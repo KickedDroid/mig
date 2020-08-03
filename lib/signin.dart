@@ -74,6 +74,7 @@ class _SignInPageState extends State<SignInPage> {
   String companyId;
 
   @override
+  bool _showPassword = false;
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,

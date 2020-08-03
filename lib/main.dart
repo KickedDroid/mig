@@ -304,7 +304,7 @@ class WelcomeScreen extends StatelessWidget {
               child: ListView(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 50.0),
+                    padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 30.0),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -320,12 +320,7 @@ class WelcomeScreen extends StatelessWidget {
                       ),
                       child: Column(children: <Widget>[
                         ListTile(
-                          title: Text(
-                            "Latest Entries",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18.0,
-                            ),
+                          title: Text("Latest Entries",style: TextStyle(color: Colors.black,fontSize: 18.0,),
                           ),
                         ),
                         Divider(),
@@ -360,14 +355,20 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 10.0),
                     child: Card(
+                      elevation:5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                       child: Row(
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('CompanyID'),
+                            padding: const EdgeInsets.all(15.0),
+                            child: Text("Company ID",style: TextStyle(color: Colors.black,fontSize: 16.0,),
+                            ),
                           ),
+
                         ],
                       ),
                     ),
