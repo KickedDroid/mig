@@ -52,37 +52,15 @@ class _OverviewState extends State<Overview> {
             ),
           ),
           child: Center(
-            child: ListView(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: new Container(
-                      height: 590.0,
-                      width: 500.0,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            spreadRadius: 3,
-                            blurRadius: 3,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: FittedBox(child: _buildBody(context)),
-                        ),
-                      ),
-                    ),
-                  ),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: _buildBody(context),
                 ),
-              ],
+              ),
             ),
           )),
     );
@@ -97,11 +75,27 @@ Widget _buildBody(BuildContext context) {
       if (!snapshot.hasData) {
         return LinearProgressIndicator();
       } else {
-        return DataTable(columns: [
-          DataColumn(label: Text('Name')),
-          DataColumn(label: Text('Last Updated')),
-          DataColumn(label: Text('Coolant\nPercentage')),
-        ], rows: _buildList(context, snapshot.data.documents));
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.3),
+                  spreadRadius: 3,
+                  blurRadius: 3,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+            ),
+            child: DataTable(columns: [
+              DataColumn(label: Text('Name')),
+              DataColumn(label: Text('Last Updated')),
+              DataColumn(label: Text('Coolant\nPercentage')),
+            ], rows: _buildList(context, snapshot.data.documents)),
+          ),
+        );
       }
     },
   );
@@ -117,6 +111,12 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
   return DataRow(cells: [
     DataCell(Text(machines['name'])),
     DataCell(Text(machines['last-updated'].substring(0, 10))),
-    DataCell(Text(machines['coolant-percent'])),
+    DataCell(Text(
+      machines['coolant-percent'],
+      style: TextStyle(
+          color: double.parse(machines['coolant-percent']) < 6.0
+              ? Colors.red
+              : Colors.green),
+    )),
   ]);
 }
