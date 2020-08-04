@@ -4,6 +4,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
 import 'package:hive/hive.dart';
+import 'package:mig/namechange.dart';
 import './graph.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'qr.dart';
@@ -131,32 +132,6 @@ class MachineItem extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          'Coolant Percent',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w300),
-                        ),
-                        Card(
-                          color: greenPercent,
-                          child: Center(
-                              child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              c_percent != null
-                                  ? "$c_percent%"
-                                  : 'Coolant Percent',
-                              style: TextStyle(
-                                  fontSize: 24.0, color: Colors.white),
-                            ),
-                          )),
-                        ),
-                      ],
-                    ),
-                  ),
                   Center(
                     child: GestureDetector(
                       onTap: () {
@@ -169,17 +144,53 @@ class MachineItem extends StatelessWidget {
                       },
                       onLongPress: () => {},
                       child: Container(
+                        height: 40,
+                        width: 180,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            gradient: LinearGradient(
+                                colors: [Colors.orange, Colors.orange[500]])),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Enter Coolant %',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChangeNamePage(name),
+                          ),
+                        );
+                      },
+                      onLongPress: () => {},
+                      child: Container(
                           height: 40,
                           width: 180,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              gradient: LinearGradient(
-                                  colors: [Colors.orange, Colors.orange[500]])),
+                              gradient: LinearGradient(colors: [
+                                Colors.orange[300],
+                                Colors.orange[200]
+                              ])),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Enter Coolant %',
+                                'Edit Name',
                                 style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w400,
@@ -188,7 +199,7 @@ class MachineItem extends StatelessWidget {
                             ],
                           )),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

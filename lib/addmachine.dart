@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hive/hive.dart';
+import 'package:mig/batch.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import './graph.dart';
@@ -131,7 +132,8 @@ class _AddMachineListState extends State<AddMachineList> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => _handleWidget()));
+                                        builder: (context) =>
+                                            _handleWidgetBatch()));
                               },
                               onLongPress: () => {},
                               child: Container(
@@ -302,15 +304,17 @@ class _AddMachinePageState extends State<AddMachinePage> {
                           _dataString = _textController.text;
                           _inputErrorText = null;
                         });
-                        _captureAndSharePng();
+                        var box = Hive.box('myBox');
                         Firestore.instance
-                            .collection("companies")
+                            .collection(box.get('companyId'))
                             .document("$name")
                             .setData({
                           "name": "$name",
                           "coolant-percent": "0.0",
-                          "last-updated": "$time"
+                          "last-updated": "$time",
+                          "last-cleaned": "$time"
                         });
+                        Navigator.pop(context);
                       },
                     ),
                   )
@@ -361,6 +365,22 @@ Widget _handleWidget() {
             body: Center(child: Text('Only Admins can edit')));
       } else {
         return AddMachinePage();
+      }
+    },
+  );
+}
+
+Widget _handleWidgetBatch() {
+  return ValueListenableBuilder(
+    valueListenable: Hive.box('myBox').listenable(),
+    builder: (BuildContext context, box, Widget child) {
+      var isAdmin = box.get('admin');
+      if (isAdmin == false) {
+        return Scaffold(
+            appBar: AppBar(),
+            body: Center(child: Text('Only Admins can edit')));
+      } else {
+        return BatchAddPage();
       }
     },
   );

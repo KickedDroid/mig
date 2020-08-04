@@ -38,32 +38,34 @@ class _OverviewState extends State<Overview> {
         notchMargin: 0.0,
         shape: CircularNotchedRectangle(),
       ),
-      appBar: AppBar(
-          title: Text('Machine Overview',
-              style: TextStyle(
-                color: Color(0xffFFFFFF),
-                backgroundColor: Colors.lightBlue[600],
-              ))),
-      backgroundColor: Colors.white,
-      body: Container(
-          decoration: new BoxDecoration(
-            image: new DecorationImage(
-              image: new AssetImage("assets/Coolantbg.png"),
-              fit: BoxFit.fill,
+      backgroundColor: Colors.blue,
+      body: ListView(children: <Widget>[
+        Column(
+          children: <Widget>[
+            SafeArea(
+              child: Text(
+                'Machine Overview',
+                style: TextStyle(
+                    fontSize: 32.0,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white),
+              ),
             ),
-          ),
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
                 child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: _buildBody(context),
+                  scrollDirection: Axis.horizontal,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: _buildBody(context),
+                  ),
                 ),
               ),
             ),
-          )),
+          ],
+        ),
+      ]),
     );
   }
 }
@@ -80,17 +82,7 @@ Widget _buildBody(BuildContext context) {
         return ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
           child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
-                  spreadRadius: 3,
-                  blurRadius: 3,
-                  offset: Offset(0, 3), // changes position of shadow
-                ),
-              ],
-            ),
+            color: Colors.white,
             child: DataTable(columns: [
               DataColumn(label: Text('Name')),
               DataColumn(label: Text('Last Updated')),
@@ -120,7 +112,7 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
               color: double.parse(machines['coolant-percent']) < 6.0
                   ? Colors.red
                   : Colors.green))),
-      DataCell(Text(machines['last-cleaned'].substring(0, 10))),
+      DataCell(Text(machines['last-cleaned'].substring(0, 10) ?? "No Input")),
     ],
   );
 }
