@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
+import 'package:mig/graph.dart';
 import 'package:mig/qr.dart';
 import './signin.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,6 +15,7 @@ import './overview.dart';
 import './qr.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'graph.dart';
 
 main() async {
   await Hive.initFlutter();
@@ -64,6 +66,7 @@ class MyApp extends StatelessWidget {
         '/Addmachines': (BuildContext) => AddMachineList(),
         '/Useraccount': (BuildContext) => new UserAccount(),
         '/Overview': (BuildContext) => new Overview(),
+        'Graph': (BuildContext) => new MachineGraph(),
         '/FAQ': (BuildContext) => WebviewScaffold(
             url: 'https://168mfg.com/system/',
             appBar: AppBar(title: Text('Webview'))),
@@ -189,7 +192,7 @@ class WelcomeScreen extends StatelessWidget {
                       leading: Icon(Icons.history),
                       title: Text("History"),
                       onTap: () {
-                        Navigator.of(context).pop();
+                        Navigator.pushNamed(context, '/Graph');
                       },
                     ),
                     ListTile(
@@ -241,7 +244,14 @@ class WelcomeScreen extends StatelessWidget {
               IconButton(
                   icon: Icon(Icons.timeline),
                   color: Colors.white,
-                  onPressed: null),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MachineGraph(),
+                      ),
+                    );
+                  }),
               IconButton(
                   icon: Icon(Icons.list),
                   color: Colors.white,
