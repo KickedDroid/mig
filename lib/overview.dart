@@ -54,7 +54,7 @@ class _OverviewState extends State<Overview> {
           ),
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(15.0),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: SingleChildScrollView(
@@ -95,6 +95,7 @@ Widget _buildBody(BuildContext context) {
               DataColumn(label: Text('Name')),
               DataColumn(label: Text('Last Updated')),
               DataColumn(label: Text('Coolant\nPercentage')),
+              DataColumn(label: Text('Last Cleaned')),
             ], rows: _buildList(context, snapshot.data.documents)),
           ),
         );
@@ -110,15 +111,16 @@ List _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
 DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
   DocumentSnapshot machines = snapshot;
 
-  return DataRow(cells: [
-    DataCell(Text(machines['name'])),
-    DataCell(Text(machines['last-updated'].substring(0, 10))),
-    DataCell(Text(
-      machines['coolant-percent'],
-      style: TextStyle(
-          color: double.parse(machines['coolant-percent']) < 6.0
-              ? Colors.red
-              : Colors.green),
-    )),
-  ]);
+  return DataRow(
+    cells: [
+      DataCell(Text(machines['name'])),
+      DataCell(Text(machines['last-updated'].substring(0, 10))),
+      DataCell(Text(machines['coolant-percent'],
+          style: TextStyle(
+              color: double.parse(machines['coolant-percent']) < 6.0
+                  ? Colors.red
+                  : Colors.green))),
+      DataCell(Text(machines['last-cleaned'].substring(0, 10))),
+    ],
+  );
 }
