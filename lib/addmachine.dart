@@ -48,7 +48,7 @@ class _AddMachineListState extends State<AddMachineList> {
       body: SafeArea(
         child: StreamBuilder(
           stream:
-              Firestore.instance.collection(box.get('companies')).snapshots(),
+              Firestore.instance.collection(box.get('companyId')).snapshots(),
           builder: (context, snapshot) {
             assert(snapshot != null);
             if (!snapshot.hasData) {
@@ -116,6 +116,38 @@ class _AddMachineListState extends State<AddMachineList> {
                                       ),
                                       Text(
                                         ' Add Machine',
+                                        style: TextStyle(color: Colors.white),
+                                      )
+                                    ],
+                                  )),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => _handleWidget()));
+                              },
+                              onLongPress: () => {},
+                              child: Container(
+                                  height: 50,
+                                  width: 300,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      gradient: LinearGradient(colors: [
+                                        Colors.blue,
+                                        Colors.blueAccent
+                                      ])),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        ' Batch Add',
                                         style: TextStyle(color: Colors.white),
                                       )
                                     ],
@@ -223,6 +255,10 @@ class _AddMachinePageState extends State<AddMachinePage> {
       color: Colors.white,
       child: Column(
         children: <Widget>[
+          Text(
+            "Add a Machine",
+            style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w400),
+          ),
           Padding(
             padding: const EdgeInsets.only(
               top: _topSectionTopPadding,
@@ -300,7 +336,7 @@ class _AddMachinePageState extends State<AddMachinePage> {
                         backgroundColor: Colors.white,
                         foregroundColor: Colors.black,
                         data: _dataString,
-                        size: 0.5 * bodyHeight,
+                        size: 0.2 * bodyHeight,
                       ),
                     ),
                   ),

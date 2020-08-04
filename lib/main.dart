@@ -116,6 +116,7 @@ class WelcomeScreen extends StatelessWidget {
 
   String result = "Scan a Qr Code to begin";
 
+  var box = Hive.box('myBox');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -288,7 +289,7 @@ class WelcomeScreen extends StatelessWidget {
                 );
               }),
           child: Icon(
-            Icons.add,
+            Icons.camera_alt,
             color: Colors.white,
           ),
         ),
@@ -301,32 +302,38 @@ class WelcomeScreen extends StatelessWidget {
               ),
             ),
             child: Center(
-              child: ListView(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 30.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            spreadRadius: 3,
-                            blurRadius: 3,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: Column(children: <Widget>[
+                child: ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 30.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          spreadRadius: 3,
+                          blurRadius: 3,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: <Widget>[
                         ListTile(
-                          title: Text("Latest Entries",style: TextStyle(color: Colors.black,fontSize: 18.0,),
+                          title: Text(
+                            "Latest Entries",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18.0,
+                            ),
                           ),
                         ),
                         Divider(),
-                         StreamBuilder(
+                        StreamBuilder(
                           stream: Firestore.instance
-                              .collection("companies")
+                              .collection(box.get('companyId'))
                               .orderBy('last-updated', descending: true)
                               .snapshots(),
                           builder: (context, snapshot) {
@@ -341,7 +348,9 @@ class WelcomeScreen extends StatelessWidget {
                                   DocumentSnapshot machines =
                                       snapshot.data.documents[index];
                                   return ListTile(
-                                    title: Text('${machines['name']}:  ${machines['coolant-percent']}%  (${machines['last-updated'].substring(0,10)})',),
+                                    title: Text(
+                                      '${machines['name']}:  ${machines['coolant-percent']}%  (${machines['last-updated'].substring(0, 10)})',
+                                    ),
                                     //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
                                     leading: Icon(Icons.assessment),
                                   );
@@ -353,27 +362,31 @@ class WelcomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 10.0),
-                    child: Card(
-                      elevation:5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Row(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Text("Company ID",style: TextStyle(color: Colors.black,fontSize: 16.0,),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 10.0),
+                  child: Card(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Text(
+                            "Company ID: ${box.get('companyId')}",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16.0,
                             ),
                           ),
-
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  )
-                ],
+                  ),
+                )
+              ],
             ))));
   }
 }

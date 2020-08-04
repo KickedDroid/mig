@@ -35,6 +35,8 @@ class _UserAccountState extends State<UserAccount> {
 
   final nameController = TextEditingController();
 
+  var box = Hive.box('myBox');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,15 +140,15 @@ class _UserAccountState extends State<UserAccount> {
                 const SizedBox(height: 20.0),
                 ListTile(
                   title: Text(
-                    "Company Info",
+                    "Company ID",
                     //style: whiteBoldText,
                   ),
                   subtitle: Text(
-                    "Precision Tool Technologies",
+                    box.get('companyId'),
                     //style: greyTExt,
                   ),
                   trailing: Icon(
-                    Icons.keyboard_arrow_right,
+                    Icons.edit,
                     color: Colors.grey.shade400,
                   ),
                   onTap: () {},
