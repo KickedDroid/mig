@@ -192,7 +192,7 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                 ),
                 SwitchListTile(
                     title: Text(
-                      "Ceeaned Sump",
+                      "Cleaned Sump",
                       //style: whiteBoldText,
                     ),
                     value: cleaned,
