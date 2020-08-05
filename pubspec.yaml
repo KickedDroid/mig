@@ -27,13 +27,10 @@ dependencies:
   fl_chart: ^0.10.0
   image_picker: ^0.6.7+2
   splashscreen: ^1.2.0
-  liquid_pull_to_refresh: ^2.0.0
   majascan: ^0.3.7
-  flutter_zoom_drawer: ^1.0.4
   flutter_webview_plugin: ^0.3.11
   qr_flutter: ^3.2.0
   path_provider: ^1.6.11
-  flutter_qr_bar_scanner: ^1.0.2
   esys_flutter_share: ^1.0.2
   firebase_auth:
   google_sign_in:

@@ -230,7 +230,7 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                           if (notes != null) {
                             Firestore.instance
                                 .collection(box.get('companyId'))
-                                .document("${widget.name}")
+                                .document("${widget.docRef}")
                                 .updateData({
                               "notes": {"time": "$time", "note": "$notes"}
                             });
@@ -239,7 +239,7 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                           if (cleaned != false) {
                             Firestore.instance
                                 .collection(box.get('companyId'))
-                                .document("${widget.name}")
+                                .document("${widget.docRef}")
                                 .updateData({"last-cleaned": "$time"});
                           }
                           Navigator.pop(context);
