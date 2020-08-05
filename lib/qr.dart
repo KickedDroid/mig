@@ -97,9 +97,9 @@ class _QrPageState extends State<QrPage> {
 }
 
 class UpdateMachinePage extends StatefulWidget {
-  final String name;
+  final String docRef;
 
-  UpdateMachinePage(this.name);
+  UpdateMachinePage(this.docRef);
 
   @override
   _UpdateMachinePageState createState() => _UpdateMachinePageState();
@@ -138,7 +138,7 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    '${widget.name}',
+                    '${widget.docRef}',
                     style: TextStyle(
                         fontSize: 46,
                         fontWeight: FontWeight.bold,
