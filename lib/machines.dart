@@ -115,7 +115,9 @@ class MachineItem extends StatelessWidget {
                 children: [
                   Text(last_updated != null ? last_updated : 'LastUpdated'),
                   Card(
-                    color: greenPercent,
+                    color: double.parse(c_percent) < 6
+                        ? Colors.redAccent
+                        : greenPercent,
                     child: Center(
                         child: Padding(
                       padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
