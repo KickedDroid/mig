@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:bezier_chart/bezier_chart.dart';
+import 'package:hive/hive.dart';
 
 class MachineGraph extends StatefulWidget {
   MachineGraph({Key key}) : super(key: key);
@@ -43,13 +45,7 @@ Widget sample3(BuildContext context) {
         selectedDate: toDate,
         series: [
           BezierLine(
-            label: "Duty",
-            onMissingValue: (dateTime) {
-              if (dateTime.day.isEven) {
-                return 10.0;
-              }
-              return 5.0;
-            },
+            label: "Coolant Percent",
             data: [
               DataPoint<DateTime>(value: 10, xAxis: date1),
               DataPoint<DateTime>(value: 50, xAxis: date2),
@@ -61,10 +57,44 @@ Widget sample3(BuildContext context) {
           verticalIndicatorColor: Colors.black26,
           showVerticalIndicator: true,
           verticalIndicatorFixedPosition: false,
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.blue,
           footerHeight: 30.0,
         ),
       ),
     ),
   );
+}
+
+Widget _buildBody(BuildContext context) {
+  var box = Hive.box('myBox');
+  return StreamBuilder<QuerySnapshot>(
+    stream: Firestore.instance.collection(box.get('companyId')).snapshots(),
+    builder: (context, snapshot) {
+      assert(snapshot != null);
+      if (!snapshot.hasData) {
+        return LinearProgressIndicator();
+      } else {
+        return BezierChart(
+            config: BezierChartConfig(
+              verticalIndicatorStrokeWidth: 3.0,
+              verticalIndicatorColor: Colors.black26,
+              showVerticalIndicator: true,
+              verticalIndicatorFixedPosition: false,
+              backgroundColor: Colors.red,
+              footerHeight: 30.0,
+            ),
+            bezierChartScale: BezierChartScale.WEEKLY,
+            series: _buildList(context, snapshot.data.documents));
+      }
+    },
+  );
+}
+
+List _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+  return snapshot.map((data) => _buildListItem(context, data)).toList();
+}
+
+DataPoint _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
+  DocumentSnapshot machines = snapshot;
+  return DataPoint(value: machines['data']);
 }

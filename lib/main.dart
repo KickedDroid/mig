@@ -373,30 +373,33 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 10.0),
-                  child: Card(
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Text(
-                            "Company ID: ${box.get('companyId')}",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                Card(
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
-                )
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "Company ID: ${box.get('companyId')}",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16.0,
+                        ),
+                      ).padding(),
+                    ],
+                  ),
+                ).padding()
               ],
             ))));
+  }
+}
+
+extension WidgetModifier on Widget {
+  Widget padding([EdgeInsetsGeometry value = const EdgeInsets.all(16)]) {
+    return Padding(
+      padding: value,
+      child: this,
+    );
   }
 }

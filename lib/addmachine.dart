@@ -12,6 +12,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import './graph.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'extensions.dart';
 
 const greenPercent = Color(0xff14c4f7);
 
@@ -78,88 +79,79 @@ class _AddMachineListState extends State<AddMachineList> {
                 return Container(
                   height: 250,
                   color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Add Machine',
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Add Machine',
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      Center(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => _handleWidget()));
+                          },
+                          onLongPress: () => {},
+                          child: Container(
+                              height: 50,
+                              width: 300,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  gradient: LinearGradient(colors: [
+                                    Colors.lightBlue,
+                                    Colors.lightBlueAccent
+                                  ])),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.settings_applications,
+                                    color: Colors.white,
+                                  ),
+                                  Text(
+                                    ' Add Machine',
+                                    style: TextStyle(color: Colors.white),
+                                  )
+                                ],
+                              )),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => _handleWidget()));
-                              },
-                              onLongPress: () => {},
-                              child: Container(
-                                  height: 50,
-                                  width: 300,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      gradient: LinearGradient(colors: [
-                                        Colors.lightBlue,
-                                        Colors.lightBlueAccent
-                                      ])),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.settings_applications,
-                                        color: Colors.white,
-                                      ),
-                                      Text(
-                                        ' Add Machine',
-                                        style: TextStyle(color: Colors.white),
-                                      )
-                                    ],
-                                  )),
-                            ),
-                          ),
+                      ).padding(),
+                      Center(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        _handleWidgetBatch()));
+                          },
+                          onLongPress: () => {},
+                          child: Container(
+                              height: 50,
+                              width: 300,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  gradient: LinearGradient(colors: [
+                                    Colors.blue,
+                                    Colors.blueAccent
+                                  ])),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    ' Batch Add',
+                                    style: TextStyle(color: Colors.white),
+                                  )
+                                ],
+                              )),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            _handleWidgetBatch()));
-                              },
-                              onLongPress: () => {},
-                              child: Container(
-                                  height: 50,
-                                  width: 300,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      gradient: LinearGradient(colors: [
-                                        Colors.blue,
-                                        Colors.blueAccent
-                                      ])),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        ' Batch Add',
-                                        style: TextStyle(color: Colors.white),
-                                      )
-                                    ],
-                                  )),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                      ).padding(),
+                    ],
+                  ).padding(),
                 );
               });
         },
