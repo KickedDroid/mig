@@ -273,29 +273,26 @@ class WelcomeScreen extends StatelessWidget {
                 return Container(
                   height: 250,
                   color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Enter Coolant Concentration',
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            QrPage(),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [GenerateButton()],
-                        )
-                      ],
-                    ),
-                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Enter Coolant Concentration',
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          QrPage(),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [GenerateButton()],
+                      )
+                    ],
+                  ).padding(),
                 );
               }),
           child: Icon(

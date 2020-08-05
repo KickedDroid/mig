@@ -71,6 +71,7 @@ class _MachineListState extends State<MachineList> {
                           last_updated:
                               machines['last-updated'].substring(0, 10),
                           notes: machines['history'],
+                          docRef: machines.documentID,
                         );
                       },
                     );
@@ -82,12 +83,14 @@ class _MachineListState extends State<MachineList> {
 }
 
 class MachineItem extends StatelessWidget {
+  final String docRef;
   final String name;
   final String last_updated;
   final String c_percent;
   final dynamic notes;
 
-  MachineItem({this.name, this.last_updated, this.c_percent, this.notes});
+  MachineItem(
+      {this.name, this.last_updated, this.c_percent, this.notes, this.docRef});
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +105,10 @@ class MachineItem extends StatelessWidget {
             child: ExpandablePanel(
               header: Text(
                 name != null ? name : 'Name',
-                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w700, color: Colors.blueGrey[500]),
+                style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.blueGrey[500]),
               ),
               collapsed: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -139,7 +145,7 @@ class MachineItem extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => UpdateMachinePage(name),
+                            builder: (context) => UpdateMachinePage(docRef),
                           ),
                         );
                       },
@@ -149,8 +155,10 @@ class MachineItem extends StatelessWidget {
                         width: 350,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            gradient: LinearGradient(
-                                colors: [Colors.lightBlue[300], Colors.lightBlue[400]])),
+                            gradient: LinearGradient(colors: [
+                              Colors.lightBlue[300],
+                              Colors.lightBlue[400]
+                            ])),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -167,13 +175,18 @@ class MachineItem extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 8,),
+                    padding: const EdgeInsets.fromLTRB(
+                      0,
+                      8,
+                      0,
+                      8,
+                    ),
                     child: GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ChangeNamePage(name),
+                            builder: (context) => ChangeNamePage(docRef),
                           ),
                         );
                       },

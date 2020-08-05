@@ -13,9 +13,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class ChangeNamePage extends StatefulWidget {
-  final String name;
+  final String docRef;
 
-  ChangeNamePage(this.name);
+  ChangeNamePage(this.docRef);
 
   @override
   _ChangeNamePageState createState() => _ChangeNamePageState();
@@ -35,11 +35,12 @@ class _ChangeNamePageState extends State<ChangeNamePage> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(onPressed: () {
-          getTextInputData();
-          _changeName(widget.name, newName);
-        },
-        child: Icon(Icons.edit),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            getTextInputData();
+            _changeName(widget.docRef, newName);
+          },
+          child: Icon(Icons.edit),
         ),
         bottomNavigationBar: BottomAppBar(
           child: Row(
@@ -85,12 +86,12 @@ class _ChangeNamePageState extends State<ChangeNamePage> {
   }
 }
 
-void _changeName(String name, String newName) async {
+void _changeName(String docRef, String newName) async {
   var box = Hive.box('myBox');
 
   await Firestore.instance
       .collection(box.get('companyId'))
-      .document("$name")
+      .document("$docRef")
       .updateData({
     "name": "$newName",
   });

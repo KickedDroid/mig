@@ -11,6 +11,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import './graph.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'extensions.dart';
 
 class BatchAddPage extends StatefulWidget {
   @override
@@ -32,11 +33,11 @@ class _BatchAddPageState extends State<BatchAddPage> {
     showDialog(
       context: context,
       builder: (_) => new AlertDialog(
-        title: Text(batchName),
-        content: Text(numOf.toString()),
+        title: Text("Batch: $batchName"),
+        content: Text("Number of Machines: ${numOf.toString()}"),
         actions: <Widget>[
           FlatButton(
-            child: Text('Close me!'),
+            child: Text('Submit'),
             onPressed: () {
               _batchAdd(batchName, numOf);
               Navigator.of(context).pop();
@@ -65,49 +66,38 @@ class _BatchAddPageState extends State<BatchAddPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.check),
-          onPressed: () {
-            getTextInputData();
-            _batchAdd(batchName, numOf);
-          },
-          ),
+        child: Icon(Icons.check),
+        onPressed: () {
+          getTextInputData();
+          show();
+        },
+      ),
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Batch Add',
-                style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
+            Text(
+              'Batch Add',
+              style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
+            ).padding(),
+            TextFormField(
+              controller: controller,
+              keyboardType: TextInputType.number,
+              style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Number of Machines to Add',
+                labelStyle: TextStyle(fontSize: 15),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                controller: controller,
-                keyboardType: TextInputType.number,
-                style:
-                    TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Number of Machines to Add',
-                  labelStyle: TextStyle(fontSize: 15),
-                ),
+            ).padding(),
+            TextFormField(
+              controller: controller2,
+              style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Name of Batch',
+                labelStyle: TextStyle(fontSize: 15),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                controller: controller2,
-                style:
-                    TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Name of Batch',
-                  labelStyle: TextStyle(fontSize: 15),
-                ),
-              ),
-            ),
+            ).padding(),
           ],
         ),
       ),

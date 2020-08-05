@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
+import 'extensions.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -81,28 +82,25 @@ class _SignInPageState extends State<SignInPage> {
       body: ListView(
         children: [
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-              
-              child: new Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    stops: [0.1, 0.5, 0.7, 0.9],
-                    colors: [
-                      Colors.white,
-                      Colors.blue[50],
-                      Colors.lightBlue[100],
-                      Colors.lightBlue[200],
-                          ],
-                        ),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(00.0),
-                        // the box shawdow property allows for fine tuning as aposed to shadowColor
-                      ),
+            child: new Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  stops: [0.1, 0.5, 0.7, 0.9],
+                  colors: [
+                    Colors.white,
+                    Colors.blue[50],
+                    Colors.lightBlue[100],
+                    Colors.lightBlue[200],
+                  ],
+                ),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(00.0),
+                // the box shawdow property allows for fine tuning as aposed to shadowColor
+              ),
               child: Column(
                 children: [
                   Padding(
@@ -260,7 +258,6 @@ class _SignInPageState extends State<SignInPage> {
                 ],
               ),
             ),
-          ),
           ),
         ],
       ),
