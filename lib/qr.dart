@@ -212,15 +212,15 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                           if (data != null) {
                             Firestore.instance
                                 .collection(box.get('companyId'))
-                                .document("${widget.name}")
+                                .document("${widget.docRef}")
                                 .updateData({
-                              "name": "${widget.name}",
+                              "name": "${widget.docRef}",
                               "coolant-percent": "$data",
                               "last-updated": "$time"
                             });
                             Firestore.instance
                                 .collection(box.get('companyId'))
-                                .document("${widget.name}")
+                                .document("${widget.docRef}")
                                 .updateData({
                               "history": FieldValue.arrayUnion([
                                 {"time": "$time", "data": "$data"},
