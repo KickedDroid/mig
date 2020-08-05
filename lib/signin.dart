@@ -83,11 +83,31 @@ class _SignInPageState extends State<SignInPage> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+              
+              child: new Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    stops: [0.1, 0.5, 0.7, 0.9],
+                    colors: [
+                      Colors.white,
+                      Colors.blue[50],
+                      Colors.lightBlue[100],
+                      Colors.lightBlue[200],
+                          ],
+                        ),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(00.0),
+                        // the box shawdow property allows for fine tuning as aposed to shadowColor
+                      ),
               child: Column(
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsets.fromLTRB(110.0, 30.0, 110.0, 30.0),
+                        const EdgeInsets.fromLTRB(115.0, 20.0, 115.0, 10.0),
                     child: Container(child: Image.asset('assets/logosb.png')),
                   ),
                   Container(
@@ -129,6 +149,7 @@ class _SignInPageState extends State<SignInPage> {
                           controller: pass,
                           style: TextStyle(
                               color: Colors.black, fontFamily: 'SFUIDisplay'),
+                          obscureText: !this._showPassword,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Password',
@@ -137,7 +158,7 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(0.0),
                     child: Container(
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -169,7 +190,7 @@ class _SignInPageState extends State<SignInPage> {
                     onLongPress: () => {},
                     child: Padding(
                       padding:
-                          const EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 10.0),
+                          const EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 10.0),
                       child: Container(
                           height: 60,
                           width: 300,
@@ -239,6 +260,7 @@ class _SignInPageState extends State<SignInPage> {
                 ],
               ),
             ),
+          ),
           ),
         ],
       ),

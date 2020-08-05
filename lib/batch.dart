@@ -69,7 +69,8 @@ class _BatchAddPageState extends State<BatchAddPage> {
           onPressed: () {
             getTextInputData();
             _batchAdd(batchName, numOf);
-          }),
+          },
+          ),
       body: SafeArea(
         child: Column(
           children: <Widget>[

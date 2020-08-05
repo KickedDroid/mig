@@ -25,12 +25,12 @@ class _MachineListState extends State<MachineList> {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            stops: [0.1, 0.5, 0.7, 0.9],
+            stops: [0.1, 0.2, 0.8, 0.9],
             colors: [
+              Colors.white,
               Colors.blue[50],
               Colors.blue[100],
-              Colors.blue[200],
-              Colors.blue[300],
+              Colors.white,
             ],
           ),
         ),
@@ -95,13 +95,14 @@ class MachineItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Card(
-          elevation: 10.0,
+          color: Color(0xFFffffff),
+          elevation: 3.0,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: ExpandablePanel(
               header: Text(
                 name != null ? name : 'Name',
-                style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w700),
+                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w700, color: Colors.blueGrey[500]),
               ),
               collapsed: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,7 +112,7 @@ class MachineItem extends StatelessWidget {
                     color: greenPercent,
                     child: Center(
                         child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
                       child: Text(
                         c_percent != null ? c_percent : 'Coolant Percent',
                         style: TextStyle(fontSize: 24.0, color: Colors.white),
@@ -145,11 +146,11 @@ class MachineItem extends StatelessWidget {
                       onLongPress: () => {},
                       child: Container(
                         height: 40,
-                        width: 180,
+                        width: 350,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(5),
                             gradient: LinearGradient(
-                                colors: [Colors.orange, Colors.orange[500]])),
+                                colors: [Colors.lightBlue[300], Colors.lightBlue[400]])),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -166,7 +167,7 @@ class MachineItem extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 8,),
                     child: GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -179,12 +180,12 @@ class MachineItem extends StatelessWidget {
                       onLongPress: () => {},
                       child: Container(
                           height: 40,
-                          width: 180,
+                          width: 350,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(5),
                               gradient: LinearGradient(colors: [
                                 Colors.orange[300],
-                                Colors.orange[200]
+                                Colors.orange[400]
                               ])),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

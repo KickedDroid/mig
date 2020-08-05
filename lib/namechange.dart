@@ -38,7 +38,9 @@ class _ChangeNamePageState extends State<ChangeNamePage> {
         floatingActionButton: FloatingActionButton(onPressed: () {
           getTextInputData();
           _changeName(widget.name, newName);
-        }),
+        },
+        child: Icon(Icons.edit),
+        ),
         bottomNavigationBar: BottomAppBar(
           child: Row(
             children: <Widget>[
