@@ -304,7 +304,8 @@ class _AddMachinePageState extends State<AddMachinePage> {
                           "name": "$name",
                           "coolant-percent": "0.0",
                           "last-updated": "$time",
-                          "last-cleaned": "$time"
+                          "last-cleaned": "$time",
+                          "notes": {"time": "$time", "note": "No Notes"}
                         });
                         Navigator.pop(context);
                       },
