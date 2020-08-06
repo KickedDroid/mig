@@ -58,8 +58,8 @@ class _NotesListState extends State<NotesList> {
                 itemBuilder: (context, index) {
                   DocumentSnapshot machines = snapshot.data.documents[index];
                   return MachineItem(
+                    notes: Notes.fromMap(machines['notes']),
                     name: machines['name'],
-                    notes: machines['note'] ?? "No data",
                   );
                 },
               );
@@ -67,14 +67,24 @@ class _NotesListState extends State<NotesList> {
           },
         ),
       ),
-
     );
   }
 }
 
+class Notes {
+  final String note;
+  final String date;
+
+  Notes(this.date, this.note);
+
+  Notes.fromMap(Map<String, dynamic> map)
+      : note = map['note'],
+        date = map['time'];
+}
+
 class MachineItem extends StatelessWidget {
+  final Notes notes;
   final String name;
-  final String notes;
   //final String c_percent;
 
   MachineItem({this.notes, this.name});
@@ -82,10 +92,8 @@ class MachineItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(notes),
+      title: Text(notes.note ?? "NO Data"),
       subtitle: Text(name),
     );
   }
 }
-
-
