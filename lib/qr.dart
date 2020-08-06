@@ -214,7 +214,6 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                                 .collection(box.get('companyId'))
                                 .document("${widget.docRef}")
                                 .updateData({
-                              "name": "${widget.docRef}",
                               "coolant-percent": "$data",
                               "last-updated": "$time"
                             });
