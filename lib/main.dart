@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:splashscreen/splashscreen.dart';
 import './machines.dart';
 import './addmachine.dart';
+import './notes.dart';
 import './useraccount.dart';
 import './overview.dart';
 import './qr.dart';
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
         '/HomePage': (BuildContext) => WelcomeScreen(),
         '/Machines': (BuildContext) => MachineList(),
         '/Addmachines': (BuildContext) => AddMachineList(),
+        '/Notes': (BuildContext) => NotesList(),
         '/Useraccount': (BuildContext) => new UserAccount(),
         '/Overview': (BuildContext) => new Overview(),
         'Graph': (BuildContext) => new MachineGraph(),
@@ -233,9 +235,10 @@ class WelcomeScreen extends StatelessWidget {
                   onPressed: () async =>
                       Navigator.pushNamed(context, "/Overview")),
               IconButton(
-                  icon: Icon(Icons.settings),
+                  icon: Icon(Icons.message),
                   color: Colors.white,
-                  onPressed: null),
+                  onPressed: () async =>
+                      Navigator.pushNamed(context, "/Notes")),
               IconButton(
                   icon: Icon(Icons.create),
                   color: Colors.white,
