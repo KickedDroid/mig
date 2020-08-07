@@ -315,7 +315,7 @@ class WelcomeScreen extends StatelessWidget {
                 child: ListView(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 30.0),
+                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -335,13 +335,12 @@ class WelcomeScreen extends StatelessWidget {
                           title: Text(
                             "Latest Entries",
                             style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18.0,
-                            ),
+                                color: Colors.black,
+                                fontSize: 24.0,
+                                fontWeight: FontWeight.w500),
                           ),
-                        subtitle: Text("Account: ${box.get('companyId')}"),
+                          subtitle: Text("Account: ${box.get('companyId')}"),
                         ),
-                        Divider(),
                         StreamBuilder(
                           stream: Firestore.instance
                               .collection(box.get('companyId'))
@@ -374,23 +373,64 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                //Card(
-                  //elevation: 5,
-                  //shape: RoundedRectangleBorder(
-                    //borderRadius: BorderRadius.circular(10.0),
-                  //),
-                  //child: Row(
-                    //children: <Widget>[
-                      //Text(
-                        //"Company ID: ${box.get('companyId')}",
-                        //style: TextStyle(
-                          //color: Colors.black,
-                          //fontSize: 16.0,
-                        //),
-                      //).padding(),
-                    //],
-                  //),
-                //).padding()
+                Card(
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            'Needs Updates',
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ).padding(),
+                      StreamBuilder(
+                        stream: Firestore.instance
+                            .collection(box.get('companyId'))
+                            .orderBy('coolant-percent', descending: false)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          assert(snapshot != null);
+                          if (!snapshot.hasData) {
+                            return Text('Please Wait');
+                          } else {
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: 4,
+                              itemBuilder: (context, index) {
+                                DocumentSnapshot machines =
+                                    snapshot.data.documents[index];
+                                return ListTile(
+                                  title: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text('${machines['name']}'),
+                                      Text(machines['coolant-percent'],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: double.parse(machines[
+                                                          'coolant-percent']) <
+                                                      6.0
+                                                  ? Colors.red
+                                                  : Colors.green))
+                                    ],
+                                  ),
+                                  //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
+                                );
+                              },
+                            );
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ).padding()
               ],
             ))));
   }
