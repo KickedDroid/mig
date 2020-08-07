@@ -1,15 +1,8 @@
-import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/material.dart';
-import 'package:expandable/expandable.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hive/hive.dart';
-import 'package:mig/qr.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 const greenPercent = Color(0xff14c4f7);
@@ -125,7 +118,7 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
               fontWeight: FontWeight.bold,
               color: double.parse(machines['coolant-percent']) < 6.0
                   ? Colors.red
-                  : Colors.green))),
+                  : Color(0xff1c6b92)))),
       DataCell(Text(
         machines['last-cleaned'].substring(0, 10) ?? "No Input",
         style: TextStyle(fontWeight: FontWeight.w500),

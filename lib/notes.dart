@@ -1,18 +1,8 @@
-import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui';
-import 'package:esys_flutter_share/esys_flutter_share.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hive/hive.dart';
-import 'package:mig/batch.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import './graph.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'extensions.dart';
 
 const greenPercent = Color(0xff14c4f7);
 
@@ -46,8 +36,10 @@ class _NotesListState extends State<NotesList> {
               ))),
       body: SafeArea(
         child: StreamBuilder(
-          stream:
-              Firestore.instance.collection(box.get('companyId')).snapshots(),
+          stream: Firestore.instance
+              .collection(box.get('companyId'))
+              .orderBy("notes")
+              .snapshots(),
           builder: (context, snapshot) {
             assert(snapshot != null);
             if (!snapshot.hasData) {

@@ -1,15 +1,11 @@
-import 'dart:collection';
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
 import 'package:hive/hive.dart';
 import 'package:mig/namechange.dart';
-import './graph.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'qr.dart';
 
-const greenPercent = Color(0xff14c4f7);
+const greenPercent = Color(0xff1c6b92);
 
 class MachineList extends StatefulWidget {
   @override
@@ -147,7 +143,8 @@ class MachineItem extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => UpdateMachinePage(docRef),
+                            builder: (context) =>
+                                UpdateMachinePage(docRef, name),
                           ),
                         );
                       },

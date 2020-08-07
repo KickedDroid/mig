@@ -9,7 +9,6 @@ import 'package:hive/hive.dart';
 import 'package:mig/batch.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import './graph.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'extensions.dart';

@@ -10,10 +10,8 @@ import 'package:majascan/majascan.dart';
 import 'package:mig/updatemachine.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:io';
-import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class QrPage extends StatefulWidget {
   QrPage({Key key}) : super(key: key);

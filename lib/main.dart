@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:mig/graph.dart';
 import 'package:mig/qr.dart';
 import './signin.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:splashscreen/splashscreen.dart';
 import './machines.dart';
 import './addmachine.dart';
@@ -418,7 +416,7 @@ class WelcomeScreen extends StatelessWidget {
                                                           'coolant-percent']) <
                                                       6.0
                                                   ? Colors.red
-                                                  : Colors.green))
+                                                  : Color(0xff1c6b92)))
                                     ],
                                   ),
                                   //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
