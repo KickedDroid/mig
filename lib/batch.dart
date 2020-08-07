@@ -108,7 +108,7 @@ class _BatchAddPageState extends State<BatchAddPage> {
 void _batchAdd(String name, int numMachines) async {
   var box = Hive.box('myBox');
   var time = new DateTime.now();
-  for (int i = 0; i <= numMachines; i++) {
+  for (int i = 1; i <= numMachines; i++) {
     print('For Loop Called $i Times');
     await Firestore.instance
         .collection(box.get('companyId'))
@@ -117,7 +117,8 @@ void _batchAdd(String name, int numMachines) async {
       "name": "$name $i",
       "coolant-percent": "0.0",
       "last-updated": "$time",
-      "last-cleaned": "$time"
+      "last-cleaned": "$time",
+      "notes": {"note": "No Notes", "time": "$time"}
     });
   }
 }
