@@ -306,7 +306,6 @@ class _AddMachinePageState extends State<AddMachinePage> {
                           "last-cleaned": "$time",
                           "notes": {"time": "$time", "note": "No Notes"}
                         });
-                        Navigator.pop(context);
                       },
                     ),
                   )

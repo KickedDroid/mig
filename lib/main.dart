@@ -60,20 +60,19 @@ class MyApp extends StatelessWidget {
         loaderColor: Colors.blue,
       ),
       routes: <String, WidgetBuilder>{
-        '/HomePage': (BuildContext) => WelcomeScreen(),
-        '/Machines': (BuildContext) => MachineList(),
-        '/Addmachines': (BuildContext) => AddMachineList(),
-        '/Notes': (BuildContext) => NotesList(),
-        '/Useraccount': (BuildContext) => new UserAccount(),
-        '/Overview': (BuildContext) => new Overview(),
-        'Graph': (BuildContext) => new MachineGraph(),
-        '/FAQ': (BuildContext) => WebviewScaffold(
+        '/Machines': (BuildContext context) => MachineList(),
+        '/Addmachines': (BuildContext context) => AddMachineList(),
+        '/Notes': (BuildContext context) => NotesList(),
+        '/Useraccount': (BuildContext context) => new UserAccount(),
+        '/Overview': (BuildContext context) => new Overview(),
+        'Graph': (BuildContext context) => new MachineGraph(),
+        '/FAQ': (BuildContext context) => WebviewScaffold(
             url: 'https://168mfg.com/system/',
             appBar: AppBar(title: Text('Webview'))),
-        '/PPO': (BuildContext) => WebviewScaffold(
+        '/PPO': (BuildContext context) => WebviewScaffold(
             url: 'https://cncdirt.com/privacypolicy/',
             appBar: AppBar(title: Text('Webview'))),
-        '/TDC': (BuildContext) => WebviewScaffold(
+        '/TDC': (BuildContext context) => WebviewScaffold(
               url:
                   'https://www.termsfeed.com/blog/sample-terms-and-conditions-template/',
               appBar: AppBar(
