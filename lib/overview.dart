@@ -41,11 +41,10 @@ class _OverviewState extends State<Overview> {
       backgroundColor: Colors.lightBlue[200],
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Colors.blue, Colors.white])
-        ),
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Colors.blue, Colors.white])),
         child: ListView(children: <Widget>[
           Column(
             children: <Widget>[
@@ -74,9 +73,7 @@ class _OverviewState extends State<Overview> {
           ),
         ]),
       ),
-              )
-      
-    ;
+    );
   }
 }
 
@@ -115,14 +112,24 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
 
   return DataRow(
     cells: [
-      DataCell(Text(machines['name'])),
-      DataCell(Text(machines['last-updated'].substring(0, 10))),
+      DataCell(Text(
+        machines['name'],
+        style: TextStyle(fontWeight: FontWeight.w500),
+      )),
+      DataCell(Text(
+        machines['last-updated'].substring(0, 10),
+        style: TextStyle(fontWeight: FontWeight.w500),
+      )),
       DataCell(Text(machines['coolant-percent'],
           style: TextStyle(
+              fontWeight: FontWeight.bold,
               color: double.parse(machines['coolant-percent']) < 6.0
                   ? Colors.red
                   : Colors.green))),
-      DataCell(Text(machines['last-cleaned'].substring(0, 10) ?? "No Input")),
+      DataCell(Text(
+        machines['last-cleaned'].substring(0, 10) ?? "No Input",
+        style: TextStyle(fontWeight: FontWeight.w500),
+      )),
     ],
   );
 }

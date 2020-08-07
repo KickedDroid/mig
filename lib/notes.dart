@@ -94,8 +94,11 @@ class MachineItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(notes.note ?? "NO Data"),
-      subtitle: Text(name),
+      title: Text(
+        name,
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+      ),
+      subtitle: Text(notes.note ?? "NO Data"),
     );
   }
 }
