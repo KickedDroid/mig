@@ -53,7 +53,9 @@ class _NotesListState extends State<NotesList> {
             if (!snapshot.hasData) {
               return Text('Please Wait');
             } else {
-              return ListView.builder(
+              return ListView.separated(
+                separatorBuilder: (context, index) =>
+                    Divider(color: Colors.lightBlue),
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) {
                   DocumentSnapshot machines = snapshot.data.documents[index];

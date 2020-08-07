@@ -339,6 +339,7 @@ class WelcomeScreen extends StatelessWidget {
                               fontSize: 18.0,
                             ),
                           ),
+                        subtitle: Text("Account: ${box.get('companyId')}"),
                         ),
                         Divider(),
                         StreamBuilder(
@@ -373,23 +374,23 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Card(
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        "Company ID: ${box.get('companyId')}",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16.0,
-                        ),
-                      ).padding(),
-                    ],
-                  ),
-                ).padding()
+                //Card(
+                  //elevation: 5,
+                  //shape: RoundedRectangleBorder(
+                    //borderRadius: BorderRadius.circular(10.0),
+                  //),
+                  //child: Row(
+                    //children: <Widget>[
+                      //Text(
+                        //"Company ID: ${box.get('companyId')}",
+                        //style: TextStyle(
+                          //color: Colors.black,
+                          //fontSize: 16.0,
+                        //),
+                      //).padding(),
+                    //],
+                  //),
+                //).padding()
               ],
             ))));
   }

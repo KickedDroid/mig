@@ -38,35 +38,45 @@ class _OverviewState extends State<Overview> {
         notchMargin: 0.0,
         shape: CircularNotchedRectangle(),
       ),
-      backgroundColor: Colors.blue,
-      body: ListView(children: <Widget>[
-        Column(
-          children: <Widget>[
-            SafeArea(
-              child: Text(
-                'Machine Overview',
-                style: TextStyle(
-                    fontSize: 32.0,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.white),
+      backgroundColor: Colors.lightBlue[200],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.blue, Colors.white])
+        ),
+        child: ListView(children: <Widget>[
+          Column(
+            children: <Widget>[
+              SafeArea(
+                child: Text(
+                  'Machine Overview',
+                  style: TextStyle(
+                      fontSize: 32.0,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white),
+                ),
               ),
-            ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
                   child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: _buildBody(context),
+                    scrollDirection: Axis.horizontal,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: _buildBody(context),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ]),
-    );
+            ],
+          ),
+        ]),
+      ),
+              )
+      
+    ;
   }
 }
 
