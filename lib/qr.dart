@@ -7,6 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:majascan/majascan.dart';
+import 'package:mig/updatemachine.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:io';
 import 'package:flutter/rendering.dart';
@@ -37,7 +38,7 @@ class _QrPageState extends State<QrPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => UpdateMachinePage(result),
+          builder: (context) => UpdateMachinePageQr(result),
         ),
       );
     } on PlatformException catch (ex) {
@@ -98,8 +99,9 @@ class _QrPageState extends State<QrPage> {
 
 class UpdateMachinePage extends StatefulWidget {
   final String docRef;
+  final String name;
 
-  UpdateMachinePage(this.docRef);
+  UpdateMachinePage(this.docRef, this.name);
 
   @override
   _UpdateMachinePageState createState() => _UpdateMachinePageState();
@@ -138,7 +140,7 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    '${widget.docRef}',
+                    '${widget.name}',
                     style: TextStyle(
                         fontSize: 46,
                         fontWeight: FontWeight.bold,
