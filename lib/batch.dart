@@ -47,10 +47,12 @@ class _BatchAddPageState extends State<BatchAddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
+        color: Color(0xFF1c6b92),
         child: Row(
           children: <Widget>[
             IconButton(
                 icon: Icon(Icons.arrow_back),
+                color: Colors.white,
                 onPressed: () {
                   Navigator.pop(context);
                 })
@@ -58,6 +60,7 @@ class _BatchAddPageState extends State<BatchAddPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Color(0xFF1c6b92),
         child: Icon(Icons.check),
         onPressed: () {
           getTextInputData();
@@ -67,10 +70,13 @@ class _BatchAddPageState extends State<BatchAddPage> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Text(
-              'Batch Add',
-              style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
-            ).padding(),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+              child: Text(
+                'Create Multiple Machines',
+                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+              ).padding(),
+            ),
             TextFormField(
               controller: controller,
               keyboardType: TextInputType.number,
@@ -90,7 +96,12 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 labelStyle: TextStyle(fontSize: 15),
               ),
             ).padding(),
+            Text(
+              'This screen allows you to setup multiple machines at once',
+              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            ).padding(),
           ],
+          
         ),
       ),
     );

@@ -27,7 +27,7 @@ class _AddMachineListState extends State<AddMachineList> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BottomAppBar(
-        color: Colors.lightBlue[600],
+        color: Color(0xFF1c6b92),
         child: Row(
           children: [
             IconButton(
@@ -41,10 +41,10 @@ class _AddMachineListState extends State<AddMachineList> {
         shape: CircularNotchedRectangle(),
       ),
       appBar: AppBar(
+          backgroundColor: Color(0xFF1c6b92),
           title: Text('Machine Setup',
               style: TextStyle(
                 color: Color(0xffFFFFFF),
-                backgroundColor: Colors.lightBlue[600],
               ))),
       body: SafeArea(
         child: StreamBuilder(
@@ -71,6 +71,7 @@ class _AddMachineListState extends State<AddMachineList> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Color(0xFF1c6b92),
         onPressed: () {
           showModalBottomSheet<void>(
               context: context,
@@ -204,16 +205,16 @@ class _AddMachinePageState extends State<AddMachinePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('QR Code Generator'),
+        title: Text('Add Machine'),
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
-        actionsIconTheme: IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.white),
+        actionsIconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Color(0xFF1c6b92),
         actions: <Widget>[
           IconButton(
             icon: Icon(
               Icons.share,
-              color: Colors.black,
+              color: Colors.white,
             ),
             onPressed: _captureAndSharePng,
           )
@@ -248,13 +249,16 @@ class _AddMachinePageState extends State<AddMachinePage> {
       color: Colors.white,
       child: Column(
         children: <Widget>[
-          Text(
-            "Add a Machine",
-            style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w400),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 20, 10, 5),
+            child: Text(
+              "Add a Machine",
+              style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w400),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(
-              top: _topSectionTopPadding,
+              top: 10,
               left: 20.0,
               right: 10.0,
               bottom: _topSectionBottomPadding,
@@ -267,7 +271,7 @@ class _AddMachinePageState extends State<AddMachinePage> {
                 children: <Widget>[
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(2.0),
                       child: TextField(
                         onChanged: (value) {
                           setState(() {
@@ -331,7 +335,7 @@ class _AddMachinePageState extends State<AddMachinePage> {
                         backgroundColor: Colors.white,
                         foregroundColor: Colors.black,
                         data: _dataString,
-                        size: 0.2 * bodyHeight,
+                        size: 0.4 * bodyHeight,
                       ),
                     ),
                   ),

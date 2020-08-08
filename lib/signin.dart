@@ -104,7 +104,7 @@ class _SignInPageState extends State<SignInPage> {
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsets.fromLTRB(115.0, 20.0, 115.0, 10.0),
+                        const EdgeInsets.fromLTRB(60.0, 20.0, 60.0, 20.0),
                     child: Container(child: Image.asset('assets/logosb.png')),
                   ),
                   Container(

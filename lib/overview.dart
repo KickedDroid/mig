@@ -18,7 +18,7 @@ class _OverviewState extends State<Overview> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BottomAppBar(
-        color: Colors.lightBlue[600],
+        color: Color(0xFF1c6b92),
         child: Row(
           children: [
             IconButton(
@@ -35,9 +35,9 @@ class _OverviewState extends State<Overview> {
       body: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Colors.blue, Colors.white])),
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color(0xFF1c6b92), Colors.white])),
         child: ListView(children: <Widget>[
           Column(
             children: <Widget>[
@@ -118,7 +118,7 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
               fontWeight: FontWeight.bold,
               color: double.parse(machines['coolant-percent']) < 6.0
                   ? Colors.red
-                  : Color(0xff1c6b92)))),
+                  : Colors.greenAccent[700]))),
       DataCell(Text(
         machines['last-cleaned'].substring(0, 10) ?? "No Input",
         style: TextStyle(fontWeight: FontWeight.w500),

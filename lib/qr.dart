@@ -340,14 +340,14 @@ class GenerateScreenState extends State<GenerateScreen> {
       appBar: AppBar(
         title: Text('QR Code Generator'),
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
-        actionsIconTheme: IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.white),
+        actionsIconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Color(0xFF1c6b92),
         actions: <Widget>[
           IconButton(
             icon: Icon(
               Icons.share,
-              color: Colors.black,
+              color: Colors.white,
             ),
             onPressed: _captureAndSharePng,
           )
@@ -398,12 +398,18 @@ class GenerateScreenState extends State<GenerateScreen> {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(5),
                           color: Colors.white,
                           border: Border.all(color: Colors.blueAccent)),
                       child: TextField(
                         controller: _textController,
                         decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue, width:2.0)),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey, width: 2.0)
+                          ),
                           hintText: "Enter a machine name",
                           errorText: _inputErrorText,
                         ),
