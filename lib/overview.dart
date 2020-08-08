@@ -34,20 +34,21 @@ class _OverviewState extends State<Overview> {
       backgroundColor: Colors.lightBlue[200],
       body: Container(
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Color(0xFF1c6b92), Colors.white])),
+          image: DecorationImage(
+            image: AssetImage("assets/Coolantbg.png"))),
         child: ListView(children: <Widget>[
           Column(
             children: <Widget>[
-              SafeArea(
-                child: Text(
-                  'Machine Overview',
-                  style: TextStyle(
-                      fontSize: 32.0,
-                      fontWeight: FontWeight.w800,
-                      color: Colors.white),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 10, 8, 0),
+                child: SafeArea(
+                  child: Text(
+                    'Machine Overview',
+                    style: TextStyle(
+                        fontSize: 32.0,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white),
+                  ),
                 ),
               ),
               Center(

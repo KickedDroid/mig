@@ -35,7 +35,7 @@ class _UserAccountState extends State<UserAccount> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BottomAppBar(
-        color: Colors.lightBlue[600],
+        color: Color(0xFF1c6b92),
         child: Row(
           children: [
             IconButton(
@@ -49,10 +49,10 @@ class _UserAccountState extends State<UserAccount> {
         shape: CircularNotchedRectangle(),
       ),
       appBar: AppBar(
+        backgroundColor: Color(0xFF1c6b92),
           title: Text('User Account Information',
               style: TextStyle(
                 color: Color(0xffFFFFFF),
-                backgroundColor: Colors.lightBlue[600],
               ))),
       backgroundColor: Colors.white,
       body: Theme(
