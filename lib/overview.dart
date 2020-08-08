@@ -35,7 +35,7 @@ class _OverviewState extends State<Overview> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/Coolantbg.png"))),
+            image: AssetImage("assets/Coolantbg.png"), fit: BoxFit.fill)),
         child: ListView(children: <Widget>[
           Column(
             children: <Widget>[
