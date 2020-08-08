@@ -28,6 +28,7 @@ class _ChangeNamePageState extends State<ChangeNamePage> {
     return Container(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Color(0xFF1c6b92),
           onPressed: () {
             getTextInputData();
             _changeName(widget.docRef, newName);
@@ -35,10 +36,12 @@ class _ChangeNamePageState extends State<ChangeNamePage> {
           child: Icon(Icons.edit),
         ),
         bottomNavigationBar: BottomAppBar(
+          color: Color(0xFF1c6b92),
           child: Row(
             children: <Widget>[
               IconButton(
                   icon: Icon(Icons.arrow_back),
+                  color: Colors.white,
                   onPressed: () {
                     Navigator.pop(context);
                   })
@@ -49,7 +52,7 @@ class _ChangeNamePageState extends State<ChangeNamePage> {
           child: Column(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.fromLTRB(20, 30, 20, 10),
                 child: Text(
                   'Edit Name of Machine',
                   style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w700),

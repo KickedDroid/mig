@@ -5,7 +5,7 @@ import 'package:mig/namechange.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'qr.dart';
 
-const greenPercent = Color(0xff1c6b92);
+const greenPercent = Color(0xff009970);
 
 class MachineList extends StatefulWidget {
   @override
@@ -33,7 +33,7 @@ class _MachineListState extends State<MachineList> {
         child: Scaffold(
             backgroundColor: Color(0x00000000),
             bottomNavigationBar: BottomAppBar(
-              color: Colors.lightBlue[600],
+              color: Color(0xFF1c6b92),
               child: Row(
                 children: [
                   IconButton(
@@ -112,14 +112,16 @@ class MachineItem extends StatelessWidget {
                   Text(last_updated != null ? last_updated : 'LastUpdated'),
                   Card(
                     color: double.parse(c_percent) < 6
-                        ? Colors.redAccent
+                        ? Colors.grey[200]
                         : greenPercent,
                     child: Center(
                         child: Padding(
                       padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
                       child: Text(
                         c_percent != null ? c_percent : 'Coolant Percent',
-                        style: TextStyle(fontSize: 24.0, color: Colors.white),
+                        style: TextStyle(fontSize: 24.0, color: double.parse(c_percent) < 6
+                        ? Color(0xFFff0000)
+                        : Colors.white),
                       ),
                     )),
                   )
@@ -196,8 +198,8 @@ class MachineItem extends StatelessWidget {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               gradient: LinearGradient(colors: [
-                                Colors.orange[300],
-                                Colors.orange[400]
+                                Color(0xFF1c6b92),
+                                Color(0xFF217ca9)
                               ])),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

@@ -17,7 +17,7 @@ class _NotesListState extends State<NotesList> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
-        color: Colors.lightBlue[600],
+        color: Color(0xFF1c6b92),
         child: Row(
           children: [
             IconButton(
@@ -29,10 +29,10 @@ class _NotesListState extends State<NotesList> {
         ),
       ),
       appBar: AppBar(
+          backgroundColor: Color(0xFF1c6b92),
           title: Text('User Notes',
               style: TextStyle(
                 color: Color(0xffFFFFFF),
-                backgroundColor: Colors.lightBlue[600],
               ))),
       body: SafeArea(
         child: StreamBuilder(

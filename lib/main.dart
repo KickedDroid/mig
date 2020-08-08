@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
         styleTextUnderTheLoader: new TextStyle(),
         photoSize: 100.0,
         onClick: () => print("Flutter Egypt"),
-        loaderColor: Colors.blue,
+        loaderColor: Color(0xFF1c6b92),
       ),
       routes: <String, WidgetBuilder>{
         '/Machines': (BuildContext context) => MachineList(),
@@ -130,7 +130,7 @@ class WelcomeScreen extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: Container(
-                    width: MediaQuery.of(context).size.width * .4,
+                    width: MediaQuery.of(context).size.width * 1.0,
                     child: DrawerHeader(
                       decoration: BoxDecoration(
                           image: DecorationImage(
@@ -216,14 +216,15 @@ class WelcomeScreen extends StatelessWidget {
           ),
         ),
         appBar: AppBar(
+            backgroundColor: Color(0xFF1c6b92),
             title: Text('Full Shop - Coolant Overview',
                 style: TextStyle(
                   color: Color(0xffFFFFFF),
-                  backgroundColor: Colors.lightBlue[600],
                 ))),
+      
         bottomNavigationBar: BottomAppBar(
           elevation: 10.0,
-          color: Colors.lightBlue[600],
+          color: Color(0xFF1c6b92),
           child: Row(
             children: [
               IconButton(
@@ -266,7 +267,7 @@ class WelcomeScreen extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: FloatingActionButton(
           elevation: 5.0,
-          backgroundColor: Colors.lightBlue[600],
+          backgroundColor: Color(0xFF1c6b92),
           onPressed: () => showModalBottomSheet<void>(
               context: context,
               builder: (BuildContext context) {
@@ -332,8 +333,8 @@ class WelcomeScreen extends StatelessWidget {
                           title: Text(
                             "Latest Entries",
                             style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 24.0,
+                                color: Color(0xFF3c6172),
+                                fontSize: 22.0,
                                 fontWeight: FontWeight.w500),
                           ),
                           subtitle: Text("Account: ${box.get('companyId')}"),
@@ -350,7 +351,7 @@ class WelcomeScreen extends StatelessWidget {
                             } else {
                               return ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: 4,
+                                itemCount: 3,
                                 itemBuilder: (context, index) {
                                   DocumentSnapshot machines =
                                       snapshot.data.documents[index];
@@ -376,14 +377,17 @@ class WelcomeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: Column(
+                    
+                    
                     children: <Widget>[
                       Row(
                         children: <Widget>[
                           Text(
-                            'Needs Updates',
-                            style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.w500),
+                            'Lowest Concentrations',
+                            style: TextStyle(color: Color(0xFF3c6172),
+                                fontSize: 22, fontWeight: FontWeight.w500),
                           ),
+                          
                         ],
                       ).padding(),
                       StreamBuilder(
@@ -398,7 +402,7 @@ class WelcomeScreen extends StatelessWidget {
                           } else {
                             return ListView.builder(
                               shrinkWrap: true,
-                              itemCount: 4,
+                              itemCount: 3,
                               itemBuilder: (context, index) {
                                 DocumentSnapshot machines =
                                     snapshot.data.documents[index];
@@ -426,6 +430,8 @@ class WelcomeScreen extends StatelessWidget {
                         },
                       ),
                     ],
+
+                    
                   ),
                 ).padding()
               ],
