@@ -72,8 +72,8 @@ class History {
   History(this.data, this.time);
 
   History.fromMap(Map<String, dynamic> map)
-      : data = map['data'],
-        time = map['time'];
+      : data = map['coolant-percent'],
+        time = map['last-updated'];
 
   @override
   String toString() {
