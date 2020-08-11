@@ -356,8 +356,16 @@ Widget _handleWidget() {
       var isAdmin = box.get('admin');
       if (isAdmin == false) {
         return Scaffold(
-            appBar: AppBar(),
-            body: Center(child: Text('Only Admins can edit')));
+            appBar: AppBar(
+              backgroundColor: Color(0xFF1c6b92),
+            ),
+            body: Center(
+                child: Text("Denied: Must be an Administrator",
+                    style: new TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.red,
+                    ))));
       } else {
         return AddMachinePage();
       }
@@ -372,8 +380,14 @@ Widget _handleWidgetBatch() {
       var isAdmin = box.get('admin');
       if (isAdmin == false) {
         return Scaffold(
-            appBar: AppBar(),
-            body: Center(child: Text('Only Admins can edit')));
+            appBar: AppBar(backgroundColor: Color(0xFF1c6b92),),
+            body: Center(
+                child: Text("Denied: Must be an Administrator",
+                    style: new TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.red,
+                    ))));
       } else {
         return BatchAddPage();
       }
