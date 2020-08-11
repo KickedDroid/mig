@@ -63,7 +63,8 @@ class GenerateScreenState extends State<GenerateScreen> {
       final file = await new File('${tempDir.path}/image.png').create();
       await file.writeAsBytes(pngBytes);
 
-      await Share.file(_dataString, '$_dataString.png', pngBytes, 'image/png');
+      await Share.file(
+          _dataString, '${widget.name}.png', pngBytes, '${widget.name}/png');
     } catch (e) {
       print(e.toString());
     }
@@ -106,11 +107,19 @@ class GenerateScreenState extends State<GenerateScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: RepaintBoundary(
                       key: globalKey,
-                      child: QrImage(
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.black,
-                        data: widget.name,
-                        size: 0.5 * bodyHeight,
+                      child: Column(
+                        children: [
+                          Text(
+                            widget.name,
+                            style: TextStyle(fontSize: 32.0),
+                          ),
+                          QrImage(
+                            backgroundColor: Colors.white,
+                            foregroundColor: Colors.black,
+                            data: widget.name,
+                            size: 0.5 * bodyHeight,
+                          ),
+                        ],
                       ),
                     ),
                   ),
