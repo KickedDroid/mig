@@ -47,8 +47,9 @@ class _MachineGraphState extends State<MachineGraph> {
         if (!snapshot.hasData) {
           return LinearProgressIndicator();
         } else {
-          List<History> history =
-              snapshot.data.documents.map((e) => History.fromMap(e.data));
+          List<History> history = snapshot.data.documents
+              .map((e) => History.fromMap(e.data))
+              .toList();
           return _buildChart(context, history);
         }
       },

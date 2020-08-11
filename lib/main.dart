@@ -271,7 +271,7 @@ class WelcomeScreen extends StatelessWidget {
               context: context,
               builder: (BuildContext context) {
                 return Container(
-                  height: 250,
+                  height: 200,
                   color: Colors.white,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -287,10 +287,6 @@ class WelcomeScreen extends StatelessWidget {
                           QrPage(),
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [GenerateButton()],
-                      )
                     ],
                   ).padding(),
                 );
@@ -384,13 +380,14 @@ class WelcomeScreen extends StatelessWidget {
                         ListTile(
                           //dense: true,
                           title: Text(
-                              'Diluted',
-                              style: TextStyle(
-                                  color: Color(0xFF3c6172),
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            subtitle: Text("Machines with the lowest coolant concentration"),
+                            'Diluted',
+                            style: TextStyle(
+                                color: Color(0xFF3c6172),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          subtitle: Text(
+                              "Machines with the lowest coolant concentration"),
                         ),
                         StreamBuilder(
                           stream: Firestore.instance
@@ -411,18 +408,18 @@ class WelcomeScreen extends StatelessWidget {
                                   return ListTile(
                                     dense: true,
                                     title: Text('${machines['name']}'),
-                                      leading: Icon(Icons.trending_down),
-                                      trailing: Text(machines['coolant-percent'],
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: double.parse(machines[
-                                                            'coolant-percent']) <
-                                                        6.0
-                                                    ? Colors.red
-                                                    : Color(0xff1c6b92))),
+                                    leading: Icon(Icons.trending_down),
+                                    trailing: Text(machines['coolant-percent'],
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: double.parse(machines[
+                                                        'coolant-percent']) <
+                                                    6.0
+                                                ? Colors.red
+                                                : Color(0xff1c6b92))),
                                   );
                                 },
-                                );           //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
+                              ); //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
                             }
                           },
                         )
@@ -431,60 +428,61 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ),
                 Card(
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        ListTile(
-                          //dense: true,
-                          title: Text(
-                              'Strong',
-                              style: TextStyle(
-                                  color: Color(0xFF3c6172),
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            subtitle: Text("Machines with the highest coolant concentration"),
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        //dense: true,
+                        title: Text(
+                          'Strong',
+                          style: TextStyle(
+                              color: Color(0xFF3c6172),
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500),
                         ),
-                        StreamBuilder(
-                          stream: Firestore.instance
-                              .collection(box.get('companyId'))
-                              .orderBy('coolant-percent', descending: true)
-                              .snapshots(),
-                          builder: (context, snapshot) {
-                            assert(snapshot != null);
-                            if (!snapshot.hasData) {
-                              return Text('Please Wait');
-                            } else {
-                              return ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: 2,
-                                itemBuilder: (context, index) {
-                                  DocumentSnapshot machines =
-                                      snapshot.data.documents[index];
-                                  return ListTile(
-                                    dense: true,
-                                    title: Text('${machines['name']}'),
-                                      leading: Icon(Icons.trending_up),
-                                      trailing: Text(machines['coolant-percent'],
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: double.parse(machines[
-                                                            'coolant-percent']) >
-                                                        10.0
-                                                    ? Colors.red
-                                                    : Colors.green)),
-                                  );
-                                },
-                                );           //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
-                            }
-                          },
-                        )
-                      ],
-                    ),
-                  ).padding()
+                        subtitle: Text(
+                            "Machines with the highest coolant concentration"),
+                      ),
+                      StreamBuilder(
+                        stream: Firestore.instance
+                            .collection(box.get('companyId'))
+                            .orderBy('coolant-percent', descending: true)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          assert(snapshot != null);
+                          if (!snapshot.hasData) {
+                            return Text('Please Wait');
+                          } else {
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: 2,
+                              itemBuilder: (context, index) {
+                                DocumentSnapshot machines =
+                                    snapshot.data.documents[index];
+                                return ListTile(
+                                  dense: true,
+                                  title: Text('${machines['name']}'),
+                                  leading: Icon(Icons.trending_up),
+                                  trailing: Text(machines['coolant-percent'],
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: double.parse(machines[
+                                                      'coolant-percent']) >
+                                                  10.0
+                                              ? Colors.red
+                                              : Colors.green)),
+                                );
+                              },
+                            ); //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
+                          }
+                        },
+                      )
+                    ],
+                  ),
+                ).padding()
               ],
             ))));
   }

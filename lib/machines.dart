@@ -3,6 +3,7 @@ import 'package:expandable/expandable.dart';
 import 'package:hive/hive.dart';
 import 'package:mig/namechange.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'generateQr.dart';
 import 'qr.dart';
 
 const greenPercent = Color(0xff009970);
@@ -119,9 +120,11 @@ class MachineItem extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
                       child: Text(
                         c_percent != null ? c_percent : 'Coolant Percent',
-                        style: TextStyle(fontSize: 24.0, color: double.parse(c_percent) < 6
-                        ? Color(0xFFff0000)
-                        : Colors.white),
+                        style: TextStyle(
+                            fontSize: 24.0,
+                            color: double.parse(c_percent) < 6
+                                ? Color(0xFFff0000)
+                                : Colors.white),
                       ),
                     )),
                   )
@@ -214,6 +217,38 @@ class MachineItem extends StatelessWidget {
                             ],
                           )),
                     ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => GenerateScreen(
+                            name: docRef,
+                          ),
+                        ),
+                      );
+                    },
+                    onLongPress: () => {},
+                    child: Container(
+                        height: 40,
+                        width: 350,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            gradient: LinearGradient(
+                                colors: [Color(0xFF1c6b92), Colors.blueGrey])),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Generate Qr Code',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white),
+                            )
+                          ],
+                        )),
                   ),
                 ],
               ),
