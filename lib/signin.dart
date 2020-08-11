@@ -103,16 +103,17 @@ class _SignInPageState extends State<SignInPage> {
               child: Column(
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsets.fromLTRB(60.0, 20.0, 60.0, 20.0),
-                    child: Container(height: MediaQuery.of(context).size.height*.2, child: Image.asset('assets/logosb.png')),
+                    padding: const EdgeInsets.fromLTRB(60.0, 20.0, 60.0, 20.0),
+                    child: Container(
+                        height: MediaQuery.of(context).size.height * .2,
+                        child: Image.asset('assets/logosb.png')),
                   ),
                   Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(color: Colors.grey)),
-                    height: MediaQuery.of(context).size.height*.08,
+                    height: MediaQuery.of(context).size.height * .08,
                     width: 300,
                     child: TextFormField(
                       onChanged: (value) {
@@ -137,7 +138,7 @@ class _SignInPageState extends State<SignInPage> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(5),
                           border: Border.all(color: Colors.grey)),
-                      height: MediaQuery.of(context).size.height*.08,
+                      height: MediaQuery.of(context).size.height * .08,
                       width: 300,
                       child: TextFormField(
                           onChanged: (value) {
@@ -163,7 +164,7 @@ class _SignInPageState extends State<SignInPage> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(5),
                           border: Border.all(color: Colors.grey)),
-                      height: MediaQuery.of(context).size.height*.08,
+                      height: MediaQuery.of(context).size.height * .08,
                       width: 300,
                       child: TextFormField(
                           onChanged: (value) {
@@ -185,6 +186,7 @@ class _SignInPageState extends State<SignInPage> {
                     onTap: () {
                       signIn(emailData, passData);
                       var box = Hive.box('myBox');
+                      box.put('userId', emailData);
                       box.put('companyId', companyId);
                     },
                     onLongPress: () => {},
@@ -192,7 +194,7 @@ class _SignInPageState extends State<SignInPage> {
                       padding:
                           const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 10.0),
                       child: Container(
-                          height: MediaQuery.of(context).size.height*.08,
+                          height: MediaQuery.of(context).size.height * .08,
                           width: 300,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -224,7 +226,7 @@ class _SignInPageState extends State<SignInPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(3.0),
                       child: Container(
-                          height: MediaQuery.of(context).size.height*.08,
+                          height: MediaQuery.of(context).size.height * .08,
                           width: 300,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),

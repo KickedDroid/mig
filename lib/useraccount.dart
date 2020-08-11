@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hive/hive.dart';
@@ -30,6 +31,10 @@ class _UserAccountState extends State<UserAccount> {
 
   var box = Hive.box('myBox');
 
+  void signOut() async {
+    FirebaseAuth.instance.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +54,7 @@ class _UserAccountState extends State<UserAccount> {
         shape: CircularNotchedRectangle(),
       ),
       appBar: AppBar(
-        backgroundColor: Color(0xFF1c6b92),
+          backgroundColor: Color(0xFF1c6b92),
           title: Text('User Account Information',
               style: TextStyle(
                 color: Color(0xffFFFFFF),
@@ -96,31 +101,12 @@ class _UserAccountState extends State<UserAccount> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) => new AlertDialog(
-                                          title: new Text("Edit Name"),
-                                          content: new TextField(
-                                            controller: nameController,
-                                          ),
-                                          actions: <Widget>[
-                                            FlatButton(
-                                              child: Text('Close me!'),
-                                              onPressed: () {
-                                                var box = Hive.box('myBox');
-                                                box.put('name',
-                                                    nameController.text);
-                                                Navigator.of(context).pop();
-                                              },
-                                            )
-                                          ],
-                                        ));
-                              },
-                              child: _handleWidget()),
                           Text(
-                            "Brainerd",
+                            box.get('userId'),
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          Text(
+                            box.get('companyId'),
                             style: TextStyle(
                               color: Colors.grey.shade400,
                             ),
@@ -142,21 +128,6 @@ class _UserAccountState extends State<UserAccount> {
                   ),
                   trailing: Icon(
                     Icons.edit,
-                    color: Colors.grey.shade400,
-                  ),
-                  onTap: () {},
-                ),
-                ListTile(
-                  title: Text(
-                    "Profile Settings",
-                    //style: whiteBoldText,
-                  ),
-                  subtitle: Text(
-                    "John Smith",
-                    //style: greyTExt,
-                  ),
-                  trailing: Icon(
-                    Icons.keyboard_arrow_right,
                     color: Colors.grey.shade400,
                   ),
                   onTap: () {},
@@ -196,7 +167,9 @@ class _UserAccountState extends State<UserAccount> {
                     "Logout",
                     //style: whiteBoldText,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    signOut();
+                  },
                 ),
               ],
             ),
@@ -211,7 +184,7 @@ Widget _handleWidget() {
   return ValueListenableBuilder(
     valueListenable: Hive.box('myBox').listenable(),
     builder: (BuildContext context, box, Widget child) {
-      var name = box.get('name');
+      var name = box.get('userId');
       if (name == null) {
         return Text(
           "John Smith",
