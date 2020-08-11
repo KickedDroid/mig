@@ -200,10 +200,27 @@ class _AddMachinePageState extends State<AddMachinePage> {
   String name;
 
   TextEditingController controller;
+  String cmin;
+  String cmax;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        var box = Hive.box('myBox');
+        Firestore.instance
+            .collection(box.get('companyId'))
+            .document("$name")
+            .setData({
+          "name": "$name",
+          "coolant-percent": "0.0",
+          "last-updated": "$time",
+          "last-cleaned": "$time",
+          "notes": {"time": "$time", "note": "No Notes"},
+          "c-min": "$cmin",
+          "c-max": "$cmax"
+        });
+      }),
       appBar: AppBar(
         title: Text('Add Machine'),
         elevation: 0,
@@ -291,24 +308,13 @@ class _AddMachinePageState extends State<AddMachinePage> {
                     child: FlatButton(
                       color: Colors.blueAccent[700],
                       child: Text(
-                        "SUBMIT",
+                        "Get QR",
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
                         setState(() {
                           _dataString = _textController.text;
                           _inputErrorText = null;
-                        });
-                        var box = Hive.box('myBox');
-                        Firestore.instance
-                            .collection(box.get('companyId'))
-                            .document("$name")
-                            .setData({
-                          "name": "$name",
-                          "coolant-percent": "0.0",
-                          "last-updated": "$time",
-                          "last-cleaned": "$time",
-                          "notes": {"time": "$time", "note": "No Notes"}
                         });
                       },
                     ),
@@ -317,6 +323,44 @@ class _AddMachinePageState extends State<AddMachinePage> {
               ),
             ),
           ),
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        cmin = value;
+                      });
+                    },
+                    controller: controller,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Min',
+                        labelStyle: TextStyle(fontSize: 15)),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        cmax = value;
+                      });
+                    },
+                    controller: controller,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Max',
+                        labelStyle: TextStyle(fontSize: 15)),
+                  ),
+                ),
+              ),
+            ],
+          ).padding(),
           Expanded(
             child: Center(
               child: Padding(
@@ -380,7 +424,9 @@ Widget _handleWidgetBatch() {
       var isAdmin = box.get('admin');
       if (isAdmin == false) {
         return Scaffold(
-            appBar: AppBar(backgroundColor: Color(0xFF1c6b92),),
+            appBar: AppBar(
+              backgroundColor: Color(0xFF1c6b92),
+            ),
             body: Center(
                 child: Text("Denied: Must be an Administrator",
                     style: new TextStyle(

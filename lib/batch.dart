@@ -13,11 +13,15 @@ class BatchAddPage extends StatefulWidget {
 class _BatchAddPageState extends State<BatchAddPage> {
   int numOf;
   String batchName = "";
+  String cmin;
+  String cmax;
 
   getTextInputData() {
     setState(() {
       numOf = int.parse(controller.text);
       batchName = controller2.text;
+      cmin = controllerCmin.text;
+      cmax = controllerCmax.text;
     });
   }
 
@@ -31,7 +35,7 @@ class _BatchAddPageState extends State<BatchAddPage> {
           FlatButton(
             child: Text('Submit'),
             onPressed: () {
-              _batchAdd(batchName, numOf);
+              _batchAdd(batchName, numOf, cmin, cmax);
               Navigator.of(context).pop();
             },
           )
@@ -42,6 +46,8 @@ class _BatchAddPageState extends State<BatchAddPage> {
 
   final TextEditingController controller = TextEditingController();
   final TextEditingController controller2 = TextEditingController();
+  final TextEditingController controllerCmin = TextEditingController();
+  final TextEditingController controllerCmax = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -68,47 +74,67 @@ class _BatchAddPageState extends State<BatchAddPage> {
         },
       ),
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-              child: Text(
+        child: Expanded(
+          child: Column(
+            children: <Widget>[
+              Text(
                 'Create Multiple Machines',
                 style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
               ).padding(),
-            ),
-            TextFormField(
-              controller: controller,
-              keyboardType: TextInputType.number,
-              style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Number of Machines to Add',
-                labelStyle: TextStyle(fontSize: 15),
-              ),
-            ).padding(),
-            TextFormField(
-              controller: controller2,
-              style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Name of Batch',
-                labelStyle: TextStyle(fontSize: 15),
-              ),
-            ).padding(),
-            Text(
-              'This screen allows you to setup multiple machines at once',
-              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-            ).padding(),
-          ],
-          
+              TextFormField(
+                controller: controller,
+                keyboardType: TextInputType.number,
+                style:
+                    TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Number of Machines to Add',
+                  labelStyle: TextStyle(fontSize: 15),
+                ),
+              ).padding(),
+              TextFormField(
+                controller: controller2,
+                style:
+                    TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Name of Batch',
+                  labelStyle: TextStyle(fontSize: 15),
+                ),
+              ).padding(),
+              TextFormField(
+                controller: controllerCmin,
+                style:
+                    TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Min',
+                  labelStyle: TextStyle(fontSize: 15),
+                ),
+              ).padding(),
+              TextFormField(
+                controller: controllerCmax,
+                style:
+                    TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Max',
+                  labelStyle: TextStyle(fontSize: 15),
+                ),
+              ).padding(),
+              Text(
+                'This screen allows you to setup multiple machines at once',
+                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+              ).padding(),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-void _batchAdd(String name, int numMachines) async {
+void _batchAdd(String name, int numMachines, String cmin, String cmax) async {
   var box = Hive.box('myBox');
   var time = new DateTime.now();
   for (int i = 1; i <= numMachines; i++) {
@@ -121,7 +147,9 @@ void _batchAdd(String name, int numMachines) async {
       "coolant-percent": "0.0",
       "last-updated": "$time",
       "last-cleaned": "$time",
-      "notes": {"note": "No Notes", "time": "$time"}
+      "notes": {"note": "No Notes", "time": "$time"},
+      "c-min": "$cmin",
+      "c-max": "$cmax"
     });
   }
 }
