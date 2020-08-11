@@ -220,6 +220,7 @@ class _AddMachinePageState extends State<AddMachinePage> {
           "c-min": "$cmin",
           "c-max": "$cmax"
         });
+        Navigator.pop(context);
       }),
       appBar: AppBar(
         title: Text('Add Machine'),
