@@ -236,7 +236,7 @@ class MachineItem extends StatelessWidget {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             gradient: LinearGradient(
-                                colors: [Color(0xFF1c6b92), Colors.blueGrey])),
+                                colors: [Colors.blueGrey, Colors.blueGrey])),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
