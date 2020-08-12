@@ -202,15 +202,15 @@ class _BatchQrCodesState extends State<BatchQrCodes> {
   var box = Hive.box('myBox');
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.share),
-          onPressed: () {
-            _captureAndSharePng();
-          }),
-      body: RepaintBoundary(
-        key: globalKey,
-        child: Container(
+    return RepaintBoundary(
+      key: globalKey,
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.share),
+            onPressed: () {
+              _captureAndSharePng();
+            }),
+        body: Container(
           child: StreamBuilder(
             stream:
                 Firestore.instance.collection(box.get('companyId')).snapshots(),
@@ -245,14 +245,19 @@ class QrItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
-      child: Column(
-        children: [
-          Text(
-            docRef,
-            style: TextStyle(fontSize: 18.0),
-          ),
-          QrImage(data: docRef),
-        ],
+      child: Container(
+        child: Column(
+          children: [
+            Text(
+              docRef,
+              style: TextStyle(fontSize: 18.0),
+            ),
+            QrImage(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                data: docRef),
+          ],
+        ),
       ),
     );
   }
