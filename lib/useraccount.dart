@@ -31,10 +31,6 @@ class _UserAccountState extends State<UserAccount> {
 
   var box = Hive.box('myBox');
 
-  void signOut() async {
-    FirebaseAuth.instance.signOut();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,9 +136,8 @@ class _UserAccountState extends State<UserAccount> {
                           "Administrator",
                           //style: whiteBoldText,
                         ),
-                        subtitle: Text(box.get('admin') ?? false
-                        ? "on"
-                        : "off"
+                        subtitle: Text(
+                          "On",
                           //style: greyTExt,
                         ),
                         value: box.get('admin') ?? false,
@@ -162,15 +157,6 @@ class _UserAccountState extends State<UserAccount> {
                   ),
                   value: false,
                   onChanged: (val) {},
-                ),
-                ListTile(
-                  title: Text(
-                    "Logout",
-                    //style: whiteBoldText,
-                  ),
-                  onTap: () {
-                    signOut();
-                  },
                 ),
               ],
             ),
