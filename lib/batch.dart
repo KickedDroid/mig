@@ -1,8 +1,13 @@
+import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hive/hive.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'extensions.dart';
 
 class BatchAddPage extends StatefulWidget {
@@ -36,7 +41,15 @@ class _BatchAddPageState extends State<BatchAddPage> {
             child: Text('Submit'),
             onPressed: () {
               _batchAdd(batchName, numOf, cmin, cmax);
-              Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BatchQrCodes(
+                    name: batchName,
+                    numOf: numOf,
+                  ),
+                ),
+              );
             },
           )
         ],
@@ -151,5 +164,96 @@ void _batchAdd(String name, int numMachines, String cmin, String cmax) async {
       "c-min": "$cmin",
       "c-max": "$cmax"
     });
+  }
+}
+
+class BatchQrCodes extends StatefulWidget {
+  final String name;
+  final int numOf;
+
+  BatchQrCodes({Key key, this.name, this.numOf}) : super(key: key);
+
+  @override
+  _BatchQrCodesState createState() => _BatchQrCodesState();
+}
+
+class _BatchQrCodesState extends State<BatchQrCodes> {
+  GlobalKey globalKey = new GlobalKey();
+
+  Future<void> _captureAndSharePng() async {
+    try {
+      RenderRepaintBoundary boundary =
+          globalKey.currentContext.findRenderObject();
+      var image = await boundary.toImage(pixelRatio: 3.0);
+      ByteData byteData = await image.toByteData(format: ImageByteFormat.png);
+      Uint8List pngBytes = byteData.buffer.asUint8List();
+
+      final tempDir = await getTemporaryDirectory();
+      final file = await new File('${tempDir.path}/image.png').create();
+      await file.writeAsBytes(pngBytes);
+
+      await Share.file('Share Qr Codes', '${widget.name}.png', pngBytes,
+          '${widget.name}/png');
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  var box = Hive.box('myBox');
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.share),
+          onPressed: () {
+            _captureAndSharePng();
+          }),
+      body: RepaintBoundary(
+        key: globalKey,
+        child: Container(
+          child: StreamBuilder(
+            stream:
+                Firestore.instance.collection(box.get('companyId')).snapshots(),
+            builder: (context, snapshot) {
+              assert(snapshot != null);
+              if (!snapshot.hasData) {
+                return Text('Please Wait');
+              } else {
+                return ListView.builder(
+                  itemCount: snapshot.data.documents.length,
+                  itemBuilder: (context, index) {
+                    DocumentSnapshot machines = snapshot.data.documents[index];
+                    return QrItem(
+                      docRef: machines.documentID,
+                    );
+                  },
+                );
+              }
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class QrItem extends StatelessWidget {
+  final docRef;
+  const QrItem({Key key, this.docRef}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        children: [
+          Text(
+            docRef,
+            style: TextStyle(fontSize: 18.0),
+          ),
+          QrImage(data: docRef),
+        ],
+      ),
+    );
   }
 }
