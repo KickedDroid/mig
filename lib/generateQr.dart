@@ -55,7 +55,7 @@ class GenerateScreenState extends State<GenerateScreen> {
     try {
       RenderRepaintBoundary boundary =
           globalKey.currentContext.findRenderObject();
-      var image = await boundary.toImage();
+      var image = await boundary.toImage(pixelRatio: 3.0);
       ByteData byteData = await image.toByteData(format: ImageByteFormat.png);
       Uint8List pngBytes = byteData.buffer.asUint8List();
 
@@ -93,31 +93,32 @@ class GenerateScreenState extends State<GenerateScreen> {
               ),
             ),
           ),
-          Expanded(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(
-                        10,
-                      )),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: RepaintBoundary(
-                      key: globalKey,
+          RepaintBoundary(
+            key: globalKey,
+            child: Expanded(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(
+                          10,
+                        )),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          Text(
-                            widget.name,
-                            style: TextStyle(fontSize: 32.0),
-                          ),
                           QrImage(
                             backgroundColor: Colors.white,
                             foregroundColor: Colors.black,
                             data: widget.name,
                             size: 0.5 * bodyHeight,
+                          ),
+                          Text(
+                            "${widget.name}",
+                            style:
+                                TextStyle(fontSize: 32.0, color: Colors.black),
                           ),
                         ],
                       ),
