@@ -29,11 +29,7 @@ class _MachineGraphState extends State<MachineGraph> {
     return SafeArea(
       child: Container(
           child: Scaffold(
-        body: Column(
-          children: <Widget>[
-            _buildBody(context),
-          ],
-        ),
+        body: SalesHomePage(),
       )),
     );
   }
@@ -41,23 +37,33 @@ class _MachineGraphState extends State<MachineGraph> {
   Widget _buildBody(BuildContext context) {
     var box = Hive.box('myBox');
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection(box.get('companyId')).snapshots(),
+      stream: Firestore.instance
+          .collection(box.get('companyId'))
+          .orderBy("history")
+          .snapshots(),
       builder: (context, snapshot) {
         assert(snapshot != null);
         if (!snapshot.hasData) {
           return LinearProgressIndicator();
         } else {
-          List<History> history = snapshot.data.documents
-              .map((e) => History.fromMap(e.data))
-              .toList();
-          return _buildChart(context, history);
+          for (int index = 0; index < snapshot.data.documents.length; index++) {
+            List<History> history = snapshot.data.documents
+                .map((e) => History.fromMap(e.data))
+                .toList();
+            _seriesBarData.add(charts.Series(
+              id: 'history',
+              data: history,
+              domainFn: (datum, index) => datum.data,
+              measureFn: (datum, index) => double.parse(datum.time),
+            ));
+          }
+          return _buildChart(context);
         }
       },
     );
   }
 
-  Widget _buildChart(BuildContext context, List<History> history) {
-    _generateData(history);
+  Widget _buildChart(BuildContext context) {
     return Container(
       child: Column(
         children: <Widget>[Expanded(child: charts.LineChart(_seriesBarData))],
@@ -80,5 +86,99 @@ class History {
   String toString() {
     // TODO: implement toString
     return data.toString();
+  }
+}
+
+// Testing
+
+class Sales {
+  final String saleVal;
+  final String saleYear;
+  Sales(this.saleVal, this.saleYear);
+
+  Sales.fromMap(Map<String, dynamic> map)
+      : saleVal = map['coolant-percent'],
+        saleYear = map['last-updated'];
+
+  @override
+  String toString() => "Record<$saleVal:$saleYear";
+}
+
+class SalesHomePage extends StatefulWidget {
+  @override
+  _SalesHomePageState createState() {
+    return _SalesHomePageState();
+  }
+}
+
+class _SalesHomePageState extends State<SalesHomePage> {
+  List<charts.Series<Sales, String>> _seriesBarData;
+  List<Sales> mydata;
+  _generateData(mydata) {
+    _seriesBarData = List<charts.Series<Sales, String>>();
+    _seriesBarData.add(
+      charts.Series(
+        domainFn: (Sales sales, _) => sales.saleYear.toString(),
+        measureFn: (Sales sales, _) => double.parse(sales.saleVal),
+        id: 'Sales',
+        data: mydata,
+        labelAccessorFn: (Sales row, _) => "${row.saleYear}",
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Sales')),
+      body: _buildBody(context),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection('companies').snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return LinearProgressIndicator();
+        } else {
+          List<Sales> sales = snapshot.data.documents
+              .map((documentSnapshot) => Sales.fromMap(documentSnapshot.data))
+              .toList();
+          return _buildChart(context, sales);
+        }
+      },
+    );
+  }
+
+  Widget _buildChart(BuildContext context, List<Sales> saledata) {
+    mydata = saledata;
+    _generateData(mydata);
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Container(
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              Text(
+                'History',
+                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Expanded(
+                child: charts.BarChart(
+                  _seriesBarData,
+                  animate: true,
+                  animationDuration: Duration(seconds: 5),
+                  behaviors: [],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
