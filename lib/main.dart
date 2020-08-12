@@ -409,7 +409,8 @@ class WelcomeScreen extends StatelessWidget {
                                     dense: true,
                                     title: Text('${machines['name']}'),
                                     leading: Icon(Icons.trending_down),
-                                    trailing: Text(machines['coolant-percent'],
+                                    trailing: Text(
+                                        "${double.parse(machines['coolant-percent'])}",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: double.parse(machines[
