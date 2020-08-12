@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:mig/batch.dart';
 import 'package:mig/graph.dart';
 import 'package:mig/qr.dart';
 import './signin.dart';
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
         '/Machines': (BuildContext context) => MachineList(),
         '/Addmachines': (BuildContext context) => AddMachineList(),
         '/Notes': (BuildContext context) => NotesList(),
+        '/BatchQrCodes': (BuildContext context) => BatchQrCodes(),
         '/Useraccount': (BuildContext context) => new UserAccount(),
         '/Overview': (BuildContext context) => new Overview(),
         'Graph': (BuildContext context) => new MachineGraph(),
