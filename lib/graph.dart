@@ -171,8 +171,10 @@ class _SalesHomePageState extends State<SalesHomePage> {
                 child: charts.BarChart(
                   _seriesBarData,
                   animate: true,
-                  animationDuration: Duration(seconds: 5),
-                  behaviors: [],
+                  animationDuration: Duration(seconds: 1),
+                  behaviors: [charts.SlidingViewport(),charts.PanAndZoomBehavior()],
+                  domainAxis: new charts.OrdinalAxisSpec(
+          viewport: new charts.OrdinalViewport('2018', 4))
                 ),
               ),
             ],
