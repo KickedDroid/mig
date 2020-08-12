@@ -98,7 +98,7 @@ class Sales {
 
   Sales.fromMap(Map<String, dynamic> map)
       : saleVal = map['coolant-percent'],
-        saleYear = map['coolant-percent'];
+        saleYear = map['name'];
 
   @override
   String toString() => "Record<$saleVal:$saleYear";
@@ -112,13 +112,13 @@ class SalesHomePage extends StatefulWidget {
 }
 
 class _SalesHomePageState extends State<SalesHomePage> {
-  List<charts.Series<Sales, num>> _seriesBarData;
+  List<charts.Series<Sales, String>> _seriesBarData;
   List<Sales> mydata;
   _generateData(mydata) {
-    _seriesBarData = List<charts.Series<Sales, num>>();
+    _seriesBarData = List<charts.Series<Sales, String>>();
     _seriesBarData.add(
       charts.Series(
-        domainFn: (Sales sales, _) => double.parse(sales.saleYear),
+        domainFn: (Sales sales, _) => sales.saleYear,
         measureFn: (Sales sales, _) => double.parse(sales.saleVal),
         id: 'Sales',
         data: mydata,
@@ -168,7 +168,7 @@ class _SalesHomePageState extends State<SalesHomePage> {
                 height: 10.0,
               ),
               Expanded(
-                child: charts.LineChart(
+                child: charts.BarChart(
                   _seriesBarData,
                   animate: true,
                   animationDuration: Duration(seconds: 1),
