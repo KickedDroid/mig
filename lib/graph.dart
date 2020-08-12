@@ -98,7 +98,7 @@ class Sales {
 
   Sales.fromMap(Map<String, dynamic> map)
       : saleVal = map['coolant-percent'],
-        saleYear = map['last-updated'];
+        saleYear = map['coolant-percent'];
 
   @override
   String toString() => "Record<$saleVal:$saleYear";
@@ -112,13 +112,13 @@ class SalesHomePage extends StatefulWidget {
 }
 
 class _SalesHomePageState extends State<SalesHomePage> {
-  List<charts.Series<Sales, String>> _seriesBarData;
+  List<charts.Series<Sales, num>> _seriesBarData;
   List<Sales> mydata;
   _generateData(mydata) {
-    _seriesBarData = List<charts.Series<Sales, String>>();
+    _seriesBarData = List<charts.Series<Sales, num>>();
     _seriesBarData.add(
       charts.Series(
-        domainFn: (Sales sales, _) => sales.saleYear.toString(),
+        domainFn: (Sales sales, _) => double.parse(sales.saleYear),
         measureFn: (Sales sales, _) => double.parse(sales.saleVal),
         id: 'Sales',
         data: mydata,
@@ -130,7 +130,7 @@ class _SalesHomePageState extends State<SalesHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Sales')),
+      appBar: AppBar(title: Text('History')),
       body: _buildBody(context),
     );
   }
@@ -168,13 +168,14 @@ class _SalesHomePageState extends State<SalesHomePage> {
                 height: 10.0,
               ),
               Expanded(
-                child: charts.BarChart(
+                child: charts.LineChart(
                   _seriesBarData,
                   animate: true,
                   animationDuration: Duration(seconds: 1),
-                  behaviors: [charts.SlidingViewport(),charts.PanAndZoomBehavior()],
-                  domainAxis: new charts.OrdinalAxisSpec(
-          viewport: new charts.OrdinalViewport('2018', 4))
+                  behaviors: [
+                    charts.SlidingViewport(),
+                    charts.PanAndZoomBehavior(),
+                  ],
                 ),
               ),
             ],
