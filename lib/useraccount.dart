@@ -102,7 +102,7 @@ class _UserAccountState extends State<UserAccount> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            box.get('userId'),
+                            box.get('userId') ?? "John Smith",
                             style: TextStyle(color: Colors.black),
                           ),
                           Text(
