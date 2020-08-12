@@ -38,7 +38,7 @@ class _NotesListState extends State<NotesList> {
         child: StreamBuilder(
           stream: Firestore.instance
               .collection(box.get('companyId'))
-              .orderBy("notes")
+              .orderBy("notes.time", descending: true)
               .snapshots(),
           builder: (context, snapshot) {
             assert(snapshot != null);
@@ -86,6 +86,7 @@ class MachineItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      leading: Icon (Icons.note),
       title: Text(
         name,
         style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
