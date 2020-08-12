@@ -271,7 +271,7 @@ class WelcomeScreen extends StatelessWidget {
               context: context,
               builder: (BuildContext context) {
                 return Container(
-                  height: 200,
+                  height: 170,
                   color: Colors.white,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

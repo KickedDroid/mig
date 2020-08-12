@@ -64,12 +64,8 @@ flutter:
   assets:
      - assets/168.png
      - assets/168Tan.png
-     - assets/User.png
      - assets/Main168.png
      - assets/logosb.png
-     - assets/CoolantTrack.png
-     - assets/logosb168.png
-     - assets/droplogo.png
      - assets/User2.png
      - assets/Coolantbg.png
 
