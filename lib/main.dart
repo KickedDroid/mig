@@ -356,7 +356,7 @@ class WelcomeScreen extends StatelessWidget {
                                   return ListTile(
                                     dense: true,
                                     title: Text(
-                                      '${machines['name']}:  ${machines['coolant-percent']}%  (${machines['last-updated'].substring(0, 10)})',
+                                      '${machines['name']}:  ${machines['coolant-percent']}%  (${machines['last-updated'].substring(5, 7) + "/" + machines['last-updated'].substring(8, 10) + "/" + machines['last-updated'].substring(2, 4)})',
                                     ),
                                     //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
                                     leading: Icon(Icons.assessment),
