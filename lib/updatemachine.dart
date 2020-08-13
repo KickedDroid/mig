@@ -21,6 +21,20 @@ class _UpdateMachinePageState extends State<UpdateMachinePageQr> {
 
   bool cleaned = false;
 
+  final cminController = TextEditingController();
+  final cmaxController = TextEditingController();
+
+  String cMin;
+
+  String cMax;
+
+  void getInputData() {
+    setState(() {
+      cMin = cminController.text;
+      cMax = cmaxController.text;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,6 +99,24 @@ class _UpdateMachinePageState extends State<UpdateMachinePageQr> {
                           labelStyle: TextStyle(fontSize: 15)),
                     ),
                   ),
+                ),
+                Row(
+                  children: [
+                    TextField(
+                      controller: cminController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Add any notes',
+                          labelStyle: TextStyle(fontSize: 15)),
+                    ),
+                    TextField(
+                      controller: cmaxController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Add any notes',
+                          labelStyle: TextStyle(fontSize: 15)),
+                    ),
+                  ],
                 ),
                 SwitchListTile(
                     title: Text(

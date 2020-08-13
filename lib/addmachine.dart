@@ -62,7 +62,11 @@ class _AddMachineListState extends State<AddMachineList> {
                   return MachineItem(
                     name: machines['name'],
                     c_percent: machines['coolant-percent'],
-                    last_updated: machines['last-updated'].substring(5, 7) + "/" + machines['last-updated'].substring(8, 10) + "/" + machines['last-updated'].substring(2, 4),
+                    last_updated: machines['last-updated'].substring(5, 7) +
+                        "/" +
+                        machines['last-updated'].substring(8, 10) +
+                        "/" +
+                        machines['last-updated'].substring(2, 4),
                   );
                 },
               );
@@ -206,22 +210,24 @@ class _AddMachinePageState extends State<AddMachinePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        var box = Hive.box('myBox');
-        Firestore.instance
-            .collection(box.get('companyId'))
-            .document("$name")
-            .setData({
-          "name": "$name",
-          "coolant-percent": "0.0",
-          "last-updated": "$time",
-          "last-cleaned": "$time",
-          "notes": {"time": "$time", "note": "No Notes"},
-          "c-min": "$cmin",
-          "c-max": "$cmax"
-        });
-        Navigator.pop(context);
-      }),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.check),
+          onPressed: () {
+            var box = Hive.box('myBox');
+            Firestore.instance
+                .collection(box.get('companyId'))
+                .document("$name")
+                .setData({
+              "name": "$name",
+              "coolant-percent": "0.0",
+              "last-updated": "$time",
+              "last-cleaned": "$time",
+              "notes": {"time": "$time", "note": "No Notes"},
+              "c-min": "$cmin",
+              "c-max": "$cmax"
+            });
+            Navigator.pop(context);
+          }),
       appBar: AppBar(
         title: Text('Add Machine'),
         elevation: 0,

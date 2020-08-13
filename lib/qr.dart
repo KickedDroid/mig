@@ -8,10 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:majascan/majascan.dart';
 import 'package:mig/updatemachine.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
-import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'extensions.dart';
 
 import 'generateQr.dart';
 
@@ -117,6 +114,20 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
 
   bool cleaned = false;
 
+  final cminController = TextEditingController();
+  final cmaxController = TextEditingController();
+
+  String cMin;
+
+  String cMax;
+
+  void getInputData() {
+    setState(() {
+      cMin = cminController.text;
+      cMax = cmaxController.text;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,8 +145,7 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
           color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: ListView(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -157,41 +167,55 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                         color: Colors.black),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    child: TextField(
-                      onChanged: (value) {
-                        setState(() {
-                          data = value;
-                        });
-                      },
-                      keyboardType: TextInputType.number,
-                      controller: controller,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter Coolant Percentage',
-                          labelStyle: TextStyle(fontSize: 15)),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    child: TextField(
-                      onChanged: (value) {
-                        setState(() {
-                          notes = value;
-                        });
-                      },
-                      controller: controller,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Add any notes',
-                          labelStyle: TextStyle(fontSize: 15)),
-                    ),
-                  ),
-                ),
+                TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      data = value;
+                    });
+                  },
+                  keyboardType: TextInputType.number,
+                  controller: controller,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Enter Coolant Percentage',
+                      labelStyle: TextStyle(fontSize: 15)),
+                ).padding(),
+                TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      notes = value;
+                    });
+                  },
+                  controller: controller,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Add any notes',
+                      labelStyle: TextStyle(fontSize: 15)),
+                ).padding(),
+                TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      notes = value;
+                    });
+                  },
+                  controller: controller,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Min',
+                      labelStyle: TextStyle(fontSize: 15)),
+                ).padding(),
+                TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      notes = value;
+                    });
+                  },
+                  controller: controller,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Max',
+                      labelStyle: TextStyle(fontSize: 15)),
+                ).padding(),
                 SwitchListTile(
                     title: Text(
                       "Cleaned Sump",
@@ -210,6 +234,7 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                     children: [
                       GestureDetector(
                         onTap: () {
+                          getInputData();
                           var box = Hive.box('myBox');
                           if (data != null) {
                             Firestore.instance
@@ -242,6 +267,19 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                                 .collection(box.get('companyId'))
                                 .document("${widget.docRef}")
                                 .updateData({"last-cleaned": "$time"});
+                          }
+
+                          if (cMin != null) {
+                            Firestore.instance
+                                .collection(box.get('companyId'))
+                                .document("${widget.docRef}")
+                                .updateData({"c-min": "$cMin"});
+                          }
+                          if (cMax != null) {
+                            Firestore.instance
+                                .collection(box.get('companyId'))
+                                .document("${widget.docRef}")
+                                .updateData({"c-max": "$cMax"});
                           }
                           Navigator.pop(context);
                         },

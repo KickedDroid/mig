@@ -19,12 +19,41 @@ class _UserAccountState extends State<UserAccount> {
   File _image;
   final picker = ImagePicker();
 
+  String newCompanyId;
+
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
 
     setState(() {
       _image = File(pickedFile.path);
     });
+  }
+
+  void getInputData() {
+    setState(() {
+      newCompanyId = nameController.text;
+    });
+  }
+
+  _showMaterialDialog() {
+    showDialog(
+        context: context,
+        builder: (_) => new AlertDialog(
+              title: new Text("Change Company ID"),
+              content: TextField(
+                controller: nameController,
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Close me!'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    getInputData();
+                    box.put("companyId", newCompanyId);
+                  },
+                )
+              ],
+            ));
   }
 
   final nameController = TextEditingController();
@@ -126,7 +155,9 @@ class _UserAccountState extends State<UserAccount> {
                     Icons.edit,
                     color: Colors.grey.shade400,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    _showMaterialDialog();
+                  },
                 ),
                 ValueListenableBuilder(
                   valueListenable: Hive.box('myBox').listenable(),

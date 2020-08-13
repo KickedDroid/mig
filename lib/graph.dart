@@ -97,8 +97,8 @@ class Sales {
   Sales(this.saleVal, this.saleYear);
 
   Sales.fromMap(Map<String, dynamic> map)
-      : saleVal = map['coolant-percent'],
-        saleYear = map['name'];
+      : saleVal = map['data'],
+        saleYear = map['time'];
 
   @override
   String toString() => "Record<$saleVal:$saleYear";
@@ -112,18 +112,17 @@ class SalesHomePage extends StatefulWidget {
 }
 
 class _SalesHomePageState extends State<SalesHomePage> {
-  List<charts.Series<Sales, String>> _seriesBarData;
+  List<charts.Series<Sales, num>> _seriesBarData;
   List<Sales> mydata;
   _generateData(mydata) {
-    _seriesBarData = List<charts.Series<Sales, String>>();
+    _seriesBarData = List<charts.Series<Sales, num>>();
     _seriesBarData.add(
       charts.Series(
-        domainFn: (Sales sales, _) => sales.saleYear,
+        domainFn: (Sales sales, _) => double.parse(sales.saleYear),
         measureFn: (Sales sales, _) => double.parse(sales.saleVal),
         id: 'Sales',
         data: mydata,
         labelAccessorFn: (Sales row, _) => "${row.saleYear}",
-        
       ),
     );
   }
@@ -136,9 +135,18 @@ class _SalesHomePageState extends State<SalesHomePage> {
           Firestore.instance
               .collection('companies')
               .getDocuments()
-              .then((value) {
-            value.documents.forEach((element) {
-              print(element.data["history"]);
+              .then((query) {
+            query.documents.forEach((element) {
+              Firestore.instance
+                  .collection('companies')
+                  .document(element.documentID)
+                  .collection('history')
+                  .getDocuments()
+                  .then((value) {
+                value.documents.forEach((element) {
+                  print(element.data);
+                });
+              });
             });
           });
         },
@@ -150,7 +158,11 @@ class _SalesHomePageState extends State<SalesHomePage> {
 
   Widget _buildBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('companies').snapshots(),
+      stream: Firestore.instance
+          .collection('companies')
+          .document('Aidan')
+          .collection('history')
+          .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return LinearProgressIndicator();
@@ -181,17 +193,10 @@ class _SalesHomePageState extends State<SalesHomePage> {
                 height: 10.0,
               ),
               Expanded(
-                child: charts.BarChart(
+                child: charts.LineChart(
                   _seriesBarData,
                   animate: true,
                   animationDuration: Duration(seconds: 1),
-                  domainAxis: new charts.OrdinalAxisSpec(
-                    renderSpec: charts.SmallTickRendererSpec(
-      // Rotation Here,
-                      labelRotation: -90,
-                      labelAnchor: charts.TickLabelAnchor.before,
-                    ),
-                  ),
                   behaviors: [
                     charts.SlidingViewport(),
                     charts.PanAndZoomBehavior(),
