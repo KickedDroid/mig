@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'extensions.dart';
+import 'package:screenshot/screenshot.dart';
 
 class BatchAddPage extends StatefulWidget {
   @override
@@ -88,7 +89,7 @@ class _BatchAddPageState extends State<BatchAddPage> {
       ),
       body: SafeArea(
         child: Expanded(
-          child: Column(
+          child: ListView(
             children: <Widget>[
               Text(
                 'Create Multiple Machines',
@@ -180,6 +181,8 @@ class BatchQrCodes extends StatefulWidget {
 class _BatchQrCodesState extends State<BatchQrCodes> {
   GlobalKey globalKey = new GlobalKey();
 
+  ScreenshotController screenshotController = ScreenshotController();
+
   Future<void> _captureAndSharePng() async {
     try {
       RenderRepaintBoundary boundary =
@@ -202,34 +205,45 @@ class _BatchQrCodesState extends State<BatchQrCodes> {
   var box = Hive.box('myBox');
   @override
   Widget build(BuildContext context) {
-    return RepaintBoundary(
-      key: globalKey,
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.share),
-            onPressed: () {
-              _captureAndSharePng();
-            }),
-        body: Container(
-          child: StreamBuilder(
-            stream:
-                Firestore.instance.collection(box.get('companyId')).snapshots(),
-            builder: (context, snapshot) {
-              assert(snapshot != null);
-              if (!snapshot.hasData) {
-                return Text('Please Wait');
-              } else {
-                return ListView.builder(
-                  itemCount: snapshot.data.documents.length,
-                  itemBuilder: (context, index) {
-                    DocumentSnapshot machines = snapshot.data.documents[index];
-                    return QrItem(
-                      docRef: machines.documentID,
-                    );
-                  },
-                );
-              }
-            },
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.share),
+          onPressed: () {
+            _captureAndSharePng();
+          }),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: RepaintBoundary(
+            key: globalKey,
+            child: Column(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * 1,
+                  child: StreamBuilder(
+                    stream: Firestore.instance
+                        .collection(box.get('companyId'))
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      assert(snapshot != null);
+                      if (!snapshot.hasData) {
+                        return Text('Please Wait');
+                      } else {
+                        return ListView.builder(
+                          itemCount: snapshot.data.documents.length,
+                          itemBuilder: (context, index) {
+                            DocumentSnapshot machines =
+                                snapshot.data.documents[index];
+                            return QrItem(
+                              docRef: machines.documentID,
+                            );
+                          },
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -16,7 +16,11 @@ class _ResetPassPageState extends State<ResetPassPage> {
   @override
   @override
   Future<void> resetPassword(String email) async {
-    await _auth.sendPasswordResetEmail(email: email);
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      print(e);
+    }
   }
 
   final TextEditingController controller = TextEditingController();
@@ -43,7 +47,7 @@ class _ResetPassPageState extends State<ResetPassPage> {
             Text('Reset PassWord'),
             TextFormField(
               controller: controller,
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.emailAddress,
               style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
               decoration: InputDecoration(
                 border: OutlineInputBorder(),

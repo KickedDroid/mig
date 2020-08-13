@@ -130,6 +130,18 @@ class _SalesHomePageState extends State<SalesHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Firestore.instance
+              .collection('companies')
+              .getDocuments()
+              .then((value) {
+            value.documents.forEach((element) {
+              print(element.data["history"]);
+            });
+          });
+        },
+      ),
       appBar: AppBar(title: Text('History')),
       body: _buildBody(context),
     );
