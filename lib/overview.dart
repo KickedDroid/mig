@@ -111,7 +111,7 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
         style: TextStyle(fontWeight: FontWeight.w500),
       )),
       DataCell(Text(
-        machines['last-updated'].substring(0, 10),
+        machines['last-updated'].substring(5, 7) + "/" + machines['last-updated'].substring(8, 10) + "/" + machines['last-updated'].substring(2, 4),
         style: TextStyle(fontWeight: FontWeight.w500),
       )),
       DataCell(Text(machines['coolant-percent'],
@@ -121,7 +121,7 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
                   ? Colors.red
                   : Colors.greenAccent[700]))),
       DataCell(Text(
-        machines['last-cleaned'].substring(0, 10) ?? "No Input",
+        machines['last-cleaned'].substring(5, 7) + "/" + machines['last-cleaned'].substring(8, 10) + "/" + machines['last-cleaned'].substring(2, 4) ?? "No Input",
         style: TextStyle(fontWeight: FontWeight.w500),
       )),
     ],

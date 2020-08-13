@@ -91,7 +91,7 @@ class MachineItem extends StatelessWidget {
         name,
         style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
       ),
-      subtitle: Text(notes.note ?? "NO Data"),
+      subtitle: Text(notes.note + " (" + notes.date.substring(5, 7) + "/" + notes.date.substring(8, 10) + "/" + notes.date.substring(2, 4) + ") " ?? "NO Data"),
     );
   }
 }

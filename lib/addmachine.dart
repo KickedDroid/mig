@@ -62,7 +62,7 @@ class _AddMachineListState extends State<AddMachineList> {
                   return MachineItem(
                     name: machines['name'],
                     c_percent: machines['coolant-percent'],
-                    last_updated: machines['last-updated'].substring(0, 10),
+                    last_updated: machines['last-updated'].substring(5, 7) + "/" + machines['last-updated'].substring(8, 10) + "/" + machines['last-updated'].substring(2, 4),
                   );
                 },
               );
