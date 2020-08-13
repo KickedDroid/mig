@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
+import 'package:mig/reset.dart';
 import 'extensions.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -63,6 +64,11 @@ class _SignInPageState extends State<SignInPage> {
     }
   }
 
+  @override
+  Future<void> resetPassword(String email) async {
+    await _auth.sendPasswordResetEmail(email: email);
+  }
+
   TextEditingController email;
 
   TextEditingController pass;
@@ -113,7 +119,7 @@ class _SignInPageState extends State<SignInPage> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(color: Colors.grey)),
-                    height: MediaQuery.of(context).size.height * .08,
+                    height: MediaQuery.of(context).size.height * .07,
                     width: 300,
                     child: TextFormField(
                       onChanged: (value) {
@@ -138,7 +144,7 @@ class _SignInPageState extends State<SignInPage> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(5),
                           border: Border.all(color: Colors.grey)),
-                      height: MediaQuery.of(context).size.height * .08,
+                      height: MediaQuery.of(context).size.height * .07,
                       width: 300,
                       child: TextFormField(
                           onChanged: (value) {
@@ -165,7 +171,7 @@ class _SignInPageState extends State<SignInPage> {
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(color: Colors.grey),
                       ),
-                      height: MediaQuery.of(context).size.height * .08,
+                      height: MediaQuery.of(context).size.height * .07,
                       width: 300,
                       child: TextFormField(
                           onChanged: (value) {
@@ -195,7 +201,7 @@ class _SignInPageState extends State<SignInPage> {
                       padding:
                           const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 10.0),
                       child: Container(
-                          height: MediaQuery.of(context).size.height * .08,
+                          height: MediaQuery.of(context).size.height * .07,
                           width: 300,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -227,7 +233,7 @@ class _SignInPageState extends State<SignInPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(3.0),
                       child: Container(
-                          height: MediaQuery.of(context).size.height * .08,
+                          height: MediaQuery.of(context).size.height * .07,
                           width: 300,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -258,6 +264,19 @@ class _SignInPageState extends State<SignInPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Text("Sign in with Google"),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ResetPassPage()),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Text("Forgot Password"),
                     ),
                   )
                 ],
