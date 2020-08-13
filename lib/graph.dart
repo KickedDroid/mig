@@ -123,6 +123,7 @@ class _SalesHomePageState extends State<SalesHomePage> {
         id: 'Sales',
         data: mydata,
         labelAccessorFn: (Sales row, _) => "${row.saleYear}",
+        
       ),
     );
   }
@@ -155,7 +156,7 @@ class _SalesHomePageState extends State<SalesHomePage> {
     mydata = saledata;
     _generateData(mydata);
     return Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.fromLTRB(8, 8, 8, 120),
       child: Container(
         child: Center(
           child: Column(
@@ -172,6 +173,13 @@ class _SalesHomePageState extends State<SalesHomePage> {
                   _seriesBarData,
                   animate: true,
                   animationDuration: Duration(seconds: 1),
+                  domainAxis: new charts.OrdinalAxisSpec(
+                    renderSpec: charts.SmallTickRendererSpec(
+      // Rotation Here,
+                      labelRotation: -90,
+                      labelAnchor: charts.TickLabelAnchor.before,
+                    ),
+                  ),
                   behaviors: [
                     charts.SlidingViewport(),
                     charts.PanAndZoomBehavior(),
