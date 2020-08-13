@@ -161,9 +161,10 @@ class _SignInPageState extends State<SignInPage> {
                     padding: const EdgeInsets.all(0.0),
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: Colors.grey)),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: Colors.grey),
+                      ),
                       height: MediaQuery.of(context).size.height * .08,
                       width: 300,
                       child: TextFormField(
