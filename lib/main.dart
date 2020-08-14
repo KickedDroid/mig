@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/Machines': (BuildContext context) => MachineList(),
         '/Addmachines': (BuildContext context) => AddMachineList(),
-        '/Notes': (BuildContext context) => NotesList(),
+        '/Notes': (BuildContext context) => NotesPage(),
         '/BatchQrCodes': (BuildContext context) => BatchQrCodes(),
         '/Useraccount': (BuildContext context) => new UserAccount(),
         '/Overview': (BuildContext context) => new Overview(),
