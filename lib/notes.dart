@@ -44,6 +44,7 @@ class _NotesListState extends State<NotesList> {
               .collection(box.get('companyId'))
               .document("${widget.docRef}")
               .collection('notes')
+              .orderBy('time', descending: true)
               .snapshots(),
           builder: (context, snapshot) {
             assert(snapshot != null);

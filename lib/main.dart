@@ -357,7 +357,9 @@ class WelcomeScreen extends StatelessWidget {
                                   return ListTile(
                                     dense: true,
                                     title: Text(
-                                      '${machines['name']}:  ${machines['coolant-percent']}%  (${machines['last-updated'].substring(5, 7) + "/" + machines['last-updated'].substring(8, 10) + "/" + machines['last-updated'].substring(2, 4)})',
+                                      machines['name'] != null
+                                          ? '${machines['name']}:  ${machines['coolant-percent']}%  (${machines['last-updated'].substring(5, 7) + "/" + machines['last-updated'].substring(8, 10) + "/" + machines['last-updated'].substring(2, 4)})'
+                                          : "No machines yet",
                                     ),
                                     //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
                                     leading: Icon(Icons.assessment),
@@ -468,7 +470,9 @@ class WelcomeScreen extends StatelessWidget {
                                     snapshot.data.documents[index];
                                 return ListTile(
                                   dense: true,
-                                  title: Text('${machines['name']}'),
+                                  title: Text(machines['name'] != null
+                                      ? machines['name']
+                                      : "No Data"),
                                   leading: Icon(Icons.trending_up),
                                   trailing: Text(machines['coolant-percent'],
                                       style: TextStyle(

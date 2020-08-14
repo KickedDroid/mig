@@ -35,7 +35,7 @@ class _QrPageState extends State<QrPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => UpdateMachinePageQr(result),
+          builder: (context) => UpdateMachinePage(result, result),
         ),
       );
     } on PlatformException catch (ex) {
@@ -141,178 +141,175 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
         iconTheme: IconThemeData(color: Colors.black),
       ),
       body: SafeArea(
-        child: Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    '${widget.name}',
-                    style: TextStyle(
-                        fontSize: 46,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  '${widget.name}',
+                  style: TextStyle(
+                      fontSize: 46,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    "Enter Coolant Percentage",
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  "Enter Coolant Percentage",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
                 ),
-                TextField(
-                  onChanged: (value) {
+              ),
+              TextField(
+                onChanged: (value) {
+                  setState(() {
+                    data = value;
+                  });
+                },
+                keyboardType: TextInputType.number,
+                controller: controller,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Enter Coolant Percentage',
+                    labelStyle: TextStyle(fontSize: 15)),
+              ).padding(),
+              Text('Optional'),
+              TextField(
+                onChanged: (value) {
+                  setState(() {
+                    notes = value;
+                  });
+                },
+                controller: controller,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Add any notes',
+                    labelStyle: TextStyle(fontSize: 15)),
+              ).padding(),
+              TextField(
+                onChanged: (value) {
+                  setState(() {
+                    notes = value;
+                  });
+                },
+                controller: controller,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Min',
+                    labelStyle: TextStyle(fontSize: 15)),
+              ).padding(),
+              TextField(
+                onChanged: (value) {
+                  setState(() {
+                    notes = value;
+                  });
+                },
+                controller: controller,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Max',
+                    labelStyle: TextStyle(fontSize: 15)),
+              ).padding(),
+              SwitchListTile(
+                  title: Text(
+                    "Cleaned Sump",
+                    //style: whiteBoldText,
+                  ),
+                  value: cleaned,
+                  onChanged: (val) {
                     setState(() {
-                      data = value;
+                      cleaned = val;
                     });
-                  },
-                  keyboardType: TextInputType.number,
-                  controller: controller,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Enter Coolant Percentage',
-                      labelStyle: TextStyle(fontSize: 15)),
-                ).padding(),
-                Text('Optional'),
-                TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      notes = value;
-                    });
-                  },
-                  controller: controller,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Add any notes',
-                      labelStyle: TextStyle(fontSize: 15)),
-                ).padding(),
-                TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      notes = value;
-                    });
-                  },
-                  controller: controller,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Min',
-                      labelStyle: TextStyle(fontSize: 15)),
-                ).padding(),
-                TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      notes = value;
-                    });
-                  },
-                  controller: controller,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Max',
-                      labelStyle: TextStyle(fontSize: 15)),
-                ).padding(),
-                SwitchListTile(
-                    title: Text(
-                      "Cleaned Sump",
-                      //style: whiteBoldText,
-                    ),
-                    value: cleaned,
-                    onChanged: (val) {
-                      setState(() {
-                        cleaned = val;
-                      });
-                    }),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          getInputData();
-                          var box = Hive.box('myBox');
-                          if (data != null) {
-                            Firestore.instance
-                                .collection(box.get('companyId'))
-                                .document("${widget.docRef}")
-                                .updateData({
-                              "coolant-percent": "$data",
-                              "last-updated": "$time"
-                            });
-                            Firestore.instance
-                                .collection(box.get('companyId'))
-                                .document("${widget.docRef}")
-                                .collection('history')
-                                .document("$time")
-                                .setData({"data": "$data", "time": "$time"});
-                          }
-                          if (notes != null) {
-                            Firestore.instance
-                                .collection(box.get('companyId'))
-                                .document("${widget.docRef}")
-                                .collection("notes")
-                                .document("$time")
-                                .setData({"note": "$notes", "time": "$time"});
-                          }
+                  }),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        getInputData();
+                        var box = Hive.box('myBox');
+                        if (data != null) {
+                          Firestore.instance
+                              .collection(box.get('companyId'))
+                              .document("${widget.docRef}")
+                              .updateData({
+                            "coolant-percent": "$data",
+                            "last-updated": "$time"
+                          });
+                          Firestore.instance
+                              .collection(box.get('companyId'))
+                              .document("${widget.docRef}")
+                              .collection('history')
+                              .document("$time")
+                              .setData({"data": "$data", "time": "$time"});
+                        }
+                        if (notes != null) {
+                          Firestore.instance
+                              .collection(box.get('companyId'))
+                              .document("${widget.docRef}")
+                              .collection("notes")
+                              .document("$time")
+                              .setData({"note": "$notes", "time": "$time"});
+                        }
 
-                          if (cleaned != false) {
-                            Firestore.instance
-                                .collection(box.get('companyId'))
-                                .document("${widget.docRef}")
-                                .updateData({"last-cleaned": "$time"});
-                          }
+                        if (cleaned != false) {
+                          Firestore.instance
+                              .collection(box.get('companyId'))
+                              .document("${widget.docRef}")
+                              .updateData({"last-cleaned": "$time"});
+                        }
 
-                          if (cMin != null) {
-                            Firestore.instance
-                                .collection(box.get('companyId'))
-                                .document("${widget.docRef}")
-                                .updateData({"c-min": "$cMin"});
-                          }
-                          if (cMax != null) {
-                            Firestore.instance
-                                .collection(box.get('companyId'))
-                                .document("${widget.docRef}")
-                                .updateData({"c-max": "$cMax"});
-                          }
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                            height: 50,
-                            width: 300,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                gradient: LinearGradient(colors: [
-                                  Colors.blueAccent[700],
-                                  Colors.blue
-                                ])),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.cloud_upload,
-                                  color: Colors.white,
+                        if (cMin != null) {
+                          Firestore.instance
+                              .collection(box.get('companyId'))
+                              .document("${widget.docRef}")
+                              .updateData({"c-min": "$cMin"});
+                        }
+                        if (cMax != null) {
+                          Firestore.instance
+                              .collection(box.get('companyId'))
+                              .document("${widget.docRef}")
+                              .updateData({"c-max": "$cMax"});
+                        }
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                          height: 50,
+                          width: 300,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: LinearGradient(colors: [
+                                Colors.blueAccent[700],
+                                Colors.blue
+                              ])),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.cloud_upload,
+                                color: Colors.white,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Update',
+                                  style: TextStyle(color: Colors.white),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Update',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                )
-                              ],
-                            )),
-                      ),
-                    ],
-                  ),
+                              )
+                            ],
+                          )),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
