@@ -13,8 +13,6 @@ class ResetPassPage extends StatefulWidget {
 }
 
 class _ResetPassPageState extends State<ResetPassPage> {
-  @override
-  @override
   Future<void> resetPassword(String email) async {
     try {
       await _auth.sendPasswordResetEmail(email: email);

@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
 import 'package:mig/reset.dart';
 import 'extensions.dart';
+import 'package:toast/toast.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -64,7 +65,6 @@ class _SignInPageState extends State<SignInPage> {
     }
   }
 
-  @override
   Future<void> resetPassword(String email) async {
     await _auth.sendPasswordResetEmail(email: email);
   }
@@ -80,66 +80,48 @@ class _SignInPageState extends State<SignInPage> {
 
   String companyId;
   bool _showPassword = true;
+
+  showToast() {
+    Toast.show("Enter Valid Email", context, duration: Toast.LENGTH_LONG);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: ListView(
-        children: [
-          Expanded(
-            child: new Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  stops: [0.1, 0.5, 0.7, 0.9],
-                  colors: [
-                    Colors.white,
-                    Colors.blue[50],
-                    Colors.lightBlue[100],
-                    Colors.lightBlue[200],
-                  ],
+    return Builder(
+      builder: (context) => Scaffold(
+        backgroundColor: Colors.white,
+        body: ListView(
+          children: [
+            Expanded(
+              child: new Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    stops: [0.1, 0.5, 0.7, 0.9],
+                    colors: [
+                      Colors.white,
+                      Colors.blue[50],
+                      Colors.lightBlue[100],
+                      Colors.lightBlue[200],
+                    ],
+                  ),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(00.0),
+                  // the box shawdow property allows for fine tuning as aposed to shadowColor
                 ),
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(00.0),
-                // the box shawdow property allows for fine tuning as aposed to shadowColor
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(60.0, 20.0, 60.0, 20.0),
-                    child: Container(
-                        height: MediaQuery.of(context).size.height * .2,
-                        child: Image.asset('assets/logosb.png')),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: Colors.grey)),
-                    height: MediaQuery.of(context).size.height * .07,
-                    width: 300,
-                    child: TextFormField(
-                      onChanged: (value) {
-                        setState(() {
-                          emailData = value;
-                        });
-                      },
-                      controller: email,
-                      style: TextStyle(
-                          color: Colors.black, fontFamily: 'SFUIDisplay'),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Email',
-                          prefixIcon: Icon(Icons.person_outline),
-                          labelStyle: TextStyle(fontSize: 15)),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.fromLTRB(60.0, 20.0, 60.0, 20.0),
+                      child: Container(
+                          height: MediaQuery.of(context).size.height * .2,
+                          child: Image.asset('assets/logosb.png')),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
+                    Container(
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(5),
@@ -147,143 +129,173 @@ class _SignInPageState extends State<SignInPage> {
                       height: MediaQuery.of(context).size.height * .07,
                       width: 300,
                       child: TextFormField(
-                          onChanged: (value) {
-                            setState(() {
-                              passData = value;
-                            });
-                          },
-                          controller: pass,
-                          style: TextStyle(
-                              color: Colors.black, fontFamily: 'SFUIDisplay'),
-                          obscureText: !this._showPassword,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Password',
-                              prefixIcon: Icon(Icons.lock_outline),
-                              labelStyle: TextStyle(fontSize: 15))),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(0.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: Colors.grey),
+                        onChanged: (value) {
+                          setState(() {
+                            emailData = value;
+                          });
+                        },
+                        controller: email,
+                        style: TextStyle(
+                            color: Colors.black, fontFamily: 'SFUIDisplay'),
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Email',
+                            prefixIcon: Icon(Icons.person_outline),
+                            labelStyle: TextStyle(fontSize: 15)),
                       ),
-                      height: MediaQuery.of(context).size.height * .07,
-                      width: 300,
-                      child: TextFormField(
-                          onChanged: (value) {
-                            setState(() {
-                              companyId = value;
-                            });
-                          },
-                          controller: pass,
-                          style: TextStyle(
-                              color: Colors.black, fontFamily: 'SFUIDisplay'),
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'CompanyID',
-                              prefixIcon: Icon(Icons.edit),
-                              labelStyle: TextStyle(fontSize: 15))),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      signIn(emailData, passData);
-                      var box = Hive.box('myBox');
-                      box.put('userId', emailData);
-                      box.put('companyId', companyId);
-                    },
-                    onLongPress: () => {},
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 10.0),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Container(
-                          height: MediaQuery.of(context).size.height * .07,
-                          width: 300,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(colors: [
-                                Colors.blueAccent[700],
-                                Colors.blue
-                              ])),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Login',
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white),
-                              ),
-                            ],
-                          )),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: Colors.grey)),
+                        height: MediaQuery.of(context).size.height * .07,
+                        width: 300,
+                        child: TextFormField(
+                            onChanged: (value) {
+                              setState(() {
+                                passData = value;
+                              });
+                            },
+                            controller: pass,
+                            style: TextStyle(
+                                color: Colors.black, fontFamily: 'SFUIDisplay'),
+                            obscureText: !this._showPassword,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Password',
+                                prefixIcon: Icon(Icons.lock_outline),
+                                labelStyle: TextStyle(fontSize: 15))),
+                      ),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      signUp(emailData, passData);
-                      var box = Hive.box('myBox');
-                      box.put('companyId', companyId);
-                    },
-                    onLongPress: () => {},
-                    child: Padding(
-                      padding: const EdgeInsets.all(3.0),
+                    Padding(
+                      padding: const EdgeInsets.all(0.0),
                       child: Container(
-                          height: MediaQuery.of(context).size.height * .07,
-                          width: 300,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(colors: [
-                                Colors.orangeAccent,
-                                Colors.orange
-                              ])),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Create an account',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white),
-                              )
-                            ],
-                          )),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: Colors.grey),
+                        ),
+                        height: MediaQuery.of(context).size.height * .07,
+                        width: 300,
+                        child: TextFormField(
+                            onChanged: (value) {
+                              setState(() {
+                                companyId = value;
+                              });
+                            },
+                            controller: pass,
+                            style: TextStyle(
+                                color: Colors.black, fontFamily: 'SFUIDisplay'),
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'CompanyID',
+                                prefixIcon: Icon(Icons.edit),
+                                labelStyle: TextStyle(fontSize: 15))),
+                      ),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      signInWithGoogle();
-                      var box = Hive.box('myBox');
-                      box.put('companyId', companyId);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text("Sign in with Google"),
+                    GestureDetector(
+                      onTap: () {
+                        if (emailData.contains("@")) {
+                          signIn(emailData, passData);
+                          var box = Hive.box('myBox');
+                          box.put('userId', emailData);
+                          box.put('companyId', companyId);
+                        } else {
+                          showToast();
+                        }
+                      },
+                      onLongPress: () => {},
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 10.0),
+                        child: Container(
+                            height: MediaQuery.of(context).size.height * .07,
+                            width: 300,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                gradient: LinearGradient(colors: [
+                                  Colors.blueAccent[700],
+                                  Colors.blue
+                                ])),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Login',
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white),
+                                ),
+                              ],
+                            )),
+                      ),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ResetPassPage()),
-                      );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text("Forgot Password"),
+                    GestureDetector(
+                      onTap: () {
+                        if (emailData.contains("@")) {
+                          signUp(emailData, passData);
+                          var box = Hive.box('myBox');
+                          box.put('companyId', companyId);
+                        } else {
+                          showToast();
+                        }
+                      },
+                      onLongPress: () => {},
+                      child: Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Container(
+                            height: MediaQuery.of(context).size.height * .07,
+                            width: 300,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                gradient: LinearGradient(colors: [
+                                  Colors.orangeAccent,
+                                  Colors.orange
+                                ])),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Create an account',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white),
+                                )
+                              ],
+                            )),
+                      ),
                     ),
-                  )
-                ],
+                    GestureDetector(
+                      onTap: () {
+                        signInWithGoogle();
+                        var box = Hive.box('myBox');
+                        box.put('companyId', companyId);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text("Sign in with Google"),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        resetPassword(emailData);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text("Forgot Password"),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
