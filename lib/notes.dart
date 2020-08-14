@@ -7,6 +7,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 const greenPercent = Color(0xff14c4f7);
 
 class NotesList extends StatefulWidget {
+  final String docRef;
+
+  NotesList(this.docRef);
+
   @override
   _NotesListState createState() => _NotesListState();
 }
@@ -38,7 +42,7 @@ class _NotesListState extends State<NotesList> {
         child: StreamBuilder(
           stream: Firestore.instance
               .collection(box.get('companyId'))
-              .document("Aidan 1")
+              .document("${widget.docRef}")
               .collection('notes')
               .snapshots(),
           builder: (context, snapshot) {
@@ -93,5 +97,57 @@ class MachineItem extends StatelessWidget {
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
         ),
         subtitle: Text(name.substring(0, 10)));
+  }
+}
+
+class NotesPage extends StatefulWidget {
+  @override
+  _NotesPageState createState() => _NotesPageState();
+}
+
+class _NotesPageState extends State<NotesPage> {
+  var box = Hive.box('myBox');
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Notes'),
+      ),
+      body: StreamBuilder(
+        stream: Firestore.instance.collection(box.get('companyId')).snapshots(),
+        builder: (context, snapshot) {
+          assert(snapshot != null);
+          if (!snapshot.hasData) {
+            return Text('Please Wait');
+          } else {
+            return ListView.builder(
+              itemCount: snapshot.data.documents.length,
+              itemBuilder: (context, index) {
+                DocumentSnapshot machines = snapshot.data.documents[index];
+                return Column(
+                  children: [
+                    ListTile(
+                      title: Text(machines['name']),
+                      trailing: Icon(Icons.arrow_forward_ios),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                NotesList(machines.documentID),
+                          ),
+                        );
+                      },
+                    ),
+                    Divider()
+                  ],
+                );
+              },
+            );
+          }
+        },
+      ),
+    );
   }
 }
