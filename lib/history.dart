@@ -8,7 +8,22 @@ class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomAppBar(
+        color: Color(0xFF1c6b92),
+        child: Row(
+          children: [
+            IconButton(
+                icon: Icon(Icons.arrow_back),
+                color: Colors.white,
+                onPressed: () => Navigator.of(context).pop()),
+          ],
+          mainAxisAlignment: MainAxisAlignment.start,
+        ),
+        notchMargin: 0.0,
+        shape: CircularNotchedRectangle(),
+      ),
       appBar: AppBar(
+        backgroundColor: Color(0xFF1c6b92),
         title: Text('History'),
       ),
       body: StreamBuilder(
