@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mig/batch.dart';
 import 'package:mig/graph.dart';
+import 'package:mig/history.dart';
 import 'package:mig/qr.dart';
 import './signin.dart';
 import 'package:splashscreen/splashscreen.dart';
@@ -67,7 +68,6 @@ class MyApp extends StatelessWidget {
         '/BatchQrCodes': (BuildContext context) => BatchQrCodes(),
         '/Useraccount': (BuildContext context) => new UserAccount(),
         '/Overview': (BuildContext context) => new Overview(),
-        'Graph': (BuildContext context) => new MachineGraph(),
         '/FAQ': (BuildContext context) => WebviewScaffold(
             url: 'https://168mfg.com/system/',
             appBar: AppBar(title: Text('Webview'))),
@@ -250,7 +250,7 @@ class WelcomeScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MachineGraph(),
+                        builder: (context) => HistoryPage(),
                       ),
                     );
                   }),
