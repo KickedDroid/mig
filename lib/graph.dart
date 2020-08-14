@@ -93,12 +93,12 @@ class History {
 
 class Sales {
   final String saleVal;
-  final String saleYear;
+  final DateTime saleYear;
   Sales(this.saleVal, this.saleYear);
 
   Sales.fromMap(Map<String, dynamic> map)
       : saleVal = map['data'],
-        saleYear = map['time'];
+        saleYear = DateTime.parse(map['time']);
 
   @override
   String toString() => "Record<$saleVal:$saleYear";
@@ -112,13 +112,13 @@ class SalesHomePage extends StatefulWidget {
 }
 
 class _SalesHomePageState extends State<SalesHomePage> {
-  List<charts.Series<Sales, num>> _seriesBarData;
+  List<charts.Series<Sales, DateTime>> _seriesBarData;
   List<Sales> mydata;
   _generateData(mydata) {
-    _seriesBarData = List<charts.Series<Sales, num>>();
+    _seriesBarData = List<charts.Series<Sales, DateTime>>();
     _seriesBarData.add(
       charts.Series(
-        domainFn: (Sales sales, _) => double.parse(sales.saleYear),
+        domainFn: (Sales sales, _) => sales.saleYear,
         measureFn: (Sales sales, _) => double.parse(sales.saleVal),
         id: 'Sales',
         data: mydata,
@@ -160,7 +160,7 @@ class _SalesHomePageState extends State<SalesHomePage> {
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance
           .collection('companies')
-          .document('Aidan')
+          .document('Aidan 1')
           .collection('history')
           .snapshots(),
       builder: (context, snapshot) {
@@ -193,7 +193,7 @@ class _SalesHomePageState extends State<SalesHomePage> {
                 height: 10.0,
               ),
               Expanded(
-                child: charts.LineChart(
+                child: charts.TimeSeriesChart(
                   _seriesBarData,
                   animate: true,
                   animationDuration: Duration(seconds: 1),

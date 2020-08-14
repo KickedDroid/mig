@@ -180,6 +180,7 @@ class BatchQrCodes extends StatefulWidget {
 
 class _BatchQrCodesState extends State<BatchQrCodes> {
   GlobalKey globalKey = new GlobalKey();
+  String _dataString = "Hello from this QR";
 
   ScreenshotController screenshotController = ScreenshotController();
 
@@ -195,8 +196,8 @@ class _BatchQrCodesState extends State<BatchQrCodes> {
       final file = await new File('${tempDir.path}/image.png').create();
       await file.writeAsBytes(pngBytes);
 
-      await Share.file('Share Qr Codes', '${widget.name}.png', pngBytes,
-          '${widget.name}/png');
+      await Share.file(
+          _dataString, '${widget.name}.png', pngBytes, '${widget.name}/png');
     } catch (e) {
       print(e.toString());
     }
@@ -205,16 +206,16 @@ class _BatchQrCodesState extends State<BatchQrCodes> {
   var box = Hive.box('myBox');
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.share),
-          onPressed: () {
-            _captureAndSharePng();
-          }),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: RepaintBoundary(
-            key: globalKey,
+    return RepaintBoundary(
+      key: globalKey,
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.share),
+            onPressed: () {
+              _captureAndSharePng();
+            }),
+        body: SafeArea(
+          child: SingleChildScrollView(
             child: Column(
               children: [
                 Container(
@@ -228,7 +229,10 @@ class _BatchQrCodesState extends State<BatchQrCodes> {
                       if (!snapshot.hasData) {
                         return Text('Please Wait');
                       } else {
-                        return ListView.builder(
+                        return GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3),
                           itemCount: snapshot.data.documents.length,
                           itemBuilder: (context, index) {
                             DocumentSnapshot machines =
@@ -257,21 +261,19 @@ class QrItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Container(
-        child: Column(
-          children: [
-            Text(
-              docRef,
-              style: TextStyle(fontSize: 18.0),
-            ),
-            QrImage(
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-                data: docRef),
-          ],
-        ),
+    return Container(
+      child: Column(
+        children: [
+          Text(
+            docRef,
+            style: TextStyle(fontSize: 12.0),
+          ),
+          QrImage(
+              size: 100,
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
+              data: docRef),
+        ],
       ),
     );
   }

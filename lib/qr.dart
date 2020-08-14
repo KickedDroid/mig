@@ -180,6 +180,7 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                       labelText: 'Enter Coolant Percentage',
                       labelStyle: TextStyle(fontSize: 15)),
                 ).padding(),
+                Text('Optional'),
                 TextField(
                   onChanged: (value) {
                     setState(() {
@@ -247,11 +248,9 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                             Firestore.instance
                                 .collection(box.get('companyId'))
                                 .document("${widget.docRef}")
-                                .updateData({
-                              "history": FieldValue.arrayUnion([
-                                {"time": "$time", "data": "$data"},
-                              ])
-                            });
+                                .collection('history')
+                                .document("$time")
+                                .setData({"data": "$data", "time": "$time"});
                           }
                           if (notes != null) {
                             Firestore.instance

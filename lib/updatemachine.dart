@@ -148,11 +148,9 @@ class _UpdateMachinePageState extends State<UpdateMachinePageQr> {
                             Firestore.instance
                                 .collection(box.get('companyId'))
                                 .document("${widget.docRef}")
-                                .updateData({
-                              "history": FieldValue.arrayUnion([
-                                {"time": "$time", "data": "$data"},
-                              ])
-                            });
+                                .collection('history')
+                                .document()
+                                .updateData({"data": "$data", "time": "$time"});
                           }
                           if (notes != null) {
                             Firestore.instance
