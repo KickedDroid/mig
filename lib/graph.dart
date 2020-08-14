@@ -19,7 +19,7 @@ class _MachineGraphState extends State<MachineGraph> {
     return SafeArea(
       child: Container(
           child: Scaffold(
-        body: SalesHomePage(widget.docRef),
+        body: HistoryHomePage(widget.docRef),
       )),
     );
   }
@@ -27,42 +27,39 @@ class _MachineGraphState extends State<MachineGraph> {
 
 // Testing
 
-class Sales {
-  final String saleVal;
-  final DateTime saleYear;
-  Sales(this.saleVal, this.saleYear);
+class History {
+  final String data;
+  final DateTime time;
+  History(this.data, this.time);
 
-  Sales.fromMap(Map<String, dynamic> map)
-      : saleVal = map['data'],
-        saleYear = DateTime.parse(map['time']);
-
-  @override
-  String toString() => "Record<$saleVal:$saleYear";
+  History.fromMap(Map<String, dynamic> map)
+      : data = map['data'],
+        time = DateTime.parse(map['time']);
 }
 
-class SalesHomePage extends StatefulWidget {
+class HistoryHomePage extends StatefulWidget {
   final String docRef;
 
-  SalesHomePage(this.docRef);
+  HistoryHomePage(this.docRef);
 
   @override
-  _SalesHomePageState createState() {
-    return _SalesHomePageState();
+  _HistoryHomePageState createState() {
+    return _HistoryHomePageState();
   }
 }
 
-class _SalesHomePageState extends State<SalesHomePage> {
-  List<charts.Series<Sales, DateTime>> _seriesBarData;
-  List<Sales> mydata;
+class _HistoryHomePageState extends State<HistoryHomePage> {
+  List<charts.Series<History, DateTime>> _seriesBarData;
+  List<History> mydata;
   _generateData(mydata) {
-    _seriesBarData = List<charts.Series<Sales, DateTime>>();
+    _seriesBarData = List<charts.Series<History, DateTime>>();
     _seriesBarData.add(
       charts.Series(
-        domainFn: (Sales sales, _) => sales.saleYear,
-        measureFn: (Sales sales, _) => double.parse(sales.saleVal),
+        domainFn: (History history, _) => history.time,
+        measureFn: (History history, _) => double.parse(history.data),
         id: 'Sales',
         data: mydata,
-        labelAccessorFn: (Sales row, _) => "${row.saleYear}",
+        labelAccessorFn: (History row, _) => "${row.data}",
       ),
     );
   }
@@ -70,27 +67,6 @@ class _SalesHomePageState extends State<SalesHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Firestore.instance
-              .collection('companies')
-              .getDocuments()
-              .then((query) {
-            query.documents.forEach((element) {
-              Firestore.instance
-                  .collection('companies')
-                  .document(element.documentID)
-                  .collection('history')
-                  .getDocuments()
-                  .then((value) {
-                value.documents.forEach((element) {
-                  print(element.data);
-                });
-              });
-            });
-          });
-        },
-      ),
       appBar: AppBar(title: Text('History')),
       body: _buildBody(context),
     );
@@ -107,8 +83,8 @@ class _SalesHomePageState extends State<SalesHomePage> {
         if (!snapshot.hasData) {
           return LinearProgressIndicator();
         } else {
-          List<Sales> sales = snapshot.data.documents
-              .map((documentSnapshot) => Sales.fromMap(documentSnapshot.data))
+          List<History> sales = snapshot.data.documents
+              .map((documentSnapshot) => History.fromMap(documentSnapshot.data))
               .toList();
           return _buildChart(context, sales);
         }
@@ -116,7 +92,7 @@ class _SalesHomePageState extends State<SalesHomePage> {
     );
   }
 
-  Widget _buildChart(BuildContext context, List<Sales> saledata) {
+  Widget _buildChart(BuildContext context, List<History> saledata) {
     mydata = saledata;
     _generateData(mydata);
     return Padding(
@@ -125,21 +101,19 @@ class _SalesHomePageState extends State<SalesHomePage> {
         child: Center(
           child: Column(
             children: <Widget>[
-              Text(
-                'History',
-                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-              ),
               SizedBox(
                 height: 10.0,
               ),
               Expanded(
                 child: charts.TimeSeriesChart(
                   _seriesBarData,
-                  animate: true,
-                  animationDuration: Duration(seconds: 1),
                   behaviors: [
                     charts.SlidingViewport(),
                     charts.PanAndZoomBehavior(),
+                    charts.RangeAnnotation([
+                      charts.LineAnnotationSegment(
+                          DateTime.now(), charts.RangeAnnotationAxisType.domain)
+                    ])
                   ],
                 ),
               ),

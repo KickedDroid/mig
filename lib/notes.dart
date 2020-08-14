@@ -38,7 +38,8 @@ class _NotesListState extends State<NotesList> {
         child: StreamBuilder(
           stream: Firestore.instance
               .collection(box.get('companyId'))
-              .orderBy("notes.time", descending: true)
+              .document("Aidan 1")
+              .collection('notes')
               .snapshots(),
           builder: (context, snapshot) {
             assert(snapshot != null);
@@ -52,8 +53,8 @@ class _NotesListState extends State<NotesList> {
                 itemBuilder: (context, index) {
                   DocumentSnapshot machines = snapshot.data.documents[index];
                   return MachineItem(
-                    notes: Notes.fromMap(machines['notes']),
-                    name: machines['name'],
+                    notes: machines['note'],
+                    name: machines['time'],
                   );
                 },
               );
@@ -77,7 +78,7 @@ class Notes {
 }
 
 class MachineItem extends StatelessWidget {
-  final Notes notes;
+  final String notes;
   final String name;
   //final String c_percent;
 
@@ -86,12 +87,11 @@ class MachineItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon (Icons.note),
-      title: Text(
-        name,
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-      ),
-      subtitle: Text(notes.note + " (" + notes.date.substring(5, 7) + "/" + notes.date.substring(8, 10) + "/" + notes.date.substring(2, 4) + ") " ?? "NO Data"),
-    );
+        leading: Icon(Icons.note),
+        title: Text(
+          notes,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+        ),
+        subtitle: Text(name.substring(0, 10)));
   }
 }

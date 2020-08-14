@@ -222,10 +222,21 @@ class _AddMachinePageState extends State<AddMachinePage> {
               "coolant-percent": "0.0",
               "last-updated": "$time",
               "last-cleaned": "$time",
-              "notes": {"time": "$time", "note": "No Notes"},
               "c-min": "$cmin",
               "c-max": "$cmax"
             });
+            Firestore.instance
+                .collection(box.get('companyId'))
+                .document("$name")
+                .collection('notes')
+                .document("$time")
+                .setData({"note": "No Notes", "time": "$time"});
+            Firestore.instance
+                .collection(box.get('companyId'))
+                .document("$name")
+                .collection('history')
+                .document("$time")
+                .setData({"data": "0.0", "time": "$time"});
             Navigator.pop(context);
           }),
       appBar: AppBar(

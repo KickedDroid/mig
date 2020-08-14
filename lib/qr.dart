@@ -256,9 +256,9 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                             Firestore.instance
                                 .collection(box.get('companyId'))
                                 .document("${widget.docRef}")
-                                .updateData({
-                              "notes": {"time": "$time", "note": "$notes"}
-                            });
+                                .collection("notes")
+                                .document("$time")
+                                .setData({"note": "$notes", "time": "$time"});
                           }
 
                           if (cleaned != false) {
