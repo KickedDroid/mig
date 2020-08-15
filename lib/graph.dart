@@ -76,6 +76,8 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
       charts.Series(
         domainFn: (History history, _) => history.time,
         measureFn: (History history, _) => double.parse(history.data),
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        areaColorFn: (_, __) => charts.MaterialPalette.blue.makeShades(100)[99],
         id: 'Sales',
         data: mydata,
         labelAccessorFn: (History row, _) => "${row.data}",
@@ -128,7 +130,7 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
                 child: charts.TimeSeriesChart(
                   _seriesBarData,
                   defaultRenderer: charts.LineRendererConfig(
-                      includeArea: true, stacked: false),
+                      includeArea: true, stacked: false, ),
                   animate: true,
                   behaviors: [
                     charts.ChartTitle("Machine:  ${widget.docRef}",
@@ -150,10 +152,25 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
                     charts.SlidingViewport(),
                     charts.PanAndZoomBehavior(),
                     charts.RangeAnnotation([
-                      charts.LineAnnotationSegment(
-                          DateTime.now(), charts.RangeAnnotationAxisType.domain)
-                    ])
-                  ],
+                        charts.RangeAnnotationSegment(
+                        2,7, charts.RangeAnnotationAxisType.measure,
+                        startLabel: 'Min',
+                        endLabel: 'Max',
+                        labelAnchor: charts.AnnotationLabelAnchor.start,
+                        color: charts.MaterialPalette.green.makeShades(100)[80]),
+                        charts.RangeAnnotationSegment(
+                        1,2, charts.RangeAnnotationAxisType.measure,
+                        startLabel: 'Low',
+                        labelAnchor: charts.AnnotationLabelAnchor.start,
+                        color: charts.MaterialPalette.red.makeShades(100)[90]),
+                        charts.RangeAnnotationSegment(
+                        7,8, charts.RangeAnnotationAxisType.measure,
+                        endLabel: 'High',
+                        labelAnchor: charts.AnnotationLabelAnchor.start,
+                        color: charts.MaterialPalette.red.makeShades(100)[90]),
+                        
+                    ]),
+                  ], 
                 ),
               ),
             ],
