@@ -6,8 +6,10 @@ import 'package:charts_flutter/flutter.dart' as charts;
 
 class MachineGraph extends StatefulWidget {
   final String docRef;
+  final double cMin;
+  final double cMax;
 
-  MachineGraph(this.docRef);
+  MachineGraph(this.docRef, this.cMin, this.cMax);
 
   @override
   _MachineGraphState createState() => _MachineGraphState();
@@ -19,7 +21,7 @@ class _MachineGraphState extends State<MachineGraph> {
     return SafeArea(
       child: Container(
           child: Scaffold(
-        body: HistoryHomePage(widget.docRef),
+        body: HistoryHomePage(widget.docRef, widget.cMin, widget.cMax),
       )),
     );
   }
@@ -39,8 +41,10 @@ class History {
 
 class HistoryHomePage extends StatefulWidget {
   final String docRef;
+  final double cMin;
+  final double cMax;
 
-  HistoryHomePage(this.docRef);
+  HistoryHomePage(this.docRef, this.cMin, this.cMax);
 
   @override
   _HistoryHomePageState createState() {
@@ -88,7 +92,10 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Coolant Percentage History'),backgroundColor: Color(0xFF1c6b92),),
+      appBar: AppBar(
+        title: Text('Coolant Percentage History'),
+        backgroundColor: Color(0xFF1c6b92),
+      ),
       backgroundColor: Colors.white,
       body: _buildBody(context),
     );
@@ -130,7 +137,9 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
                 child: charts.TimeSeriesChart(
                   _seriesBarData,
                   defaultRenderer: charts.LineRendererConfig(
-                      includeArea: true, stacked: false, ),
+                    includeArea: true,
+                    stacked: false,
+                  ),
                   animate: true,
                   behaviors: [
                     charts.ChartTitle("Machine:  ${widget.docRef}",
@@ -152,34 +161,35 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
                     charts.SlidingViewport(),
                     charts.PanAndZoomBehavior(),
                     charts.RangeAnnotation([
-                        charts.RangeAnnotationSegment(
-                        2,7, charts.RangeAnnotationAxisType.measure,
-                        startLabel: 'Min',
-                        endLabel: 'Max',
-                        labelAnchor: charts.AnnotationLabelAnchor.start,
-                        color: charts.MaterialPalette.green.makeShades(100)[80]),
-                        charts.RangeAnnotationSegment(
-                        1,2, charts.RangeAnnotationAxisType.measure,
-                        startLabel: 'Low',
-                        labelAnchor: charts.AnnotationLabelAnchor.start,
-                        color: charts.MaterialPalette.red.makeShades(100)[90]),
-                        charts.RangeAnnotationSegment(
-                        7,8, charts.RangeAnnotationAxisType.measure,
-                        endLabel: 'High',
-                        labelAnchor: charts.AnnotationLabelAnchor.start,
-                        color: charts.MaterialPalette.red.makeShades(100)[90]),
-                        
+                      charts.RangeAnnotationSegment(widget.cMin, widget.cMax,
+                          charts.RangeAnnotationAxisType.measure,
+                          startLabel: 'Min',
+                          endLabel: 'Max',
+                          labelAnchor: charts.AnnotationLabelAnchor.start,
+                          color:
+                              charts.MaterialPalette.green.makeShades(100)[80]),
+                      charts.RangeAnnotationSegment(
+                          1, 5, charts.RangeAnnotationAxisType.measure,
+                          startLabel: 'Low',
+                          labelAnchor: charts.AnnotationLabelAnchor.start,
+                          color:
+                              charts.MaterialPalette.red.makeShades(100)[90]),
+                      charts.RangeAnnotationSegment(
+                          widget.cMax,
+                          widget.cMax + 2,
+                          charts.RangeAnnotationAxisType.measure,
+                          endLabel: 'High',
+                          labelAnchor: charts.AnnotationLabelAnchor.start,
+                          color:
+                              charts.MaterialPalette.red.makeShades(100)[90]),
                     ]),
-                  ], 
+                  ],
                 ),
               ),
             ],
-            
           ),
         ),
       ),
     );
   }
-
-
 }

@@ -47,8 +47,10 @@ class HistoryPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                MachineGraph(machines.documentID),
+                            builder: (context) => MachineGraph(
+                                machines.documentID,
+                                double.parse(machines['c-min']),
+                                double.parse(machines['c-max'])),
                           ),
                         );
                       },
