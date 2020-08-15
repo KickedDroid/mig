@@ -48,6 +48,25 @@ class HistoryHomePage extends StatefulWidget {
   }
 }
 
+class MachineItem extends StatelessWidget {
+  final String notes;
+  final String name;
+  //final String c_percent;
+
+  MachineItem({this.notes, this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+        leading: Icon(Icons.note),
+        title: Text(
+          notes,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+        ),
+        subtitle: Text(name.substring(0, 10)));
+  }
+}
+
 class _HistoryHomePageState extends State<HistoryHomePage> {
   List<charts.Series<History, DateTime>> _seriesBarData;
   List<History> mydata;
@@ -67,7 +86,8 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('History')),
+      appBar: AppBar(title: Text('Coolant Percentage History'),backgroundColor: Color(0xFF1c6b92),),
+      backgroundColor: Colors.white,
       body: _buildBody(context),
     );
   }
@@ -96,7 +116,7 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
     mydata = saledata;
     _generateData(mydata);
     return Padding(
-      padding: EdgeInsets.fromLTRB(8, 8, 8, 120),
+      padding: EdgeInsets.fromLTRB(8, 50, 8, 50),
       child: Container(
         child: Center(
           child: Column(
@@ -107,7 +127,26 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
               Expanded(
                 child: charts.TimeSeriesChart(
                   _seriesBarData,
+                  defaultRenderer: charts.LineRendererConfig(
+                      includeArea: true, stacked: false),
+                  animate: true,
                   behaviors: [
+                    charts.ChartTitle("Machine:  ${widget.docRef}",
+                        subTitle: "Line Graph",
+                        behaviorPosition: charts.BehaviorPosition.top,
+                        titleOutsideJustification:
+                            charts.OutsideJustification.start,
+                        innerPadding: 40),
+                    charts.ChartTitle('Date/Timeline',
+                        behaviorPosition: charts.BehaviorPosition.bottom,
+                        titleOutsideJustification:
+                            charts.OutsideJustification.middleDrawArea,
+                        innerPadding: 20),
+                    charts.ChartTitle("Coolant Percentage",
+                        behaviorPosition: charts.BehaviorPosition.start,
+                        titleOutsideJustification:
+                            charts.OutsideJustification.middleDrawArea,
+                        outerPadding: 20),
                     charts.SlidingViewport(),
                     charts.PanAndZoomBehavior(),
                     charts.RangeAnnotation([
@@ -118,9 +157,12 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
                 ),
               ),
             ],
+            
           ),
         ),
       ),
     );
   }
+
+
 }
