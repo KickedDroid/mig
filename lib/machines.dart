@@ -3,8 +3,10 @@ import 'package:expandable/expandable.dart';
 import 'package:hive/hive.dart';
 import 'package:mig/namechange.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'generateQr.dart';
 import 'qr.dart';
+import 'extensions.dart';
 
 const greenPercent = Color(0xff009970);
 
@@ -132,13 +134,45 @@ class MachineItem extends StatelessWidget {
               ),
               expanded: Column(
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  Row(
+                    children: <Widget>[
+                      Text('Edit Name'),
+                      IconButton(
+                          icon: Icon(
+                            Icons.edit,
+                            size: 18.0,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChangeNamePage(docRef),
+                              ),
+                            );
+                          })
+                    ],
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => GenerateScreen(
+                            name: name,
+                            docRef: docRef,
+                          ),
+                        ),
+                      );
+                    },
                     child: Row(
                       children: <Widget>[
-                        Text(last_updated != null
-                            ? last_updated
-                            : 'LastUpdated'),
+                        Text('Share QR Code'),
+                        QrImage(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.black,
+                          data: docRef,
+                          size: 50,
+                        ),
                       ],
                     ),
                   ),
@@ -176,80 +210,7 @@ class MachineItem extends StatelessWidget {
                           ],
                         ),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      0,
-                      8,
-                      0,
-                      8,
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ChangeNamePage(docRef),
-                          ),
-                        );
-                      },
-                      onLongPress: () => {},
-                      child: Container(
-                          height: 40,
-                          width: 350,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              gradient: LinearGradient(colors: [
-                                Color(0xFF1c6b92),
-                                Color(0xFF217ca9)
-                              ])),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Edit Name',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.white),
-                              )
-                            ],
-                          )),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => GenerateScreen(
-                            name: name,
-                            docRef: docRef,
-                          ),
-                        ),
-                      );
-                    },
-                    onLongPress: () => {},
-                    child: Container(
-                        height: 40,
-                        width: 350,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            gradient: LinearGradient(
-                                colors: [Colors.blueGrey, Colors.blueGrey])),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Generate Qr Code',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white),
-                            )
-                          ],
-                        )),
+                    ).padding(),
                   ),
                 ],
               ),
