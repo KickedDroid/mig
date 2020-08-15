@@ -9,6 +9,7 @@ import 'package:hive/hive.dart';
 import 'package:majascan/majascan.dart';
 import 'package:mig/updatemachine.dart';
 import 'extensions.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'generateQr.dart';
 
@@ -121,6 +122,41 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
 
   String cMax;
 
+  Widget _handleWidget() {
+    return ValueListenableBuilder(
+      valueListenable: Hive.box('myBox').listenable(),
+      builder: (BuildContext context, box, Widget child) {
+        var isAdmin = box.get('admin');
+        if (isAdmin == false) {
+          return Container();
+        } else {
+          return Container(
+            child: Column(
+              children: [
+                TextField(
+                  keyboardType: TextInputType.number,
+                  controller: controller,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Min',
+                      labelStyle: TextStyle(fontSize: 15)),
+                ).padding(),
+                TextField(
+                  keyboardType: TextInputType.number,
+                  controller: controller,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Max',
+                      labelStyle: TextStyle(fontSize: 15)),
+                ).padding()
+              ],
+            ),
+          );
+        }
+      },
+    );
+  }
+
   void getInputData() {
     setState(() {
       cMin = cminController.text;
@@ -191,30 +227,7 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                     labelText: 'Add any notes',
                     labelStyle: TextStyle(fontSize: 15)),
               ).padding(),
-              TextField(
-                onChanged: (value) {
-                  setState(() {
-                    notes = value;
-                  });
-                },
-                controller: controller,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Min',
-                    labelStyle: TextStyle(fontSize: 15)),
-              ).padding(),
-              TextField(
-                onChanged: (value) {
-                  setState(() {
-                    notes = value;
-                  });
-                },
-                controller: controller,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Max',
-                    labelStyle: TextStyle(fontSize: 15)),
-              ).padding(),
+              Container(child: _handleWidget()),
               SwitchListTile(
                   title: Text(
                     "Cleaned Sump",

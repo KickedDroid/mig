@@ -11,8 +11,9 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 class GenerateScreen extends StatefulWidget {
   final String name;
+  final String docRef;
 
-  const GenerateScreen({this.name});
+  const GenerateScreen({this.name, this.docRef});
 
   @override
   State<StatefulWidget> createState() => GenerateScreenState();
@@ -112,7 +113,7 @@ class GenerateScreenState extends State<GenerateScreen> {
                           QrImage(
                             backgroundColor: Colors.white,
                             foregroundColor: Colors.black,
-                            data: widget.name,
+                            data: widget.docRef,
                             size: 0.5 * bodyHeight,
                           ),
                           Text(
