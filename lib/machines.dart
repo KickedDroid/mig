@@ -224,7 +224,8 @@ class MachineItem extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => GenerateScreen(
-                            name: docRef,
+                            name: name,
+                            docRef: docRef,
                           ),
                         ),
                       );
