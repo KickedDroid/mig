@@ -147,6 +147,7 @@ class _NotesPageState extends State<NotesPage> {
                   children: [
                     ListTile(
                       title: Text(machines['name']),
+                      leading: Icon(Icons.note),
                       trailing: Icon(Icons.arrow_forward_ios),
                       onTap: () {
                         Navigator.push(

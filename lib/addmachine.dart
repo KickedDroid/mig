@@ -42,7 +42,7 @@ class _AddMachineListState extends State<AddMachineList> {
       ),
       appBar: AppBar(
           backgroundColor: Color(0xFF1c6b92),
-          title: Text('Machine Setup',
+          title: Text('Setup & Add Machines',
               style: TextStyle(
                 color: Color(0xffFFFFFF),
               ))),
@@ -55,7 +55,9 @@ class _AddMachineListState extends State<AddMachineList> {
             if (!snapshot.hasData) {
               return Text('PLease Wait');
             } else {
-              return ListView.builder(
+              return ListView.separated(
+                separatorBuilder: (context, index) =>
+                    Divider(color: Colors.lightBlue),
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) {
                   DocumentSnapshot machines = snapshot.data.documents[index];
