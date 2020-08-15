@@ -2,16 +2,20 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hive/hive.dart';
 import 'package:mig/batch.dart';
+import 'package:mig/qr.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'extensions.dart';
+import 'generateQr.dart';
+import 'namechange.dart';
 
 const greenPercent = Color(0xff14c4f7);
 
@@ -53,7 +57,7 @@ class _AddMachineListState extends State<AddMachineList> {
           builder: (context, snapshot) {
             assert(snapshot != null);
             if (!snapshot.hasData) {
-              return Text('PLease Wait');
+              return Text('Please Wait');
             } else {
               return ListView.builder(
                 itemCount: snapshot.data.documents.length,
@@ -62,11 +66,7 @@ class _AddMachineListState extends State<AddMachineList> {
                   return MachineItem(
                     name: machines['name'],
                     c_percent: machines['coolant-percent'],
-                    last_updated: machines['last-updated'].substring(5, 7) +
-                        "/" +
-                        machines['last-updated'].substring(8, 10) +
-                        "/" +
-                        machines['last-updated'].substring(2, 4),
+                    last_updated: machines['last-updated'].substring(0, 10),
                   );
                 },
               );
@@ -166,18 +166,183 @@ class _AddMachineListState extends State<AddMachineList> {
 }
 
 class MachineItem extends StatelessWidget {
+  final String docRef;
   final String name;
   final String last_updated;
   final String c_percent;
+  final dynamic notes;
 
-  MachineItem({this.name, this.last_updated, this.c_percent});
+  MachineItem(
+      {this.name, this.last_updated, this.c_percent, this.notes, this.docRef});
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(name),
-      subtitle: Text(last_updated),
-      trailing: Text(c_percent),
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Card(
+          color: Color(0xFFffffff),
+          elevation: 3.0,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ExpandablePanel(
+              header: Text(
+                name != null ? name : 'Name',
+                style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.blueGrey[500]),
+              ),
+              collapsed: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(last_updated != null ? last_updated : 'LastUpdated'),
+                  Card(
+                    color: double.parse(c_percent) < 6
+                        ? Colors.grey[200]
+                        : greenPercent,
+                    child: Center(
+                        child: Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+                      child: Text(
+                        c_percent != null ? c_percent : 'Coolant Percent',
+                        style: TextStyle(
+                            fontSize: 24.0,
+                            color: double.parse(c_percent) < 6
+                                ? Color(0xFFff0000)
+                                : Colors.white),
+                      ),
+                    )),
+                  )
+                ],
+              ),
+              expanded: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: <Widget>[
+                        Text(last_updated != null
+                            ? last_updated
+                            : 'LastUpdated'),
+                      ],
+                    ),
+                  ),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                UpdateMachinePage(docRef, name),
+                          ),
+                        );
+                      },
+                      onLongPress: () => {},
+                      child: Container(
+                        height: 40,
+                        width: 350,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            gradient: LinearGradient(colors: [
+                              Colors.lightBlue[300],
+                              Colors.lightBlue[400]
+                            ])),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Enter Coolant %',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      0,
+                      8,
+                      0,
+                      8,
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChangeNamePage(docRef),
+                          ),
+                        );
+                      },
+                      onLongPress: () => {},
+                      child: Container(
+                          height: 40,
+                          width: 350,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              gradient: LinearGradient(colors: [
+                                Color(0xFF1c6b92),
+                                Color(0xFF217ca9)
+                              ])),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Edit Name',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white),
+                              )
+                            ],
+                          )),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => GenerateScreen(
+                            name: name,
+                            docRef: docRef,
+                          ),
+                        ),
+                      );
+                    },
+                    onLongPress: () => {},
+                    child: Container(
+                        height: 40,
+                        width: 350,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            gradient: LinearGradient(
+                                colors: [Colors.blueGrey, Colors.blueGrey])),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Generate Qr Code',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white),
+                            )
+                          ],
+                        )),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

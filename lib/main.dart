@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:mig/batch.dart';
 import 'package:mig/graph.dart';
 import 'package:mig/history.dart';
+import 'package:mig/latestentries.dart';
 import 'package:mig/qr.dart';
 import './signin.dart';
 import 'package:splashscreen/splashscreen.dart';
@@ -310,66 +311,76 @@ class WelcomeScreen extends StatelessWidget {
             child: Center(
                 child: ListView(
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          spreadRadius: 3,
-                          blurRadius: 3,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        ListTile(
-                          //dense: true,
-                          title: Text(
-                            "Latest Entries",
-                            style: TextStyle(
-                                color: Color(0xFF3c6172),
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w500),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LatestEntriesPage(),
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            spreadRadius: 3,
+                            blurRadius: 3,
+                            offset: Offset(0, 3), // changes position of shadow
                           ),
-                          subtitle: Text("Account: ${box.get('companyId')}"),
-                        ),
-                        StreamBuilder(
-                          stream: Firestore.instance
-                              .collection(box.get('companyId'))
-                              .orderBy('last-updated', descending: true)
-                              .snapshots(),
-                          builder: (context, snapshot) {
-                            //assert(snapshot != null);
-                            if (!snapshot.hasData) {
-                              return Text('Please Wait');
-                            } else {
-                              return ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: 2,
-                                itemBuilder: (context, index) {
-                                  DocumentSnapshot machines =
-                                      snapshot.data.documents[index];
-                                  return ListTile(
-                                    dense: true,
-                                    title: Text(
-                                      machines['name'] != null
-                                          ? '${machines['name']}:  ${machines['coolant-percent']}%  (${machines['last-updated'].substring(5, 7) + "/" + machines['last-updated'].substring(8, 10) + "/" + machines['last-updated'].substring(2, 4)})'
-                                          : "No machines yet",
-                                    ),
-                                    //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
-                                    leading: Icon(Icons.assessment),
-                                  );
-                                },
-                              );
-                            }
-                          },
-                        ),
-                      ],
+                        ],
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          ListTile(
+                            //dense: true,
+                            title: Text(
+                              "Latest Entries",
+                              style: TextStyle(
+                                  color: Color(0xFF3c6172),
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            subtitle: Text("Account: ${box.get('companyId')}"),
+                          ),
+                          StreamBuilder(
+                            stream: Firestore.instance
+                                .collection(box.get('companyId'))
+                                .orderBy('last-updated', descending: true)
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              //assert(snapshot != null);
+                              if (!snapshot.hasData) {
+                                return Text('Please Wait');
+                              } else {
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: 2,
+                                  itemBuilder: (context, index) {
+                                    DocumentSnapshot machines =
+                                        snapshot.data.documents[index];
+                                    return ListTile(
+                                      dense: true,
+                                      title: Text(
+                                        machines['name'] != null
+                                            ? '${machines['name']}:  ${machines['coolant-percent']}%  (${machines['last-updated'].substring(5, 7) + "/" + machines['last-updated'].substring(8, 10) + "/" + machines['last-updated'].substring(2, 4)})'
+                                            : "No machines yet",
+                                      ),
+                                      //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
+                                      leading: Icon(Icons.assessment),
+                                    );
+                                  },
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

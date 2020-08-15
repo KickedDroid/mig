@@ -3,6 +3,14 @@ import Flutter
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
+
+  func application(_ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions:
+      [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    FirebaseApp.configure()
+    return true
+  }
+
   override func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?

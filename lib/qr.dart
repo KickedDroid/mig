@@ -134,6 +134,11 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
             child: Column(
               children: [
                 TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      cMin = value;
+                    });
+                  },
                   keyboardType: TextInputType.number,
                   controller: controller,
                   decoration: InputDecoration(
@@ -142,6 +147,11 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                       labelStyle: TextStyle(fontSize: 15)),
                 ).padding(),
                 TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      cMax = value;
+                    });
+                  },
                   keyboardType: TextInputType.number,
                   controller: controller,
                   decoration: InputDecoration(
@@ -246,7 +256,6 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        getInputData();
                         var box = Hive.box('myBox');
                         if (data != null) {
                           Firestore.instance

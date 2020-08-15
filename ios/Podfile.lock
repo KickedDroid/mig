@@ -229,6 +229,8 @@ PODS:
     - Flutter
   - esys_flutter_share (0.0.1):
     - Flutter
+  - Firebase/Analytics (6.29.0):
+    - Firebase/Core
   - Firebase/Auth (6.29.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 6.7.1)
@@ -375,6 +377,7 @@ PODS:
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - esys_flutter_share (from `.symlinks/plugins/esys_flutter_share/ios`)
+  - Firebase/Analytics
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
@@ -467,6 +470,6 @@ SPEC CHECKSUMS:
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   PromisesObjC: b48e0338dbbac2207e611750777895f7a5811b75
 
-PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+PODFILE CHECKSUM: b563eb048a4bb8b7e4938e2c057e9883e18a566f
 
 COCOAPODS: 1.8.4
