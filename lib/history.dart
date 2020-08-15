@@ -24,7 +24,7 @@ class HistoryPage extends StatelessWidget {
       ),
       appBar: AppBar(
         backgroundColor: Color(0xFF1c6b92),
-        title: Text('History'),
+        title: Text('Coolant Concentration History'),
       ),
       body: StreamBuilder(
         stream: Firestore.instance.collection(box.get('companyId')).snapshots(),
@@ -41,6 +41,7 @@ class HistoryPage extends StatelessWidget {
                   children: [
                     ListTile(
                       title: Text(machines['name']),
+                      leading: Icon(Icons.show_chart),
                       trailing: Icon(Icons.arrow_forward_ios),
                       onTap: () {
                         Navigator.push(
@@ -52,7 +53,7 @@ class HistoryPage extends StatelessWidget {
                         );
                       },
                     ),
-                    Divider()
+                    Divider(color: Colors.lightBlue),
                   ],
                 );
               },
