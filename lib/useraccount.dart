@@ -167,8 +167,9 @@ class _UserAccountState extends State<UserAccount> {
                           "Administrator",
                           //style: whiteBoldText,
                         ),
-                        subtitle: Text(
-                          "On",
+                        subtitle: Text(box.get('admin') ?? false
+                        ? "on"
+                        : "off"
                           //style: greyTExt,
                         ),
                         value: box.get('admin') ?? false,

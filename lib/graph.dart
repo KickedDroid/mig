@@ -147,7 +147,7 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
     mydata = saledata;
     _generateData(mydata);
     return Padding(
-      padding: EdgeInsets.fromLTRB(8, 50, 8, 50),
+      padding: EdgeInsets.fromLTRB(4, 10, 4, 30),
       child: Container(
         child: Center(
           child: Column(
@@ -175,11 +175,11 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
                         titleOutsideJustification:
                             charts.OutsideJustification.middleDrawArea,
                         innerPadding: 20),
-                    charts.ChartTitle("Coolant Percentage",
+                    charts.ChartTitle("Coolant Concentration:  (Limits = " + widget.cMin.toStringAsFixed(0) + "% - " + widget.cMax.toStringAsFixed(0) + "%)",
                         behaviorPosition: charts.BehaviorPosition.start,
                         titleOutsideJustification:
                             charts.OutsideJustification.middleDrawArea,
-                        outerPadding: 20),
+                        outerPadding: 10),
                     charts.SlidingViewport(),
                     charts.PanAndZoomBehavior(),
                     charts.RangeAnnotation([
