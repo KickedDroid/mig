@@ -168,8 +168,8 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
                           labelAnchor: charts.AnnotationLabelAnchor.start,
                           color:
                               charts.MaterialPalette.green.makeShades(100)[80]),
-                      charts.RangeAnnotationSegment(
-                          1, 5, charts.RangeAnnotationAxisType.measure,
+                      charts.RangeAnnotationSegment(0, widget.cMin,
+                          charts.RangeAnnotationAxisType.measure,
                           startLabel: 'Low',
                           labelAnchor: charts.AnnotationLabelAnchor.start,
                           color:
