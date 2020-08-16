@@ -57,6 +57,7 @@ class _MachineListState extends State<MachineList> {
                               machines['last-updated'].substring(0, 10),
                           notes: machines['history'],
                           docRef: machines.documentID,
+                          cMin: double.parse(machines['c-min']),
                         );
                       },
                     );
@@ -73,9 +74,15 @@ class MachineItem extends StatelessWidget {
   final String last_updated;
   final String c_percent;
   final dynamic notes;
+  final double cMin;
 
   MachineItem(
-      {this.name, this.last_updated, this.c_percent, this.notes, this.docRef});
+      {this.name,
+      this.last_updated,
+      this.c_percent,
+      this.notes,
+      this.docRef,
+      this.cMin});
 
   @override
   Widget build(BuildContext context) {
@@ -100,19 +107,15 @@ class MachineItem extends StatelessWidget {
                 children: [
                   Text(last_updated != null ? last_updated : 'LastUpdated'),
                   Card(
-                    color: double.parse(c_percent) < 6
-                        ? Colors.grey[200]
+                    color: double.parse(c_percent) < cMin
+                        ? Colors.red
                         : greenPercent,
                     child: Center(
                         child: Padding(
                       padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
                       child: Text(
                         c_percent != null ? c_percent : 'Coolant Percent',
-                        style: TextStyle(
-                            fontSize: 24.0,
-                            color: double.parse(c_percent) < 6
-                                ? Color(0xFFff0000)
-                                : Colors.white),
+                        style: TextStyle(fontSize: 24.0, color: Colors.white),
                       ),
                     )),
                   )
