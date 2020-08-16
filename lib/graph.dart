@@ -161,21 +161,15 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
                     charts.SlidingViewport(),
                     charts.PanAndZoomBehavior(),
                     charts.RangeAnnotation([
-                      charts.RangeAnnotationSegment(widget.cMin, widget.cMax,
+                      charts.RangeAnnotationSegment(widget.cMin+1, widget.cMax-1,
                           charts.RangeAnnotationAxisType.measure,
-                          startLabel: 'Min',
-                          endLabel: 'Max',
+                          //startLabel: 'Min',
+                          //endLabel: 'Max',
                           labelAnchor: charts.AnnotationLabelAnchor.start,
                           color:
                               charts.MaterialPalette.green.makeShades(100)[80]),
-<<<<<<< HEAD
-                      charts.RangeAnnotationSegment(
-                          widget.cMin-2,
-                          widget.cMin, charts.RangeAnnotationAxisType.measure,
-=======
                       charts.RangeAnnotationSegment(0, widget.cMin,
                           charts.RangeAnnotationAxisType.measure,
->>>>>>> cc1247dec17dffd1eed5183cce05bbaebe0b3833
                           startLabel: 'Low',
                           labelAnchor: charts.AnnotationLabelAnchor.start,
                           color:
@@ -188,6 +182,18 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
                           labelAnchor: charts.AnnotationLabelAnchor.start,
                           color:
                               charts.MaterialPalette.red.makeShades(100)[90]),
+                      charts.RangeAnnotationSegment(widget.cMin, widget.cMin+1,
+                          charts.RangeAnnotationAxisType.measure,
+                          startLabel: 'Min',
+                          labelAnchor: charts.AnnotationLabelAnchor.start,
+                          color:
+                              charts.MaterialPalette.yellow.makeShades(100)[80]),
+                      charts.RangeAnnotationSegment(widget.cMax-1, widget.cMax,
+                          charts.RangeAnnotationAxisType.measure,
+                          startLabel: 'Max',
+                          labelAnchor: charts.AnnotationLabelAnchor.start,
+                          color:
+                              charts.MaterialPalette.yellow.makeShades(100)[80]),
                     ]),
                   ],
                 ),
