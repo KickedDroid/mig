@@ -266,38 +266,19 @@ class _AddMachinePageState extends State<AddMachinePage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: TextField(
-                        onChanged: (value) {
-                          setState(() {
-                            name = value;
-                          });
-                        },
-                        controller: controller,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Add Machine Name',
-                            labelStyle: TextStyle(fontSize: 15)),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: FlatButton(
-                      color: Colors.blueAccent[700],
-                      child: Text(
-                        "Get QR",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
+                    child: TextField(
+                      onChanged: (value) {
                         setState(() {
-                          _dataString = _textController.text;
-                          _inputErrorText = null;
+                          name = value;
                         });
                       },
+                      controller: controller,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Add Machine Name',
+                          labelStyle: TextStyle(fontSize: 15)),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
