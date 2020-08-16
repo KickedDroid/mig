@@ -97,6 +97,13 @@ Widget _buildBody(BuildContext context) {
   );
 }
 
+Color getColor(number) {
+   if (number > 0 && number < 100) return Colors.red;
+   if (number >= 100 && number < 200) return Colors.blue;
+   //color: double.parse(machines['coolant-percent']) < double.parse(machines['c-min'])
+}
+
+
 List _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
   return snapshot.map((data) => _buildListItem(context, data)).toList();
 }
@@ -114,12 +121,13 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
         machines['last-updated'].substring(5, 7) + "/" + machines['last-updated'].substring(8, 10) + "/" + machines['last-updated'].substring(2, 4),
         style: TextStyle(fontWeight: FontWeight.w500),
       )),
-      DataCell(Text(machines['coolant-percent'],
+      DataCell(Text(machines['coolant-percent'] + "% (" + machines['c-min'] + "-" + machines['c-max'] + ")",
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: double.parse(machines['coolant-percent']) < 6.0
-                  ? Colors.red
-                  : Colors.greenAccent[700]))),
+              color: double.parse(machines['coolant-percent']) < double.parse(machines['c-max']) && 
+                double.parse(machines['coolant-percent']) > double.parse(machines['c-min'])
+                  ? Colors.greenAccent[700]
+                  : Colors.red))),
       DataCell(Text(
         machines['last-cleaned'].substring(5, 7) + "/" + machines['last-cleaned'].substring(8, 10) + "/" + machines['last-cleaned'].substring(2, 4) ?? "No Input",
         style: TextStyle(fontWeight: FontWeight.w500),
@@ -127,3 +135,8 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
     ],
   );
 }
+
+// Color getColor(number) {
+//    if (double.parse(machines['coolant-percent']) < double.parse(machines['c-min'])) return Colors.red;
+//    if (double.parse(machines['coolant-percent']) > double.parse(machines['c-max'])) return Colors.red;
+// }
