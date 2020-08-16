@@ -256,11 +256,6 @@ class WelcomeScreen extends StatelessWidget {
                       ),
                     );
                   }),
-              IconButton(
-                  icon: Icon(Icons.list),
-                  color: Colors.white,
-                  onPressed: () async =>
-                      Navigator.pushNamed(context, "/Machines")),
             ],
             mainAxisAlignment: MainAxisAlignment.start,
           ),

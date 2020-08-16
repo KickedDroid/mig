@@ -32,6 +32,7 @@ class _ChangeNamePageState extends State<ChangeNamePage> {
           onPressed: () {
             getTextInputData();
             _changeName(widget.docRef, newName);
+            Navigator.of(context).pop();
           },
           child: Icon(Icons.edit),
         ),
