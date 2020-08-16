@@ -74,6 +74,8 @@ class MachineItem extends StatelessWidget {
 class _HistoryHomePageState extends State<HistoryHomePage> {
   List<charts.Series<History, DateTime>> _seriesBarData;
   List<History> mydata;
+
+  String name;
   _generateData(mydata) {
     _seriesBarData = List<charts.Series<History, DateTime>>();
     _seriesBarData.add(
@@ -87,6 +89,26 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
         labelAccessorFn: (History row, _) => "${row.data}",
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getNameFromFireStore(widget.docRef);
+  }
+
+  _getNameFromFireStore(String docRef) {
+    var box = Hive.box('myBox');
+    Firestore.instance
+        .collection(box.get('companyId'))
+        .document(docRef)
+        .get()
+        .then((value) {
+      setState(() {
+        name = value.data['name'];
+      });
+      print(value.data);
+    });
   }
 
   @override
@@ -142,7 +164,7 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
                   ),
                   animate: true,
                   behaviors: [
-                    charts.ChartTitle("Machine:  ${widget.docRef}",
+                    charts.ChartTitle("Machine:  $name",
                         subTitle: "Line Graph",
                         behaviorPosition: charts.BehaviorPosition.top,
                         titleOutsideJustification:
