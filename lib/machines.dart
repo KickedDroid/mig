@@ -182,7 +182,7 @@ class MachineItem extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                UpdateMachinePage(docRef, name),
+                                UpdateMachinePage(docRef, name)
                           ),
                         );
                       },

@@ -256,8 +256,8 @@ class _AddMachinePageState extends State<AddMachinePage> {
             padding: const EdgeInsets.only(
               top: 10,
               left: 20.0,
-              right: 10.0,
-              bottom: _topSectionBottomPadding,
+              right: 20.0,
+              bottom: 10.0,
             ),
             child: Container(
               height: _topSectionHeight,
@@ -283,44 +283,46 @@ class _AddMachinePageState extends State<AddMachinePage> {
               ),
             ),
           ),
-          Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: TextField(
-                    onChanged: (value) {
-                      setState(() {
-                        cmin = value;
-                      });
-                    },
-                    controller: controller,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Min',
-                        labelStyle: TextStyle(fontSize: 15)),
+          Container(
+            child: Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          cmin = value;
+                        });
+                      },
+                      controller: controller,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter Min Coolant %',
+                          labelStyle: TextStyle(fontSize: 15)),
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: TextField(
-                    onChanged: (value) {
-                      setState(() {
-                        cmax = value;
-                      });
-                    },
-                    controller: controller,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Max',
-                        labelStyle: TextStyle(fontSize: 15)),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          cmax = value;
+                        });
+                      },
+                      controller: controller,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter Max Coolant %',
+                          labelStyle: TextStyle(fontSize: 15)),
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ).padding(),
+              ],
+            ).padding(),
+          ),
           Expanded(
             child: Center(
               child: Padding(

@@ -98,6 +98,7 @@ class _QrPageState extends State<QrPage> {
 class UpdateMachinePage extends StatefulWidget {
   final String docRef;
   final String name;
+  
 
   UpdateMachinePage(this.docRef, this.name);
 
@@ -143,7 +144,7 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                   controller: controller,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Min',
+                      labelText: 'Min Coolant % (Optional)',
                       labelStyle: TextStyle(fontSize: 15)),
                 ).padding(),
                 TextField(
@@ -156,7 +157,7 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                   controller: controller,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Max',
+                      labelText: 'Max Coolant % (Optional)',
                       labelStyle: TextStyle(fontSize: 15)),
                 ).padding()
               ],
@@ -181,10 +182,10 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
         elevation: 2.0,
         title: Text(
           'Add Refractometer Reading',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.green[50],
-        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Color(0xFF1c6b92),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: SafeArea(
         child: Padding(
@@ -196,18 +197,18 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                 child: Text(
                   '${widget.name}',
                   style: TextStyle(
-                      fontSize: 46,
+                      fontSize: 30,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.fromLTRB(12, 2, 8, 4),
                 child: Text(
                   "Enter Coolant Percentage",
                   style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      //fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
               ),
@@ -224,7 +225,7 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                     labelText: 'Enter Coolant Percentage',
                     labelStyle: TextStyle(fontSize: 15)),
               ).padding(),
-              Text('Optional'),
+              //Text('Optional'),
               TextField(
                 onChanged: (value) {
                   setState(() {
@@ -234,13 +235,13 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                 controller: controller,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Add any notes',
+                    labelText: 'Add any notes (Optional)',
                     labelStyle: TextStyle(fontSize: 15)),
               ).padding(),
               Container(child: _handleWidget()),
               SwitchListTile(
                   title: Text(
-                    "Cleaned Sump",
+                    "Was The Sump Cleaned?",
                     //style: whiteBoldText,
                   ),
                   value: cleaned,
