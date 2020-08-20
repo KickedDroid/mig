@@ -34,8 +34,8 @@ class _OverviewState extends State<Overview> {
       backgroundColor: Colors.lightBlue[200],
       body: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/Coolantbg.png"), fit: BoxFit.fill)),
+            image: DecorationImage(
+                image: AssetImage("assets/Coolantbg.png"), fit: BoxFit.fill)),
         child: ListView(children: <Widget>[
           Column(
             children: <Widget>[
@@ -111,17 +111,27 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
         style: TextStyle(fontWeight: FontWeight.w500),
       )),
       DataCell(Text(
-        machines['last-updated'].substring(5, 7) + "/" + machines['last-updated'].substring(8, 10) + "/" + machines['last-updated'].substring(2, 4),
+        machines['last-updated'].substring(5, 7) +
+            "/" +
+            machines['last-updated'].substring(8, 10) +
+            "/" +
+            machines['last-updated'].substring(2, 4),
         style: TextStyle(fontWeight: FontWeight.w500),
       )),
       DataCell(Text(machines['coolant-percent'],
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: double.parse(machines['coolant-percent']) < 6.0
+              color: double.parse(machines['coolant-percent']) <
+                      double.parse(machines['c-min'])
                   ? Colors.red
                   : Colors.greenAccent[700]))),
       DataCell(Text(
-        machines['last-cleaned'].substring(5, 7) + "/" + machines['last-cleaned'].substring(8, 10) + "/" + machines['last-cleaned'].substring(2, 4) ?? "No Input",
+        machines['last-cleaned'].substring(5, 7) +
+                "/" +
+                machines['last-cleaned'].substring(8, 10) +
+                "/" +
+                machines['last-cleaned'].substring(2, 4) ??
+            "No Input",
         style: TextStyle(fontWeight: FontWeight.w500),
       )),
     ],
