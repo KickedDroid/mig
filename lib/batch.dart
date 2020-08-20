@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hive/hive.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mig/main.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:toast/toast.dart';
-import 'extensions.dart';
 import 'package:screenshot/screenshot.dart';
 
 class BatchAddPage extends StatefulWidget {
@@ -46,10 +46,7 @@ class _BatchAddPageState extends State<BatchAddPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => BatchQrCodes(
-                    name: batchName,
-                    numOf: numOf,
-                  ),
+                  builder: (context) => WelcomeScreen(),
                 ),
               );
             },
@@ -86,7 +83,7 @@ class _BatchAddPageState extends State<BatchAddPage> {
         onPressed: () {
           getTextInputData();
           if (controllerCmin.text.length == 0) {
-            Toast.show("Enter a Company ID", context,
+            Toast.show("Enter a Min and Max", context,
                 duration: Toast.LENGTH_LONG);
           } else {
             show();

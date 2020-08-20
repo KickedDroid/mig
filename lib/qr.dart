@@ -6,99 +6,81 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
-import 'package:majascan/majascan.dart';
 import 'package:mig/updatemachine.dart';
 import 'extensions.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
 import 'generateQr.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-class QrPage extends StatefulWidget {
-  QrPage({Key key}) : super(key: key);
+const flashOn = 'FLASH ON';
+const flashOff = 'FLASH OFF';
+const frontCamera = 'FRONT CAMERA';
+const backCamera = 'BACK CAMERA';
+
+class QRViewExample extends StatefulWidget {
+  const QRViewExample({
+    Key key,
+  }) : super(key: key);
 
   @override
-  _QrPageState createState() => _QrPageState();
+  State<StatefulWidget> createState() => _QRViewExampleState();
 }
 
-class _QrPageState extends State<QrPage> {
-  String result = "";
-
-  Future _scanQR() async {
-    try {
-      String qrResult = await MajaScan.startScan(
-          title: "Scan Machine",
-          titleColor: Colors.blue,
-          qRCornerColor: Colors.blueAccent,
-          qRScannerColor: Colors.blue);
-      setState(() {
-        result = qrResult;
-      });
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => UpdateMachinePage(result, result),
-        ),
-      );
-    } on PlatformException catch (ex) {
-      if (ex.code == MajaScan.CameraAccessDenied) {
-        setState(() {
-          result = "Camera permission was denied";
-        });
-      } else {
-        setState(() {
-          result = "Unknown Error $ex";
-        });
-      }
-    } on FormatException {
-      setState(() {
-        result = "You pressed the back button before scanning anything";
-      });
-    } catch (ex) {
-      setState(() {
-        result = "Unknown Error $ex";
-      });
-    }
-  }
+class _QRViewExampleState extends State<QRViewExample> {
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  var qrText = "";
+  QRViewController controller;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: GestureDetector(
-        onTap: () => _scanQR(),
-        onLongPress: () => _scanQR(),
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Container(
-              height: 50,
-              width: 300,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  gradient: LinearGradient(
-                      colors: [Colors.blueAccent[700], Colors.blue])),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.camera_alt,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    ' Scan Machine QR Code',
-                    style: TextStyle(color: Colors.white),
-                  )
-                ],
-              )),
-        ),
+    return Scaffold(
+      appBar: AppBar(),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            flex: 5,
+            child: QRView(
+                key: qrKey,
+                onQRViewCreated: _onQRViewCreated,
+                overlay: QrScannerOverlayShape(
+                  borderColor: Colors.blue,
+                  borderRadius: 10,
+                  borderLength: 30,
+                  borderWidth: 10,
+                  cutOutSize: 300,
+                )),
+          ),
+        ],
       ),
     );
+  }
+
+  void _onQRViewCreated(QRViewController controller) {
+    this.controller = controller;
+    controller.scannedDataStream.listen((scanData) {
+      setState(() {
+        qrText = scanData;
+      });
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => UpdateMachinePageQr(qrText),
+        ),
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
   }
 }
 
 class UpdateMachinePage extends StatefulWidget {
   final String docRef;
   final String name;
-  
 
   UpdateMachinePage(this.docRef, this.name);
 
