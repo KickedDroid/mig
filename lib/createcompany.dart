@@ -207,4 +207,16 @@ createCompany(String companyId) async {
     "c-min": "2",
     "c-max": "12"
   });
+  await Firestore.instance
+      .collection(box.get('companyId'))
+      .document("Mori 2")
+      .setData({
+    "name": "Mori 2",
+    "coolant-percent": "0.0",
+    "last-updated": "$time",
+    "last-cleaned": "$time",
+    "notes": {"note": "No Notes", "time": "$time"},
+    "c-min": "2",
+    "c-max": "12"
+  });
 }
