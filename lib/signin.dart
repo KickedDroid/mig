@@ -3,11 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
 import 'package:mig/reset.dart';
+import 'createcompany.dart';
 import 'extensions.dart';
 import 'package:toast/toast.dart';
-
-final FirebaseAuth _auth = FirebaseAuth.instance;
-final GoogleSignIn googleSignIn = GoogleSignIn();
 
 class SignInPage extends StatefulWidget {
   @override
@@ -15,6 +13,8 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
   Future<String> signInWithGoogle() async {
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
@@ -294,6 +294,20 @@ class _SignInPageState extends State<SignInPage> {
                         padding: const EdgeInsets.all(15.0),
                         child: Text("Forgot Password"),
                       ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CreateCompanyPage(),
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text("Create Company"),
+                      ),
                     )
                   ],
                 ),
@@ -306,6 +320,6 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   void handleError(e) {
-    print(e);
+    Toast.show(e.toString(), context, duration: Toast.LENGTH_LONG);
   }
 }

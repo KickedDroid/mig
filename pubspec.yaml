@@ -27,7 +27,6 @@ dependencies:
   fl_chart: ^0.10.0
   image_picker: ^0.6.7+2
   splashscreen: ^1.2.0
-  majascan: ^0.3.7
   flutter_webview_plugin: ^0.3.11
   qr_flutter: ^3.2.0
   path_provider: ^1.6.11
@@ -42,7 +41,7 @@ dependencies:
   charts_flutter:
   image_gallery_saver: '^1.5.0'
   toast: ^0.1.5
-
+  qr_code_scanner: ^0.0.13
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3

@@ -47,5 +47,7 @@
 	<string>Need to upload images</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Need to upload images</string>
+	<key>io.flutter.embedded_views_preview</key>
+	<true/>
 </dict>
 </plist>

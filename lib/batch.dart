@@ -86,7 +86,7 @@ class _BatchAddPageState extends State<BatchAddPage> {
         onPressed: () {
           getTextInputData();
           if (controllerCmin.text.length == 0) {
-            Toast.show("Enter a Company ID", context,
+            Toast.show("Enter a Min and Max", context,
                 duration: Toast.LENGTH_LONG);
           } else {
             show();

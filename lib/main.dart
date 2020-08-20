@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
 import 'package:mig/batch.dart';
 import 'package:mig/graph.dart';
 import 'package:mig/history.dart';
 import 'package:mig/latestentries.dart';
 import 'package:mig/qr.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 import './signin.dart';
 import 'package:splashscreen/splashscreen.dart';
 import './machines.dart';
@@ -18,7 +20,6 @@ import './qr.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'graph.dart';
-
 
 main() async {
   await Hive.initFlutter();
@@ -94,6 +95,7 @@ void signOut() async {
 }
 
 void signOutGoogle() async {
+  final GoogleSignIn googleSignIn = GoogleSignIn();
   await googleSignIn.signOut();
 
   print("User Sign Out");
@@ -109,13 +111,31 @@ Widget _handleWidget() {
           );
         } else {
           if (snapshot.hasData) {
-            return WelcomeScreen();
+            return _handleWidgetMachineSetUp();
           } else {
             return SignInPage();
             //return WelcomeScreen();
           }
         }
       });
+}
+
+Widget _handleWidgetMachineSetUp() {
+  return ValueListenableBuilder(
+    valueListenable: Hive.box('myBox').listenable(),
+    builder: (BuildContext context, box, Widget child) {
+      var name = box.get('isEmpty');
+      if (name == true) {
+        return Scaffold(
+          body: Center(
+            child: Text('Add Machines to View data'),
+          ),
+        );
+      } else {
+        return WelcomeScreen();
+      }
+    },
+  );
 }
 
 class WelcomeScreen extends StatelessWidget {
@@ -286,7 +306,16 @@ class WelcomeScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          QrPage(),
+                          FlatButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => QRViewExample(),
+                                  ),
+                                );
+                              },
+                              child: Text("Scan Qr Code")),
                         ],
                       ),
                     ],
@@ -427,10 +456,16 @@ class WelcomeScreen extends StatelessWidget {
                                         "${double.parse(machines['coolant-percent'])}",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            color: double.parse(machines['coolant-percent']) < double.parse(machines['c-max']) && 
-                                                  double.parse(machines['coolant-percent']) > double.parse(machines['c-min'])
-                                                    ? Colors.greenAccent[700]
-                                                    : Colors.red)),
+                                            color: double.parse(machines[
+                                                            'coolant-percent']) <
+                                                        double.parse(machines[
+                                                            'c-max']) &&
+                                                    double.parse(machines[
+                                                            'coolant-percent']) >
+                                                        double.parse(
+                                                            machines['c-min'])
+                                                ? Colors.greenAccent[700]
+                                                : Colors.red)),
                                   );
                                 },
                               ); //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
@@ -485,10 +520,16 @@ class WelcomeScreen extends StatelessWidget {
                                   trailing: Text(machines['coolant-percent'],
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          color: double.parse(machines['coolant-percent']) < double.parse(machines['c-max']) && 
-                                                  double.parse(machines['coolant-percent']) > double.parse(machines['c-min'])
-                                                    ? Colors.greenAccent[700]
-                                                    : Colors.red)),
+                                          color: double.parse(machines[
+                                                          'coolant-percent']) <
+                                                      double.parse(
+                                                          machines['c-max']) &&
+                                                  double.parse(machines[
+                                                          'coolant-percent']) >
+                                                      double.parse(
+                                                          machines['c-min'])
+                                              ? Colors.greenAccent[700]
+                                              : Colors.red)),
                                 );
                               },
                             ); //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
