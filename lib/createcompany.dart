@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:mig/batch.dart';
 import 'package:mig/signin.dart';
 import 'package:toast/toast.dart';
 import 'extensions.dart';
@@ -156,7 +157,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => _handleWidget(),
+                        builder: (context) => BatchAddPage(),
                       ),
                     );
                   },
@@ -193,7 +194,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
 createCompany(String companyId) async {
   var box = Hive.box('myBox');
   var time = new DateTime.now();
-  box.put('isEmpty', true)
+  box.put('isEmpty', true);
   await Firestore.instance
       .collection(box.get('companyId'))
       .document("Mori")
