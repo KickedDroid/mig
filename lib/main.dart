@@ -19,6 +19,7 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'graph.dart';
 
+
 main() async {
   await Hive.initFlutter();
   await Hive.openBox('myBox');
@@ -275,10 +276,12 @@ class WelcomeScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Enter Coolant Concentration',
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
+                      Center(
+                        child: Text(
+                          'Enter Coolant Concentration',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -424,11 +427,10 @@ class WelcomeScreen extends StatelessWidget {
                                         "${double.parse(machines['coolant-percent'])}",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            color: double.parse(machines[
-                                                        'coolant-percent']) <
-                                                    6.0
-                                                ? Colors.red
-                                                : Color(0xff1c6b92))),
+                                            color: double.parse(machines['coolant-percent']) < double.parse(machines['c-max']) && 
+                                                  double.parse(machines['coolant-percent']) > double.parse(machines['c-min'])
+                                                    ? Colors.greenAccent[700]
+                                                    : Colors.red)),
                                   );
                                 },
                               ); //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
@@ -483,11 +485,10 @@ class WelcomeScreen extends StatelessWidget {
                                   trailing: Text(machines['coolant-percent'],
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          color: double.parse(machines[
-                                                      'coolant-percent']) >
-                                                  10.0
-                                              ? Colors.red
-                                              : Colors.green)),
+                                          color: double.parse(machines['coolant-percent']) < double.parse(machines['c-max']) && 
+                                                  double.parse(machines['coolant-percent']) > double.parse(machines['c-min'])
+                                                    ? Colors.greenAccent[700]
+                                                    : Colors.red)),
                                 );
                               },
                             ); //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),

@@ -54,10 +54,11 @@ class _MachineListState extends State<MachineList> {
                           name: machines['name'],
                           c_percent: machines['coolant-percent'],
                           last_updated:
-                              machines['last-updated'].substring(0, 10),
+                              machines['last-updated'].substring(5, 7) + "/" + machines['last-updated'].substring(8, 10) + "/" + machines['last-updated'].substring(0, 4),
                           notes: machines['history'],
                           docRef: machines.documentID,
                           cMin: double.parse(machines['c-min']),
+                          cMax: double.parse(machines['c-max']),
                         );
                       },
                     );
@@ -75,6 +76,7 @@ class MachineItem extends StatelessWidget {
   final String c_percent;
   final dynamic notes;
   final double cMin;
+  final double cMax;
 
   MachineItem(
       {this.name,
@@ -82,7 +84,8 @@ class MachineItem extends StatelessWidget {
       this.c_percent,
       this.notes,
       this.docRef,
-      this.cMin});
+      this.cMin,
+      this.cMax});
 
   @override
   Widget build(BuildContext context) {
@@ -104,12 +107,19 @@ class MachineItem extends StatelessWidget {
               ),
               collapsed: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(last_updated != null ? last_updated : 'LastUpdated'),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(last_updated != null ? "Last Updated: " + last_updated : 'Last Updated'),
+                      Text(cMax != null ? "Concentration Limits: (" + cMin.toStringAsFixed(0) + "% -" + cMax.toStringAsFixed(0) + "%)": 'LastUpdated'),
+                    ],
+                  ),
                   Card(
-                    color: double.parse(c_percent) < cMin
-                        ? Colors.red
-                        : greenPercent,
+                    color: double.parse(c_percent) < cMax && double.parse(c_percent) > cMin
+                              ? greenPercent
+                              : Colors.red,
                     child: Center(
                         child: Padding(
                       padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
@@ -172,7 +182,7 @@ class MachineItem extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                UpdateMachinePage(docRef, name),
+                                UpdateMachinePage(docRef, name)
                           ),
                         );
                       },
