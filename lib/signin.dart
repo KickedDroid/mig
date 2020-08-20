@@ -278,7 +278,7 @@ class _SignInPageState extends State<SignInPage> {
                           box.put('companyId', companyId);
                         } else {
                           Toast.show("Enter a Company ID", context,
-                              duration: Toast.LENGTH_LONG);
+                              duration: 4);
                         }
                       },
                       child: Padding(

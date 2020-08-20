@@ -8,6 +8,7 @@ import 'package:hive/hive.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:toast/toast.dart';
 import 'extensions.dart';
 import 'package:screenshot/screenshot.dart';
 
@@ -84,7 +85,12 @@ class _BatchAddPageState extends State<BatchAddPage> {
         child: Icon(Icons.check),
         onPressed: () {
           getTextInputData();
-          show();
+          if (controllerCmin.text.length == 0) {
+            Toast.show("Enter a Company ID", context,
+                duration: Toast.LENGTH_LONG);
+          } else {
+            show();
+          }
         },
       ),
       body: SafeArea(
