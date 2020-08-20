@@ -50,28 +50,21 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: FutureBuilder(builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text('Error');
-        }
-        if (snapshot.connectionState == ConnectionState.done) {
-          return new SplashScreen(
-            seconds: 3,
-            navigateAfterSeconds: _handleWidget(),
-            title: new Text(
-              'Welcome To 168 Manufacturing',
-              style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-            ),
-            image: new Image.asset('assets/168.png'),
-            //backgroundGradient: new LinearGradient(colors: [Colors.cyan, Colors.blue], begin: Alignment.topLeft, end: Alignment.bottomRight),
-            backgroundColor: Colors.white,
-            styleTextUnderTheLoader: new TextStyle(),
-            photoSize: 100.0,
-            onClick: () => print("Flutter Egypt"),
-            loaderColor: Color(0xFF1c6b92),
-          );
-        }
-      }),
+      home: new SplashScreen(
+        seconds: 3,
+        navigateAfterSeconds: _handleWidget(),
+        title: new Text(
+          'Welcome To 168 Manufacturing',
+          style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+        ),
+        image: new Image.asset('assets/168.png'),
+        //backgroundGradient: new LinearGradient(colors: [Colors.cyan, Colors.blue], begin: Alignment.topLeft, end: Alignment.bottomRight),
+        backgroundColor: Colors.white,
+        styleTextUnderTheLoader: new TextStyle(),
+        photoSize: 100.0,
+        onClick: () => print("Flutter Egypt"),
+        loaderColor: Color(0xFF1c6b92),
+      ),
       routes: <String, WidgetBuilder>{
         '/Machines': (BuildContext context) => MachineList(),
         '/Addmachines': (BuildContext context) => AddMachineList(),
