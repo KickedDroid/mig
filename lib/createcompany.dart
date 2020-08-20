@@ -153,7 +153,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                     signUp(emailData, passData);
                     var box = Hive.box('myBox');
                     box.put('companyId', companyId);
-                    createCompany(companyId);
+                    //createCompany(companyId);
                     Navigator.push(
                       context,
                       MaterialPageRoute(

@@ -24,7 +24,6 @@ dependencies:
   flutter:
     sdk: flutter
   expandable: ^4.1.4
-  fl_chart: ^0.10.0
   image_picker: ^0.6.7+2
   splashscreen: ^1.2.0
   flutter_webview_plugin: ^0.3.11
@@ -36,8 +35,6 @@ dependencies:
   hive: ^1.4.2
   hive_flutter:
   cloud_firestore: ^0.13.7
-  screenshot: ^0.2.0
-  bezier_chart: ^1.0.17+1
   charts_flutter:
   image_gallery_saver: '^1.5.0'
   toast: ^0.1.5

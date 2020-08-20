@@ -10,7 +10,6 @@ import 'package:mig/main.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:toast/toast.dart';
-import 'package:screenshot/screenshot.dart';
 
 class BatchAddPage extends StatefulWidget {
   @override
@@ -184,8 +183,6 @@ class BatchQrCodes extends StatefulWidget {
 class _BatchQrCodesState extends State<BatchQrCodes> {
   GlobalKey globalKey = new GlobalKey();
   String _dataString = "Hello from this QR";
-
-  ScreenshotController screenshotController = ScreenshotController();
 
   Future<void> _captureAndSharePng() async {
     try {

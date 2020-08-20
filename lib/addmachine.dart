@@ -14,6 +14,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:toast/toast.dart';
 import 'extensions.dart';
 import 'generateQr.dart';
 import 'namechange.dart';
@@ -175,29 +176,34 @@ class _AddMachinePageState extends State<AddMachinePage> {
           child: Icon(Icons.check),
           onPressed: () {
             var box = Hive.box('myBox');
-            Firestore.instance
-                .collection(box.get('companyId'))
-                .document("$name")
-                .setData({
-              "name": "$name",
-              "coolant-percent": "0.0",
-              "last-updated": "$time",
-              "last-cleaned": "$time",
-              "c-min": "$cmin",
-              "c-max": "$cmax"
-            });
-            Firestore.instance
-                .collection(box.get('companyId'))
-                .document("$name")
-                .collection('notes')
-                .document("$time")
-                .setData({"note": "No Notes", "time": "$time"});
-            Firestore.instance
-                .collection(box.get('companyId'))
-                .document("$name")
-                .collection('history')
-                .document("$time")
-                .setData({"data": "0.0", "time": "$time"});
+            if (cmin != null) {
+              Firestore.instance
+                  .collection(box.get('companyId'))
+                  .document("$name")
+                  .setData({
+                "name": "$name",
+                "coolant-percent": "0.0",
+                "last-updated": "$time",
+                "last-cleaned": "$time",
+                "c-min": "$cmin",
+                "c-max": "$cmax"
+              });
+              Firestore.instance
+                  .collection(box.get('companyId'))
+                  .document("$name")
+                  .collection('notes')
+                  .document("$time")
+                  .setData({"note": "No Notes", "time": "$time"});
+              Firestore.instance
+                  .collection(box.get('companyId'))
+                  .document("$name")
+                  .collection('history')
+                  .document("$time")
+                  .setData({"data": "0.0", "time": "$time"});
+            } else {
+              Toast.show('Enter Input Data', context,
+                  duration: Toast.LENGTH_LONG);
+            }
             Navigator.pop(context);
           }),
       appBar: AppBar(
