@@ -94,10 +94,15 @@ class MachineItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        leading: Icon(Icons.note),
+        leading: Icon(Icons.note, size: 20,),
+        trailing: IconButton(icon: Icon(Icons.edit,size: 20),
+                onPressed: () {
+                  //   _onDeleteItemPressed(index);
+                },
+              ),
         title: Text(
           notes,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
         ),
         subtitle: Text(name.substring(0, 10)));
   }
