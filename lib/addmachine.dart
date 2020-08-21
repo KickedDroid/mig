@@ -176,7 +176,7 @@ class _AddMachinePageState extends State<AddMachinePage> {
           child: Icon(Icons.check),
           onPressed: () {
             var box = Hive.box('myBox');
-            if (cmin != null) {
+            if (cmin != null && cmax != null) {
               Firestore.instance
                   .collection(box.get('companyId'))
                   .document("$name")
@@ -200,11 +200,11 @@ class _AddMachinePageState extends State<AddMachinePage> {
                   .collection('history')
                   .document("$time")
                   .setData({"data": "0.0", "time": "$time"});
+              Navigator.pop(context);
             } else {
               Toast.show('Enter Input Data', context,
                   duration: Toast.LENGTH_LONG);
             }
-            Navigator.pop(context);
           }),
       appBar: AppBar(
         title: Text('Add Machine'),
