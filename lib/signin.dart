@@ -116,41 +116,41 @@ class _SignInPageState extends State<SignInPage> {
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsets.fromLTRB(60.0, 20.0, 60.0, 20.0),
+                          const EdgeInsets.fromLTRB(60.0, 10.0, 60.0, 20.0),
                       child: Container(
                           height: MediaQuery.of(context).size.height * .2,
                           child: Image.asset('assets/logosb.png')),
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: Colors.grey)),
-                      height: MediaQuery.of(context).size.height * .07,
-                      width: 300,
-                      child: TextFormField(
-                        onChanged: (value) {
-                          setState(() {
-                            emailData = value;
-                          });
-                        },
-                        controller: email,
-                        style: TextStyle(
-                            color: Colors.black, fontFamily: 'SFUIDisplay'),
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Email',
-                            prefixIcon: Icon(Icons.person_outline),
-                            labelStyle: TextStyle(fontSize: 15)),
+                    Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * .07,
+                        decoration: BoxDecoration(),
+                        width: 300,
+                        child: TextFormField(
+                            onChanged: (value) {
+                              setState(() {
+                                emailData = value;
+                              });
+                            },
+                            controller: email,
+                            style: TextStyle(
+                                color: Colors.black, fontFamily: 'SFUIDisplay', fontSize: 15),
+                            decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                
+                                border: OutlineInputBorder(),
+                                labelText: 'Email',
+                                prefixIcon: Icon(Icons.person_outline),
+                                labelStyle: TextStyle(fontSize: 15))),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(6.0),
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: Colors.grey)),
+                            ),
                         height: MediaQuery.of(context).size.height * .07,
                         width: 300,
                         child: TextFormField(
@@ -161,9 +161,11 @@ class _SignInPageState extends State<SignInPage> {
                             },
                             controller: pass,
                             style: TextStyle(
-                                color: Colors.black, fontFamily: 'SFUIDisplay'),
+                                color: Colors.black, fontFamily: 'SFUIDisplay', fontSize: 15),
                             obscureText: !this._showPassword,
                             decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
                                 border: OutlineInputBorder(),
                                 labelText: 'Password',
                                 prefixIcon: Icon(Icons.lock_outline),
@@ -171,13 +173,10 @@ class _SignInPageState extends State<SignInPage> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(0.0),
+                      padding: const EdgeInsets.all(6.0),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: Colors.grey),
-                        ),
+                            ),
                         height: MediaQuery.of(context).size.height * .07,
                         width: 300,
                         child: TextFormField(
@@ -188,8 +187,10 @@ class _SignInPageState extends State<SignInPage> {
                             },
                             controller: pass,
                             style: TextStyle(
-                                color: Colors.black, fontFamily: 'SFUIDisplay'),
+                                color: Colors.black, fontFamily: 'SFUIDisplay', fontSize: 15),
                             decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
                                 border: OutlineInputBorder(),
                                 labelText: 'CompanyID',
                                 prefixIcon: Icon(Icons.edit),
@@ -210,7 +211,7 @@ class _SignInPageState extends State<SignInPage> {
                       onLongPress: () => {},
                       child: Padding(
                         padding:
-                            const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 10.0),
+                            const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 10.0),
                         child: Container(
                             height: MediaQuery.of(context).size.height * .07,
                             width: 300,
@@ -282,7 +283,7 @@ class _SignInPageState extends State<SignInPage> {
                         }
                       },
                       child: Padding(
-                        padding: const EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(10.0),
                         child: Text("Sign in with Google"),
                       ),
                     ),
@@ -291,7 +292,7 @@ class _SignInPageState extends State<SignInPage> {
                         resetPassword(emailData);
                       },
                       child: Padding(
-                        padding: const EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(10.0),
                         child: Text("Forgot Password"),
                       ),
                     ),
@@ -305,7 +306,7 @@ class _SignInPageState extends State<SignInPage> {
                         );
                       },
                       child: Padding(
-                        padding: const EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(10.0),
                         child: Text("Create Company"),
                       ),
                     )
