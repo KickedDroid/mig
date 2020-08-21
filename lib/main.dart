@@ -72,6 +72,7 @@ class MyApp extends StatelessWidget {
         '/BatchQrCodes': (BuildContext context) => BatchQrCodes(),
         '/Useraccount': (BuildContext context) => new UserAccount(),
         '/Overview': (BuildContext context) => new Overview(),
+        '/History': (BuildContext context) => HistoryPage(),
         '/FAQ': (BuildContext context) => WebviewScaffold(
             url: 'https://168mfg.com/system/',
             appBar: AppBar(title: Text('Webview'))),
@@ -179,13 +180,13 @@ class WelcomeScreen extends StatelessWidget {
                         Navigator.pushNamed(context, '/TDC');
                       },
                     ),
-                    ListTile(
-                      leading: Icon(Icons.settings),
-                      title: new Text("Settings"),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
+                    // ListTile(
+                    //   leading: Icon(Icons.settings),
+                    //   title: new Text("Settings"),
+                    //   onTap: () {
+                    //     Navigator.of(context).pop();
+                    //   },
+                    // ),
                     ListTile(
                       leading: Icon(Icons.add),
                       title: Text("Machine Setup"),
@@ -198,14 +199,16 @@ class WelcomeScreen extends StatelessWidget {
                       leading: Icon(Icons.history),
                       title: Text("History"),
                       onTap: () {
-                        Navigator.pushNamed(context, '/Graph');
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pushNamed('/History');
                       },
                     ),
                     ListTile(
-                      leading: Icon(Icons.info_outline),
-                      title: Text("About"),
+                      leading: Icon(Icons.note),
+                      title: Text("Notes"),
                       onTap: () {
                         Navigator.of(context).pop();
+                        Navigator.of(context).pushNamed('/Notes');
                       },
                     ),
                     ListTile(

@@ -283,7 +283,7 @@ class _SignInPageState extends State<SignInPage> {
                         }
                       },
                       child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(12.0),
                         child: Text("Sign in with Google"),
                       ),
                     ),
@@ -292,7 +292,7 @@ class _SignInPageState extends State<SignInPage> {
                         resetPassword(emailData);
                       },
                       child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(12.0),
                         child: Text("Forgot Password"),
                       ),
                     ),
@@ -306,7 +306,7 @@ class _SignInPageState extends State<SignInPage> {
                         );
                       },
                       child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(12.0),
                         child: Text("Create Company"),
                       ),
                     )

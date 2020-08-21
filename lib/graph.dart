@@ -175,7 +175,7 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
                         titleOutsideJustification:
                             charts.OutsideJustification.middleDrawArea,
                         innerPadding: 20),
-                    charts.ChartTitle("Coolant Concentration:  (Limits = " + widget.cMin.toStringAsFixed(0) + "% - " + widget.cMax.toStringAsFixed(0) + "%)",
+                    charts.ChartTitle("Coolant Conc. %:  (Limits = " + widget.cMin.toStringAsFixed(0) + "% - " + widget.cMax.toStringAsFixed(0) + "%)",
                         behaviorPosition: charts.BehaviorPosition.start,
                         titleOutsideJustification:
                             charts.OutsideJustification.middleDrawArea,
