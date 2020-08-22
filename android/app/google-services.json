@@ -38,49 +38,6 @@
             {
               "client_id": "707518851728-960cv9l1qksf7g23qqbb8cmeokoso31f.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "707518851728-5dbo1p15ltee6imnvr6gn5kpd97ufk2s.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.mig"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:707518851728:android:4d02981f0210fece780615",
-        "android_client_info": {
-          "package_name": "com.pluckedstudios.fullshop"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "707518851728-960cv9l1qksf7g23qqbb8cmeokoso31f.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC2sao-THDWAT_zVwVaDbrgWdffgG6xIYk"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "707518851728-960cv9l1qksf7g23qqbb8cmeokoso31f.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "707518851728-5dbo1p15ltee6imnvr6gn5kpd97ufk2s.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.mig"
-              }
             }
           ]
         }
