@@ -237,10 +237,11 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        if (emailData.contains("@")) {
+                        if (company != null) {
                           signUp(emailData, passData);
                           var box = Hive.box('myBox');
                           box.put('companyId', companyId);
+                          box.put('admin', false);
                         } else {
                           showToast();
                         }

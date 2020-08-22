@@ -212,15 +212,6 @@ class _AddMachinePageState extends State<AddMachinePage> {
         iconTheme: IconThemeData(color: Colors.white),
         actionsIconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Color(0xFF1c6b92),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.share,
-              color: Colors.white,
-            ),
-            onPressed: _captureAndSharePng,
-          )
-        ],
       ),
       body: _contentWidget(),
     );
@@ -328,32 +319,6 @@ class _AddMachinePageState extends State<AddMachinePage> {
                 ),
               ],
             ).padding(),
-          ),
-          Expanded(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(
-                        10,
-                      )),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: RepaintBoundary(
-                      key: globalKey,
-                      child: QrImage(
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.black,
-                        data: _dataString,
-                        size: 0.4 * bodyHeight,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
           ),
         ],
       ),

@@ -195,6 +195,7 @@ createCompany(String companyId) async {
   var box = Hive.box('myBox');
   var time = new DateTime.now();
   box.put('isEmpty', true);
+  box.put('admin', true);
   await Firestore.instance
       .collection(box.get('companyId'))
       .document("Mori")

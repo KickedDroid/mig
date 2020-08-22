@@ -292,15 +292,17 @@ class WelcomeScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           FlatButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => QRViewExample(),
-                                  ),
-                                );
-                              },
-                              child: null),
+                            color: Colors.blue,
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => QRViewExample(),
+                                ),
+                              );
+                            },
+                            child: Text('Scan'),
+                          )
                         ],
                       ),
                     ],
