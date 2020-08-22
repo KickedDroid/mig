@@ -20,6 +20,8 @@ import './qr.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'graph.dart';
+import 'package:flutter/services.dart' ;
+
 
 main() async {
   await Hive.initFlutter();
@@ -31,6 +33,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+      ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -91,6 +97,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
 void signOut() async {
   FirebaseAuth.instance.signOut();
 }
@@ -101,6 +108,8 @@ void signOutGoogle() async {
 
   print("User Sign Out");
 }
+
+
 
 Widget _handleWidget() {
   return StreamBuilder(
