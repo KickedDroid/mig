@@ -7,6 +7,8 @@ import 'package:mig/batch.dart';
 import 'package:mig/graph.dart';
 import 'package:mig/history.dart';
 import 'package:mig/latestentries.dart';
+import 'package:mig/diluted.dart';
+import 'package:mig/strongcoolant.dart';
 import 'package:mig/qr.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import './signin.dart';
@@ -20,8 +22,7 @@ import './qr.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'graph.dart';
-import 'package:flutter/services.dart' ;
-
+import 'package:flutter/services.dart';
 
 main() async {
   await Hive.initFlutter();
@@ -33,10 +34,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-      ]);
+    //SystemChrome.setPreferredOrientations([
+    // DeviceOrientation.portraitUp,
+    // ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -97,7 +97,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 void signOut() async {
   FirebaseAuth.instance.signOut();
 }
@@ -108,8 +107,6 @@ void signOutGoogle() async {
 
   print("User Sign Out");
 }
-
-
 
 Widget _handleWidget() {
   return StreamBuilder(
@@ -138,6 +135,10 @@ class WelcomeScreen extends StatelessWidget {
   var box = Hive.box('myBox');
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+
     return Scaffold(
         key: _scaffoldKey,
         drawer: Drawer(
@@ -409,132 +410,168 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
-                  child: Card(
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        ListTile(
-                          //dense: true,
-                          title: Text(
-                            'Diluted',
-                            style: TextStyle(
-                                color: Color(0xFF3c6172),
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          subtitle: Text(
-                              "Machines with the lowest coolant concentration"),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DilutedPage(),
                         ),
-                        StreamBuilder(
-                          stream: Firestore.instance
-                              .collection(box.get('companyId'))
-                              .orderBy('coolant-percent', descending: false)
-                              .snapshots(),
-                          builder: (context, snapshot) {
-                            assert(snapshot != null);
-                            if (!snapshot.hasData) {
-                              return Text('Please Wait');
-                            } else {
-                              return ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: 2,
-                                itemBuilder: (context, index) {
-                                  DocumentSnapshot machines =
-                                      snapshot.data.documents[index];
-                                  return ListTile(
-                                    dense: true,
-                                    title: Text('${machines['name']}'),
-                                    leading: Icon(Icons.trending_down),
-                                    trailing: Text(
-                                        "${double.parse(machines['coolant-percent'])}",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: double.parse(machines[
-                                                            'coolant-percent']) <
-                                                        double.parse(machines[
-                                                            'c-max']) &&
-                                                    double.parse(machines[
-                                                            'coolant-percent']) >
-                                                        double.parse(
-                                                            machines['c-min'])
-                                                ? Colors.greenAccent[700]
-                                                : Colors.red)),
-                                  );
-                                },
-                              ); //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
-                            }
-                          },
-                        )
-                      ],
+                      );
+                    },
+                    child: Card(
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          ListTile(
+                            //dense: true,
+                            title: Text(
+                              'Diluted',
+                              style: TextStyle(
+                                  color: Color(0xFF3c6172),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            subtitle: Text(
+                                "Machines with the lowest coolant concentration"),
+                          ),
+                          StreamBuilder(
+                            stream: Firestore.instance
+                                .collection(box.get('companyId'))
+                                .orderBy('coolant-percent', descending: false)
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              assert(snapshot != null);
+                              if (!snapshot.hasData) {
+                                return Text('Please Wait');
+                              } else {
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: 2,
+                                  itemBuilder: (context, index) {
+                                    DocumentSnapshot machines =
+                                        snapshot.data.documents[index];
+                                    return ListTile(
+                                      dense: true,
+                                      title: Text(machines['name'] != null
+                                          ? machines['name'] +
+                                              " (" +
+                                              "${machines['c-min']}" +
+                                              "%-" +
+                                              "${machines['c-max']}" +
+                                              "%)"
+                                          : "No Data"),
+                                      leading: Icon(Icons.trending_down),
+                                      trailing: Text(
+                                          "${double.parse(machines['coolant-percent'])}",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: double.parse(machines[
+                                                              'coolant-percent']) <
+                                                          double.parse(machines[
+                                                              'c-max']) &&
+                                                      double.parse(machines[
+                                                              'coolant-percent']) >
+                                                          double.parse(
+                                                              machines['c-min'])
+                                                  ? Colors.greenAccent[700]
+                                                  : Colors.red)),
+                                    );
+                                  },
+                                ); //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
+                              }
+                            },
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                Card(
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      ListTile(
-                        //dense: true,
-                        title: Text(
-                          'Strong',
-                          style: TextStyle(
-                              color: Color(0xFF3c6172),
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => StrongPage(),
                         ),
-                        subtitle: Text(
-                            "Machines with the highest coolant concentration"),
+                      );
+                    },
+                    child: Card(
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
-                      StreamBuilder(
-                        stream: Firestore.instance
-                            .collection(box.get('companyId'))
-                            .orderBy('coolant-percent', descending: true)
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          assert(snapshot != null);
-                          if (!snapshot.hasData) {
-                            return Text('Please Wait');
-                          } else {
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: 2,
-                              itemBuilder: (context, index) {
-                                DocumentSnapshot machines =
-                                    snapshot.data.documents[index];
-                                return ListTile(
-                                  dense: true,
-                                  title: Text(machines['name'] != null
-                                      ? machines['name']
-                                      : "No Data"),
-                                  leading: Icon(Icons.trending_up),
-                                  trailing: Text(machines['coolant-percent'],
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: double.parse(machines[
-                                                          'coolant-percent']) <
-                                                      double.parse(
-                                                          machines['c-max']) &&
-                                                  double.parse(machines[
-                                                          'coolant-percent']) >
-                                                      double.parse(
-                                                          machines['c-min'])
-                                              ? Colors.greenAccent[700]
-                                              : Colors.red)),
-                                );
-                              },
-                            ); //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
-                          }
-                        },
-                      )
-                    ],
+                      child: Column(
+                        children: <Widget>[
+                          ListTile(
+                            //dense: true,
+                            title: Text(
+                              'Strong',
+                              style: TextStyle(
+                                  color: Color(0xFF3c6172),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            subtitle: Text(
+                                "Machines with the highest coolant concentration"),
+                          ),
+                          StreamBuilder(
+                            stream: Firestore.instance
+                                .collection(box.get('companyId'))
+                                .orderBy('coolant-percent', descending: true)
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              assert(snapshot != null);
+                              if (!snapshot.hasData) {
+                                return Text('Please Wait');
+                              } else {
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: 2,
+                                  itemBuilder: (context, index) {
+                                    DocumentSnapshot machines =
+                                        snapshot.data.documents[index];
+                                    return ListTile(
+                                      dense: true,
+                                      title: Text(machines['name'] != null
+                                          ? machines['name'] +
+                                              " (" +
+                                              "${machines['c-min']}" +
+                                              "%-" +
+                                              "${machines['c-max']}" +
+                                              "%)"
+                                          : "No Data"),
+                                      leading: Icon(Icons.trending_up),
+                                      trailing: Text(
+                                          machines['coolant-percent'],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: double.parse(machines[
+                                                              'coolant-percent']) <
+                                                          double.parse(machines[
+                                                              'c-max']) &&
+                                                      double.parse(machines[
+                                                              'coolant-percent']) >
+                                                          double.parse(
+                                                              machines['c-min'])
+                                                  ? Colors.greenAccent[700]
+                                                  : Colors.red)),
+                                    );
+                                  },
+                                ); //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
+                              }
+                            },
+                          )
+                        ],
+                      ),
+                    ),
                   ),
-                ).padding()
+                ),
               ],
             ))));
   }
