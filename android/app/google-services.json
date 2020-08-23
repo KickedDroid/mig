@@ -59,6 +59,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "707518851728-ichj5lbkt3sl00hc3jsqr3692q1ob5sc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pluckedstudios.fullshop",
+            "certificate_hash": "8423ec4def034d33730e19220046649afc60e5d7"
+          }
+        },
+        {
           "client_id": "707518851728-960cv9l1qksf7g23qqbb8cmeokoso31f.apps.googleusercontent.com",
           "client_type": 3
         }

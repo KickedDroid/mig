@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
         navigateAfterSeconds: _handleWidget(),
         title: new Text(
           'Welcome To 168 Manufacturing',
-          style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+          style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
         ),
         image: new Image.asset('assets/168.png'),
         //backgroundGradient: new LinearGradient(colors: [Colors.cyan, Colors.blue], begin: Alignment.topLeft, end: Alignment.bottomRight),
