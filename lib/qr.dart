@@ -164,7 +164,7 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
         elevation: 2.0,
         title: Text(
           'Add Refractometer Reading',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 18),
         ),
         backgroundColor: Color(0xFF1c6b92),
         iconTheme: IconThemeData(color: Colors.white),

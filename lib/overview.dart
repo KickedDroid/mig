@@ -86,9 +86,9 @@ Widget _buildBody(BuildContext context) {
             color: Colors.white,
             child: DataTable(columns: [
               DataColumn(label: Text('Name')),
-              DataColumn(label: Text('Last Updated')),
+              DataColumn(label: Text('Last\nUpdated')),
               DataColumn(label: Text('Coolant\nPercentage')),
-              DataColumn(label: Text('Last Cleaned')),
+              DataColumn(label: Text('Last\nCleaned')),
             ], rows: _buildList(context, snapshot.data.documents)),
           ),
         );
@@ -113,8 +113,10 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
   return DataRow(
     cells: [
       DataCell(Text(
-        machines['name'],
-        style: TextStyle(fontWeight: FontWeight.w500),
+        machines['name'].length > 19
+        ? machines['name'].substring(0,18) + "..."
+        : machines['name'],
+        style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
       )),
       DataCell(Text(
         machines['last-updated'].substring(5, 7) +
@@ -122,7 +124,7 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
             machines['last-updated'].substring(8, 10) +
             "/" +
             machines['last-updated'].substring(2, 4),
-        style: TextStyle(fontWeight: FontWeight.w500),
+        style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
       )),
       DataCell(Text(
           machines['coolant-percent'] +
@@ -132,7 +134,7 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
               machines['c-max'] +
               ")",
           style: TextStyle(
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.bold, fontSize: 12,
               color: double.parse(machines['coolant-percent']) <
                           double.parse(machines['c-max']) &&
                       double.parse(machines['coolant-percent']) >
@@ -146,7 +148,7 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
                 "/" +
                 machines['last-cleaned'].substring(2, 4) ??
             "No Input",
-        style: TextStyle(fontWeight: FontWeight.w500),
+        style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
       )),
     ],
   );

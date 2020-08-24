@@ -96,37 +96,39 @@ class GenerateScreenState extends State<GenerateScreen> {
           ),
           RepaintBoundary(
             key: globalKey,
-            child: Expanded(
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(
-                          10,
-                        )),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          QrImage(
-                            backgroundColor: Colors.white,
-                            foregroundColor: Colors.black,
-                            data: widget.docRef,
-                            size: 0.5 * bodyHeight,
-                          ),
-                          Text(
-                            "${widget.name}",
-                            style:
-                                TextStyle(fontSize: 32.0, color: Colors.black),
-                          ),
-                        ],
+            child: Column(
+              children: [
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(
+                            10,
+                          )),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            QrImage(
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
+                              data: widget.docRef,
+                              size: 0.5 * bodyHeight,
+                            ),
+                            Text(
+                              "${widget.name}",
+                              style: TextStyle(
+                                  fontSize: 32.0, color: Colors.black),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
           ),
         ],

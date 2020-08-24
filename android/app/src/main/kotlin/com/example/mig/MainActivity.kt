@@ -1,4 +1,4 @@
-package com.example.mig
+package com.pluckedstudios.fullshop
 
 import io.flutter.embedding.android.FlutterActivity
 

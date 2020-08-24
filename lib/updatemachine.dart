@@ -42,10 +42,10 @@ class _UpdateMachinePageState extends State<UpdateMachinePageQr> {
         elevation: 2.0,
         title: Text(
           'Add Refractometer Reading',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.white, fontSize: 18),
         ),
-        backgroundColor: Colors.green[50],
-        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Color(0xFF1c6b92),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: SafeArea(
         child: Container(
@@ -95,29 +95,29 @@ class _UpdateMachinePageState extends State<UpdateMachinePageQr> {
                       controller: controller,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Add any notes',
+                          labelText: 'Add any notes (Optional)',
                           labelStyle: TextStyle(fontSize: 15)),
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    TextField(
-                      controller: cminController,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Add any notes',
-                          labelStyle: TextStyle(fontSize: 15)),
-                    ),
-                    TextField(
-                      controller: cmaxController,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Add any notes',
-                          labelStyle: TextStyle(fontSize: 15)),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     TextField(
+                //       controller: cminController,
+                //       decoration: InputDecoration(
+                //           border: OutlineInputBorder(),
+                //           labelText: 'Add any notes',
+                //           labelStyle: TextStyle(fontSize: 15)),
+                //     ),
+                //     TextField(
+                //       controller: cmaxController,
+                //       decoration: InputDecoration(
+                //           border: OutlineInputBorder(),
+                //           labelText: 'Add any notes',
+                //           labelStyle: TextStyle(fontSize: 15)),
+                //     ),
+                //   ],
+                // ),
                 SwitchListTile(
                     title: Text(
                       "Cleaned Sump",
@@ -153,13 +153,13 @@ class _UpdateMachinePageState extends State<UpdateMachinePageQr> {
                                 .setData({"data": "$data", "time": "$time"});
                           }
                           if (notes != null) {
-                            Firestore.instance
-                                .collection(box.get('companyId'))
-                                .document("${widget.docRef}")
-                                .updateData({
-                              "notes": {"time": "$time", "note": "$notes"}
-                            });
-                          }
+                          Firestore.instance
+                              .collection(box.get('companyId'))
+                              .document("${widget.docRef}")
+                              .collection("notes")
+                              .document("$time")
+                              .setData({"note": "$notes", "time": "$time"});
+                        }
 
                           if (cleaned != false) {
                             Firestore.instance

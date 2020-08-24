@@ -63,6 +63,12 @@ class _BatchAddPageState extends State<BatchAddPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          backgroundColor: Color(0xFF1c6b92),
+          title: Text('Batch Add Machines',
+              style: TextStyle(
+                color: Color(0xffFFFFFF),
+              ))),
       bottomNavigationBar: BottomAppBar(
         color: Color(0xFF1c6b92),
         child: Row(
