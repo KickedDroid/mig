@@ -86,10 +86,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                 ),
               ),
               Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(color: Colors.grey)),
+                decoration: BoxDecoration(),
                 height: MediaQuery.of(context).size.height * .07,
                 width: 300,
                 child: TextFormField(
@@ -97,6 +94,8 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                   style:
                       TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                   decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
                       border: OutlineInputBorder(),
                       labelText: 'Email',
                       prefixIcon: Icon(Icons.person_outline),
@@ -106,10 +105,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: Colors.grey)),
+                  decoration: BoxDecoration(),
                   height: MediaQuery.of(context).size.height * .07,
                   width: 300,
                   child: TextFormField(
@@ -118,6 +114,8 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                           color: Colors.black, fontFamily: 'SFUIDisplay'),
                       obscureText: true,
                       decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           border: OutlineInputBorder(),
                           labelText: 'Password',
                           prefixIcon: Icon(Icons.lock_outline),
@@ -127,11 +125,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
               Padding(
                 padding: const EdgeInsets.all(0.0),
                 child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(color: Colors.grey),
-                  ),
+                  decoration: BoxDecoration( ),
                   height: MediaQuery.of(context).size.height * .07,
                   width: 300,
                   child: TextFormField(
@@ -139,6 +133,8 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                       style: TextStyle(
                           color: Colors.black, fontFamily: 'SFUIDisplay'),
                       decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           border: OutlineInputBorder(),
                           labelText: 'CompanyID',
                           prefixIcon: Icon(Icons.edit),
