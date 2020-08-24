@@ -301,17 +301,25 @@ class WelcomeScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          FlatButton(
-                            color: Colors.blue,
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => QRViewExample(),
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: FlatButton.icon (
+                              color: Colors.blue,
+                              icon: Icon(Icons.add_a_photo, color: Colors.white,),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => QRViewExample(),
+                                  ),
+                                );
+                              },
+                              label: Padding(
+                                padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+                                child: Text('Scan', style: TextStyle(color: Colors.white, fontSize: 20),
                                 ),
-                              );
-                            },
-                            child: Text('Scan'),
+                              ),
+                            ),
                           )
                         ],
                       ),

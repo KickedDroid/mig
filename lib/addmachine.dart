@@ -207,7 +207,7 @@ class _AddMachinePageState extends State<AddMachinePage> {
             }
           }),
       appBar: AppBar(
-        title: Text('Add Machine'),
+        title: Text('Add a Machine'),
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.white),
         actionsIconTheme: IconThemeData(color: Colors.white),
@@ -339,7 +339,7 @@ Widget _handleWidget() {
             body: Center(
                 child: Text("Denied: Must be an Administrator",
                     style: new TextStyle(
-                      fontSize: 20.0,
+                      fontSize: 16.0,
                       fontWeight: FontWeight.w500,
                       color: Colors.red,
                     ))));
@@ -363,7 +363,7 @@ Widget _handleWidgetBatch() {
             body: Center(
                 child: Text("Denied: Must be an Administrator",
                     style: new TextStyle(
-                      fontSize: 20.0,
+                      fontSize: 16.0,
                       fontWeight: FontWeight.w500,
                       color: Colors.red,
                     ))));
