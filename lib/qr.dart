@@ -34,7 +34,10 @@ class _QRViewExampleState extends State<QRViewExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Color(0xFF1c6b92),
+        title: Text('Scan Machine QR Code')
+      ),
       body: Column(
         children: <Widget>[
           Expanded(
