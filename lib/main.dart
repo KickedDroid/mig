@@ -316,7 +316,7 @@ class WelcomeScreen extends StatelessWidget {
                               },
                               label: Padding(
                                 padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
-                                child: Text('Scan', style: TextStyle(color: Colors.white, fontSize: 20),
+                                child: Text('Scan QR Code', style: TextStyle(color: Colors.white, fontSize: 20),
                                 ),
                               ),
                             ),

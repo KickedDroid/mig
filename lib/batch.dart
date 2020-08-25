@@ -96,7 +96,25 @@ class _BatchAddPageState extends State<BatchAddPage> {
         },
       ),
       body: SafeArea(
-        child: Expanded(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              stops: [0.1, 0.5, 0.7, 0.9],
+              colors: [
+                Colors.white,
+                Colors.blue[50],
+                Colors.lightBlue[100],
+                Colors.lightBlue[50],
+              ],
+            ),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(00.0),
+            // the box shawdow property allows for fine tuning as aposed to shadowColor
+          ),
           child: ListView(
             children: <Widget>[
               Text(
@@ -109,6 +127,8 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 style:
                     TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                 decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
                   border: OutlineInputBorder(),
                   labelText: 'Number of Machines to Add',
                   labelStyle: TextStyle(fontSize: 15),
@@ -119,8 +139,10 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 style:
                     TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                 decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
                   border: OutlineInputBorder(),
-                  labelText: 'Name of Batch',
+                  labelText: 'Name of Batch (Lathes, Mills, etc..)',
                   labelStyle: TextStyle(fontSize: 15),
                 ),
               ).padding(),
@@ -129,8 +151,10 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 style:
                     TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                 decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
                   border: OutlineInputBorder(),
-                  labelText: 'Min',
+                  labelText: 'Min Coolant %',
                   labelStyle: TextStyle(fontSize: 15),
                 ),
               ).padding(),
@@ -139,13 +163,15 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 style:
                     TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                 decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
                   border: OutlineInputBorder(),
-                  labelText: 'Max',
+                  labelText: 'Max Coolant %',
                   labelStyle: TextStyle(fontSize: 15),
                 ),
               ).padding(),
               Text(
-                'This screen allows you to setup multiple machines at once',
+                'This screen allows you to setup multiple machines at once. This function should be performed when first setting up your shop within the app.',
                 style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
               ).padding(),
             ],

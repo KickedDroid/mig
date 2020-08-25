@@ -239,30 +239,39 @@ class _AddMachinePageState extends State<AddMachinePage> {
     final bodyHeight = MediaQuery.of(context).size.height -
         MediaQuery.of(context).viewInsets.bottom;
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              stops: [0.1, 0.5, 0.7, 0.9],
+              colors: [
+                Colors.white,
+                Colors.blue[50],
+                Colors.lightBlue[100],
+                Colors.lightBlue[50],
+              ],
+            ),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(00.0),
+            // the box shawdow property allows for fine tuning as aposed to shadowColor
+          ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start ,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.fromLTRB(10, 20, 10, 5),
+            padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
             child: Text(
               "Add a Machine",
               style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w400),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 10,
-              left: 20.0,
-              right: 20.0,
-              bottom: 10.0,
-            ),
-            child: Container(
-              height: _topSectionHeight,
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Expanded(
+          Container(
+            height: MediaQuery.of(context).size.height *.35,
+            child: Column(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
                     child: TextField(
                       onChanged: (value) {
                         setState(() {
@@ -271,18 +280,14 @@ class _AddMachinePageState extends State<AddMachinePage> {
                       },
                       controller: controller,
                       decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           border: OutlineInputBorder(),
                           labelText: 'Add Machine Name',
                           labelStyle: TextStyle(fontSize: 15)),
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            child: Row(
-              children: [
+                ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(5.0),
@@ -294,6 +299,8 @@ class _AddMachinePageState extends State<AddMachinePage> {
                       },
                       controller: controller,
                       decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           border: OutlineInputBorder(),
                           labelText: 'Enter Min Coolant %',
                           labelStyle: TextStyle(fontSize: 15)),
@@ -311,6 +318,8 @@ class _AddMachinePageState extends State<AddMachinePage> {
                       },
                       controller: controller,
                       decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           border: OutlineInputBorder(),
                           labelText: 'Enter Max Coolant %',
                           labelStyle: TextStyle(fontSize: 15)),
