@@ -122,8 +122,8 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
               ).padding(),
               TextFormField(
-                controller: controller,
                 keyboardType: TextInputType.number,
+                controller: controller,
                 style:
                     TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                 decoration: InputDecoration(
@@ -147,6 +147,7 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 ),
               ).padding(),
               TextFormField(
+                keyboardType: TextInputType.number,
                 controller: controllerCmin,
                 style:
                     TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
@@ -159,6 +160,7 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 ),
               ).padding(),
               TextFormField(
+                keyboardType: TextInputType.number,
                 controller: controllerCmax,
                 style:
                     TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),

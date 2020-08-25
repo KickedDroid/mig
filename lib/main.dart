@@ -392,7 +392,9 @@ class WelcomeScreen extends StatelessWidget {
                               } else {
                                 return ListView.builder(
                                   shrinkWrap: true,
-                                  itemCount: 2,
+                                  itemCount: snapshot.data.documents.length == 1 || snapshot.data.documents.length == 0
+                                      ? snapshot.data.documents.length
+                                      : 2,
                                   itemBuilder: (context, index) {
                                     DocumentSnapshot machines =
                                         snapshot.data.documents[index];
@@ -458,7 +460,9 @@ class WelcomeScreen extends StatelessWidget {
                               } else {
                                 return ListView.builder(
                                   shrinkWrap: true,
-                                  itemCount: 2,
+                                  itemCount: snapshot.data.documents.length == 1 || snapshot.data.documents.length == 0
+                                      ? snapshot.data.documents.length
+                                      : 2,
                                   itemBuilder: (context, index) {
                                     DocumentSnapshot machines =
                                         snapshot.data.documents[index];
@@ -540,7 +544,9 @@ class WelcomeScreen extends StatelessWidget {
                               } else {
                                 return ListView.builder(
                                   shrinkWrap: true,
-                                  itemCount: 2,
+                                  itemCount: snapshot.data.documents.length == 1 || snapshot.data.documents.length == 0
+                                      ? snapshot.data.documents.length
+                                      : 2,
                                   itemBuilder: (context, index) {
                                     DocumentSnapshot machines =
                                         snapshot.data.documents[index];

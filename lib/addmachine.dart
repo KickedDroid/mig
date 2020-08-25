@@ -297,6 +297,7 @@ class _AddMachinePageState extends State<AddMachinePage> {
                           cmin = value;
                         });
                       },
+                      keyboardType: TextInputType.number,
                       controller: controller,
                       decoration: InputDecoration(
                           filled: true,
@@ -316,6 +317,7 @@ class _AddMachinePageState extends State<AddMachinePage> {
                           cmax = value;
                         });
                       },
+                      keyboardType: TextInputType.number,
                       controller: controller,
                       decoration: InputDecoration(
                           filled: true,

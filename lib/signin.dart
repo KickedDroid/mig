@@ -271,28 +271,28 @@ class _SignInPageState extends State<SignInPage> {
                           )),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      if (companyId != null) {
-                        signInWithGoogle();
-                        var box = Hive.box('myBox');
-                        box.put('companyId', companyId);
-                      } else {
-                        Toast.show("Enter a Company ID", context,
-                            duration: 4);
-                      }
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text("Sign in with Google"),
-                    ),
-                  ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     if (companyId != null) {
+                  //       signInWithGoogle();
+                  //       var box = Hive.box('myBox');
+                  //       box.put('companyId', companyId);
+                  //     } else {
+                  //       Toast.show("Enter a Company ID", context,
+                  //           duration: 4);
+                  //     }
+                  //   },
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(12.0),
+                  //     child: Text("Sign in with Google"),
+                  //   ),
+                  // ),
                   GestureDetector(
                     onTap: () {
                       resetPassword(emailData);
                     },
                     child: Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: Text("Forgot Password"),
                     ),
                   ),
