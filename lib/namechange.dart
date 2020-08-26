@@ -6,8 +6,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChangeNamePage extends StatefulWidget {
   final String docRef;
+  final String name;
 
-  ChangeNamePage(this.docRef);
+  ChangeNamePage(this.docRef, this.name);
 
   @override
   _ChangeNamePageState createState() => _ChangeNamePageState();
@@ -22,15 +23,22 @@ class _ChangeNamePageState extends State<ChangeNamePage> {
     });
   }
 
-  final TextEditingController controller = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller = new TextEditingController(text: widget.name);
+  }
+
+  TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
         appBar: AppBar(
-        backgroundColor: Color(0xFF1c6b92),
-        title: Text('Edit Machine Name'),
-      ),
+          backgroundColor: Color(0xFF1c6b92),
+          title: Text('Edit Machine Name'),
+        ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Color(0xFF1c6b92),
           onPressed: () {
@@ -80,7 +88,8 @@ class _ChangeNamePageState extends State<ChangeNamePage> {
                   padding: const EdgeInsets.fromLTRB(20, 30, 20, 10),
                   child: Text(
                     'Edit Name of Machine',
-                    style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w700),
+                    style:
+                        TextStyle(fontSize: 32.0, fontWeight: FontWeight.w700),
                   ),
                 ),
                 Center(
