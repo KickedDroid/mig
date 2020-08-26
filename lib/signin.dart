@@ -225,9 +225,9 @@ class _SignInPageState extends State<SignInPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Login',
+                                'Login to Company Account',
                                 style: TextStyle(
-                                    fontSize: 24,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.w600,
                                     color: Colors.white),
                               ),
@@ -264,7 +264,7 @@ class _SignInPageState extends State<SignInPage> {
                               Text(
                                 'Create user account',
                                 style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.w600,
                                     color: Colors.white),
                               )

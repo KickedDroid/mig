@@ -135,9 +135,9 @@ class WelcomeScreen extends StatelessWidget {
   var box = Hive.box('myBox');
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
+    //SystemChrome.setPreferredOrientations([
+      //DeviceOrientation.portraitUp,
+    //]);
 
     return Scaffold(
         key: _scaffoldKey,
