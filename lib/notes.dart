@@ -17,6 +17,44 @@ class NotesList extends StatefulWidget {
 
 class _NotesListState extends State<NotesList> {
   var box = Hive.box('myBox');
+
+  final TextEditingController controller = TextEditingController();
+
+  void deleteNote(String docRef, String item) {
+    Firestore.instance
+        .collection(box.get('companyId'))
+        .document(docRef)
+        .collection('notes')
+        .document(item)
+        .delete();
+  }
+
+  void editNote(String docRef, String item) {
+    showDialog(
+      context: context,
+      builder: (_) => new AlertDialog(
+        title: new Text("Edit Note"),
+        content: TextField(
+          controller: controller,
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Submit'),
+            onPressed: () {
+              Firestore.instance
+                  .collection(box.get('companyId'))
+                  .document(docRef)
+                  .collection('notes')
+                  .document(item)
+                  .updateData({"note": "${controller.text}"});
+              Navigator.of(context).pop();
+            },
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,9 +97,25 @@ class _NotesListState extends State<NotesList> {
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) {
                   DocumentSnapshot machines = snapshot.data.documents[index];
-                  return MachineItem(
-                    notes: machines['note'],
-                    name: machines['time'],
+                  return Dismissible(
+                    onDismissed: (direction) {
+                      deleteNote(widget.docRef, machines.documentID);
+                      Scaffold.of(context).showSnackBar(
+                          SnackBar(content: Text("Note deleted")));
+                    },
+                    background: Container(
+                      color: Colors.red,
+                    ),
+                    key: Key(widget.docRef),
+                    child: GestureDetector(
+                      onTap: () {
+                        editNote(widget.docRef, machines.documentID);
+                      },
+                      child: MachineItem(
+                        notes: machines['note'],
+                        name: machines['time'],
+                      ),
+                    ),
                   );
                 },
               );
@@ -94,15 +148,10 @@ class MachineItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        leading: Icon(Icons.note, size: 20,),
-        trailing: IconButton(icon: Icon(Icons.edit,size: 20),
-                onPressed: () {
-                  //   _onDeleteItemPressed(index);
-                },
-              ),
+        leading: Icon(Icons.note),
         title: Text(
           notes,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
         ),
         subtitle: Text(name.substring(0, 10)));
   }
