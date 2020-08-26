@@ -121,7 +121,7 @@ Widget _handleWidget() {
           if (snapshot.hasData) {
             return WelcomeScreen();
           } else {
-            return InitialPage();
+            return SignInPage();
             //return WelcomeScreen();
           }
         }
@@ -137,7 +137,7 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //SystemChrome.setPreferredOrientations([
-      //DeviceOrientation.portraitUp,
+    //DeviceOrientation.portraitUp,
     //]);
 
     return Scaffold(

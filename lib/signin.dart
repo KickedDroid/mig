@@ -207,12 +207,6 @@ class _SignInPageState extends State<SignInPage> {
                         var box = Hive.box('myBox');
                         box.put('userId', emailData);
                         box.put('companyId', companyId);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => _handleWidget(),
-                          ),
-                        );
                       } else {
                         showToast();
                       }
@@ -251,12 +245,12 @@ class _SignInPageState extends State<SignInPage> {
                         var box = Hive.box('myBox');
                         box.put('companyId', companyId);
                         box.put('admin', false);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => _handleWidget(),
-                          ),
-                        );
+                        //Navigator.push(
+                        //  context,
+                        //  MaterialPageRoute(
+                        //    builder: (context) => _handleWidget(),
+                        //  ),
+                        //);
                       } else {
                         showToast();
                       }
