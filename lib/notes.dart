@@ -21,12 +21,33 @@ class _NotesListState extends State<NotesList> {
   TextEditingController controller = TextEditingController();
 
   void deleteNote(String docRef, String item) {
-    Firestore.instance
-        .collection(box.get('companyId'))
-        .document(docRef)
-        .collection('notes')
-        .document(item)
-        .delete();
+    showDialog(
+      context: context,
+      builder: (_) => new AlertDialog(
+        title: new Text("Are You Sure You Want To Delete?"),
+        content: Text(""),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          FlatButton(
+            child: Text('Submit'),
+            onPressed: () {
+              Firestore.instance
+                  .collection(box.get('companyId'))
+                  .document(docRef)
+                  .collection('notes')
+                  .document(item)
+                  .delete();
+              Navigator.of(context).pop();
+            },
+          )
+        ],
+      ),
+    );
   }
 
   void editNote(String docRef, String item, String note) {
