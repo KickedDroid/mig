@@ -18,7 +18,7 @@ class NotesList extends StatefulWidget {
 class _NotesListState extends State<NotesList> {
   var box = Hive.box('myBox');
 
-  final TextEditingController controller = TextEditingController();
+  TextEditingController controller = TextEditingController();
 
   void deleteNote(String docRef, String item) {
     Firestore.instance
@@ -29,7 +29,10 @@ class _NotesListState extends State<NotesList> {
         .delete();
   }
 
-  void editNote(String docRef, String item) {
+  void editNote(String docRef, String item, String note) {
+    setState(() {
+      controller = new TextEditingController(text: note);
+    });
     showDialog(
       context: context,
       builder: (_) => new AlertDialog(
@@ -109,7 +112,8 @@ class _NotesListState extends State<NotesList> {
                     key: Key(widget.docRef),
                     child: GestureDetector(
                       onTap: () {
-                        editNote(widget.docRef, machines.documentID);
+                        editNote(widget.docRef, machines.documentID,
+                            machines['note']);
                       },
                       child: MachineItem(
                         notes: machines['note'],
