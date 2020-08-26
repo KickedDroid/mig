@@ -7,6 +7,7 @@ import 'createcompany.dart';
 import 'help.dart';
 import 'extensions.dart';
 import 'package:toast/toast.dart';
+import 'main.dart';
 
 class SignInPage extends StatefulWidget {
   @override
@@ -115,8 +116,7 @@ class _SignInPageState extends State<SignInPage> {
               child: Column(
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsets.fromLTRB(60.0, 10.0, 60.0, 20.0),
+                    padding: const EdgeInsets.fromLTRB(60.0, 10.0, 60.0, 20.0),
                     child: Container(
                         height: MediaQuery.of(context).size.height * .2,
                         child: Image.asset('assets/logosb.png')),
@@ -135,11 +135,12 @@ class _SignInPageState extends State<SignInPage> {
                           },
                           controller: email,
                           style: TextStyle(
-                              color: Colors.black, fontFamily: 'SFUIDisplay', fontSize: 15),
+                              color: Colors.black,
+                              fontFamily: 'SFUIDisplay',
+                              fontSize: 15),
                           decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
-                              
                               border: OutlineInputBorder(),
                               labelText: 'Email',
                               prefixIcon: Icon(Icons.person_outline),
@@ -149,8 +150,7 @@ class _SignInPageState extends State<SignInPage> {
                   Padding(
                     padding: const EdgeInsets.all(6.0),
                     child: Container(
-                      decoration: BoxDecoration(
-                          ),
+                      decoration: BoxDecoration(),
                       height: MediaQuery.of(context).size.height * .07,
                       width: 300,
                       child: TextFormField(
@@ -161,7 +161,9 @@ class _SignInPageState extends State<SignInPage> {
                           },
                           controller: pass,
                           style: TextStyle(
-                              color: Colors.black, fontFamily: 'SFUIDisplay', fontSize: 15),
+                              color: Colors.black,
+                              fontFamily: 'SFUIDisplay',
+                              fontSize: 15),
                           obscureText: !this._showPassword,
                           decoration: InputDecoration(
                               filled: true,
@@ -175,8 +177,7 @@ class _SignInPageState extends State<SignInPage> {
                   Padding(
                     padding: const EdgeInsets.all(6.0),
                     child: Container(
-                      decoration: BoxDecoration(
-                          ),
+                      decoration: BoxDecoration(),
                       height: MediaQuery.of(context).size.height * .07,
                       width: 300,
                       child: TextFormField(
@@ -187,7 +188,9 @@ class _SignInPageState extends State<SignInPage> {
                           },
                           controller: pass,
                           style: TextStyle(
-                              color: Colors.black, fontFamily: 'SFUIDisplay', fontSize: 15),
+                              color: Colors.black,
+                              fontFamily: 'SFUIDisplay',
+                              fontSize: 15),
                           decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -204,6 +207,12 @@ class _SignInPageState extends State<SignInPage> {
                         var box = Hive.box('myBox');
                         box.put('userId', emailData);
                         box.put('companyId', companyId);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => _handleWidget(),
+                          ),
+                        );
                       } else {
                         showToast();
                       }
@@ -242,6 +251,12 @@ class _SignInPageState extends State<SignInPage> {
                         var box = Hive.box('myBox');
                         box.put('companyId', companyId);
                         box.put('admin', false);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => _handleWidget(),
+                          ),
+                        );
                       } else {
                         showToast();
                       }
@@ -332,6 +347,25 @@ class _SignInPageState extends State<SignInPage> {
         ),
       ),
     );
+  }
+
+  Widget _handleWidget() {
+    return StreamBuilder(
+        stream: FirebaseAuth.instance.onAuthStateChanged,
+        builder: (BuildContext context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Text('Loading'),
+            );
+          } else {
+            if (snapshot.hasData) {
+              return WelcomeScreen();
+            } else {
+              return SignInPage();
+              //return WelcomeScreen();
+            }
+          }
+        });
   }
 
   void handleError(e) {
