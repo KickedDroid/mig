@@ -6,6 +6,7 @@ import 'package:hive/hive.dart';
 import 'package:mig/batch.dart';
 import 'package:mig/graph.dart';
 import 'package:mig/history.dart';
+import 'package:mig/initialpage.dart';
 import 'package:mig/latestentries.dart';
 import 'package:mig/diluted.dart';
 import 'package:mig/strongcoolant.dart';
@@ -120,7 +121,7 @@ Widget _handleWidget() {
           if (snapshot.hasData) {
             return WelcomeScreen();
           } else {
-            return SignInPage();
+            return InitialPage();
             //return WelcomeScreen();
           }
         }
@@ -303,9 +304,12 @@ class WelcomeScreen extends StatelessWidget {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(12.0),
-                            child: FlatButton.icon (
+                            child: FlatButton.icon(
                               color: Colors.blue,
-                              icon: Icon(Icons.add_a_photo, color: Colors.white,),
+                              icon: Icon(
+                                Icons.add_a_photo,
+                                color: Colors.white,
+                              ),
                               onPressed: () {
                                 Navigator.push(
                                   context,
@@ -315,8 +319,12 @@ class WelcomeScreen extends StatelessWidget {
                                 );
                               },
                               label: Padding(
-                                padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
-                                child: Text('Scan QR Code', style: TextStyle(color: Colors.white, fontSize: 20),
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 8, 20, 8),
+                                child: Text(
+                                  'Scan QR Code',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
                                 ),
                               ),
                             ),
@@ -392,7 +400,9 @@ class WelcomeScreen extends StatelessWidget {
                               } else {
                                 return ListView.builder(
                                   shrinkWrap: true,
-                                  itemCount: snapshot.data.documents.length == 1 || snapshot.data.documents.length == 0
+                                  itemCount: snapshot.data.documents.length ==
+                                              1 ||
+                                          snapshot.data.documents.length == 0
                                       ? snapshot.data.documents.length
                                       : 2,
                                   itemBuilder: (context, index) {
@@ -460,7 +470,9 @@ class WelcomeScreen extends StatelessWidget {
                               } else {
                                 return ListView.builder(
                                   shrinkWrap: true,
-                                  itemCount: snapshot.data.documents.length == 1 || snapshot.data.documents.length == 0
+                                  itemCount: snapshot.data.documents.length ==
+                                              1 ||
+                                          snapshot.data.documents.length == 0
                                       ? snapshot.data.documents.length
                                       : 2,
                                   itemBuilder: (context, index) {
@@ -544,7 +556,9 @@ class WelcomeScreen extends StatelessWidget {
                               } else {
                                 return ListView.builder(
                                   shrinkWrap: true,
-                                  itemCount: snapshot.data.documents.length == 1 || snapshot.data.documents.length == 0
+                                  itemCount: snapshot.data.documents.length ==
+                                              1 ||
+                                          snapshot.data.documents.length == 0
                                       ? snapshot.data.documents.length
                                       : 2,
                                   itemBuilder: (context, index) {
