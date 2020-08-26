@@ -17,6 +17,12 @@ class InitialPage extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    height: MediaQuery.of(context).size.height * .2,
+                    child: Image.asset('assets/logosb.png')),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(
