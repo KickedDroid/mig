@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
 import 'package:mig/reset.dart';
 import 'createcompany.dart';
+import 'help.dart';
 import 'extensions.dart';
 import 'package:toast/toast.dart';
 
@@ -261,7 +262,7 @@ class _SignInPageState extends State<SignInPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Create an account',
+                                'Create user account',
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w600,
@@ -307,7 +308,21 @@ class _SignInPageState extends State<SignInPage> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Text("Create Company"),
+                      child: Text("Create Company Account"),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HelpPage(),
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text("Help"),
                     ),
                   )
                 ],
