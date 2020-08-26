@@ -39,6 +39,7 @@ dependencies:
   image_gallery_saver: '^1.5.0'
   toast: ^0.1.5
   qr_code_scanner: ^0.0.13
+  flutter_slidable: "^0.5.5"
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3

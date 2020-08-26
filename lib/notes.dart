@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hive/hive.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 const greenPercent = Color(0xff14c4f7);
 
@@ -121,25 +122,30 @@ class _NotesListState extends State<NotesList> {
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) {
                   DocumentSnapshot machines = snapshot.data.documents[index];
-                  return Dismissible(
-                    onDismissed: (direction) {
-                      deleteNote(widget.docRef, machines.documentID);
-                      Scaffold.of(context).showSnackBar(
-                          SnackBar(content: Text("Note deleted")));
-                    },
-                    background: Container(
-                      color: Colors.red,
-                    ),
-                    key: Key(widget.docRef),
-                    child: GestureDetector(
-                      onTap: () {
-                        editNote(widget.docRef, machines.documentID,
-                            machines['note']);
-                      },
-                      child: MachineItem(
-                        notes: machines['note'],
-                        name: machines['time'],
+                  return Slidable(
+                    secondaryActions: <Widget>[
+                      IconSlideAction(
+                        caption: 'Edit Note',
+                        color: Colors.black45,
+                        icon: Icons.edit,
+                        onTap: () => {
+                          editNote(widget.docRef, machines.documentID,
+                              machines['note'])
+                        },
                       ),
+                      IconSlideAction(
+                        caption: 'Delete',
+                        color: Colors.red,
+                        icon: Icons.delete,
+                        onTap: () =>
+                            deleteNote(widget.docRef, machines.documentID),
+                      ),
+                    ],
+                    actionPane: SlidableDrawerActionPane(),
+                    actionExtentRatio: 0.25,
+                    child: MachineItem(
+                      notes: machines['note'],
+                      name: machines['time'],
                     ),
                   );
                 },
