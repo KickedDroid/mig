@@ -244,7 +244,7 @@ class _NotesPageState extends State<NotesPage> {
                         );
                       },
                     ),
-                    Divider()
+                    Divider(color: Colors.blueGrey)
                   ],
                 );
               },

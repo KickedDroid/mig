@@ -53,7 +53,7 @@ class _OverviewState extends State<Overview> {
               ),
               Center(
                 child: Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: SingleChildScrollView(
@@ -82,12 +82,15 @@ Widget _buildBody(BuildContext context) {
       } else {
         return ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
+          
           child: Container(
+            constraints: BoxConstraints(
+            maxWidth: 800.0,),
             color: Colors.white,
             child: DataTable(columns: [
               DataColumn(label: Text('Name')),
-              DataColumn(label: Text('Last\nUpdated')),
-              DataColumn(label: Text('Coolant\nPercentage')),
+              DataColumn(label: Text('Coolant %')),
+              DataColumn(label: Text('Last\nUpdate')),
               DataColumn(label: Text('Last\nCleaned')),
             ], rows: _buildList(context, snapshot.data.documents)),
           ),
@@ -112,44 +115,62 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
 
   return DataRow(
     cells: [
-      DataCell(Text(
-        machines['name'].length > 19
-        ? machines['name'].substring(0,18) + "..."
-        : machines['name'],
-        style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
-      )),
-      DataCell(Text(
-        machines['last-updated'].substring(5, 7) +
-            "/" +
-            machines['last-updated'].substring(8, 10) +
-            "/" +
-            machines['last-updated'].substring(2, 4),
-        style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
-      )),
-      DataCell(Text(
-          machines['coolant-percent'] +
-              "% (" +
-              machines['c-min'] +
-              "-" +
-              machines['c-max'] +
-              ")",
-          style: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 12,
-              color: double.parse(machines['coolant-percent']) <
-                          double.parse(machines['c-max']) &&
-                      double.parse(machines['coolant-percent']) >
-                          double.parse(machines['c-min'])
-                  ? Colors.greenAccent[700]
-                  : Colors.red))),
-      DataCell(Text(
-        machines['last-cleaned'].substring(5, 7) +
-                "/" +
-                machines['last-cleaned'].substring(8, 10) +
-                "/" +
-                machines['last-cleaned'].substring(2, 4) ??
-            "No Input",
-        style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
-      )),
+      DataCell(
+        Container(
+          width: 80,
+          child: Text(
+          machines['name'].length > 29
+          ? machines['name'].substring(0,28) + "..."
+          : machines['name'],
+          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+      ),
+        )),
+      DataCell(
+        Container(
+          width: 45,
+          child: Text(
+            machines['coolant-percent'] +
+                "% (" +
+                machines['c-min'] +
+                "-" +
+                machines['c-max'] +
+                ")",
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 12,
+                color: double.parse(machines['coolant-percent']) <
+                            double.parse(machines['c-max']) &&
+                        double.parse(machines['coolant-percent']) >
+                            double.parse(machines['c-min'])
+                    ? Colors.greenAccent[700]
+                    : Colors.red)),
+        )),
+      DataCell(
+        Container(
+          width: 35,
+          child: Text(
+          machines['last-updated'].substring(5, 7) +
+              "/" +
+              machines['last-updated'].substring(8, 10),// +
+              //"/" +
+              //machines['last-updated'].substring(2, 4),
+          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+      ),
+        )),
+      
+      DataCell(
+        Container(
+          width: 35,
+          child: Text(
+          machines['last-cleaned'].substring(5, 7) +
+                  "/" +
+                  machines['last-cleaned'].substring(8, 10)// +
+                  //"/" +
+                  //machines['last-cleaned'].substring(2, 4) 
+                  ??
+              "No Input",
+          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+      ),
+        )),
     ],
   );
 }
