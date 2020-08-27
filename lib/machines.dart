@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
 import 'package:hive/hive.dart';
-import 'package:mig/namechange.dart';
+import 'namechange.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'generateQr.dart';
 import 'qr.dart';
 import 'extensions.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 const greenPercent = Color(0xff009970);
 
@@ -17,6 +18,34 @@ class MachineList extends StatefulWidget {
 
 class _MachineListState extends State<MachineList> {
   var box = Hive.box('myBox');
+
+  deleteMachine(String docRef) {
+    showDialog(
+      context: context,
+      builder: (_) => new AlertDialog(
+        title: new Text("Are You Sure You Want To Delete?"),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          FlatButton(
+            child: Text('Submit'),
+            onPressed: () {
+              Firestore.instance
+                  .collection(box.get('companyId'))
+                  .document(docRef)
+                  .delete();
+              Navigator.of(context).pop();
+            },
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,6 +68,7 @@ class _MachineListState extends State<MachineList> {
               child: StreamBuilder(
                 stream: Firestore.instance
                     .collection(box.get('companyId'))
+                    .orderBy("name", descending: false)
                     .snapshots(),
                 builder: (context, snapshot) {
                   assert(snapshot != null);
@@ -50,19 +80,31 @@ class _MachineListState extends State<MachineList> {
                       itemBuilder: (context, index) {
                         DocumentSnapshot machines =
                             snapshot.data.documents[index];
-                        return MachineItem(
-                          name: machines['name'],
-                          c_percent: machines['coolant-percent'],
-                          last_updated:
-                              machines['last-updated'].substring(5, 7) +
-                                  "/" +
-                                  machines['last-updated'].substring(8, 10) +
-                                  "/" +
-                                  machines['last-updated'].substring(0, 4),
-                          notes: machines['history'],
-                          docRef: machines.documentID,
-                          cMin: double.parse(machines['c-min']),
-                          cMax: double.parse(machines['c-max']),
+                        return Slidable(
+                          secondaryActions: <Widget>[
+                            IconSlideAction(
+                              caption: 'Delete',
+                              color: Colors.red,
+                              icon: Icons.delete,
+                              onTap: () => {deleteMachine(machines.documentID)},
+                            ),
+                          ],
+                          actionPane: SlidableDrawerActionPane(),
+                          actionExtentRatio: 0.25,
+                          child: MachineItem(
+                            name: machines['name'],
+                            c_percent: machines['coolant-percent'],
+                            last_updated:
+                                machines['last-updated'].substring(5, 7) +
+                                    "/" +
+                                    machines['last-updated'].substring(8, 10) +
+                                    "/" +
+                                    machines['last-updated'].substring(0, 4),
+                            notes: machines['history'],
+                            docRef: machines.documentID,
+                            cMin: double.parse(machines['c-min']),
+                            cMax: double.parse(machines['c-max']),
+                          ),
                         );
                       },
                     );
