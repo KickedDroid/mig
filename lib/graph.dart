@@ -115,7 +115,10 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Coolant Percentage History'),
+        title: Text('$name History'),
+        toolbarHeight: MediaQuery.of(context).orientation == Orientation.portrait
+        ? AppBar().preferredSize.height
+        : 0,
         backgroundColor: Color(0xFF1c6b92),
       ),
       backgroundColor: Colors.white,
@@ -147,7 +150,7 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
     mydata = saledata;
     _generateData(mydata);
     return Padding(
-      padding: EdgeInsets.fromLTRB(4, 10, 4, 30),
+      padding: EdgeInsets.fromLTRB(4, 8, 4, 8),
       child: Container(
         child: Center(
           child: Column(
@@ -164,22 +167,22 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
                   ),
                   animate: true,
                   behaviors: [
-                    charts.ChartTitle("Machine:  $name",
-                        subTitle: "Line Graph",
-                        behaviorPosition: charts.BehaviorPosition.top,
-                        titleOutsideJustification:
-                            charts.OutsideJustification.start,
-                        innerPadding: 40),
+                    // charts.ChartTitle("Machine:  $name",
+                    //     subTitle: "Line Graph",
+                    //     behaviorPosition: charts.BehaviorPosition.top,
+                    //     titleOutsideJustification:
+                    //         charts.OutsideJustification.start,
+                    //     innerPadding: 40),
                     charts.ChartTitle('Date/Timeline',
                         behaviorPosition: charts.BehaviorPosition.bottom,
                         titleOutsideJustification:
                             charts.OutsideJustification.middleDrawArea,
-                        innerPadding: 20),
+                        innerPadding: 6),
                     charts.ChartTitle("Coolant Conc. %:  (Limits = " + widget.cMin.toStringAsFixed(0) + "% - " + widget.cMax.toStringAsFixed(0) + "%)",
                         behaviorPosition: charts.BehaviorPosition.start,
                         titleOutsideJustification:
                             charts.OutsideJustification.middleDrawArea,
-                        outerPadding: 10),
+                        outerPadding: 6),
                     charts.SlidingViewport(),
                     charts.PanAndZoomBehavior(),
                     charts.RangeAnnotation([

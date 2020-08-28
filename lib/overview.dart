@@ -119,8 +119,8 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
         Container(
           width: 80,
           child: Text(
-          machines['name'].length > 29
-          ? machines['name'].substring(0,28) + "..."
+          machines['name'].length > 17
+          ? machines['name'].substring(0,16) + "..."
           : machines['name'],
           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
       ),
@@ -146,7 +146,7 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
         )),
       DataCell(
         Container(
-          width: 35,
+          width: 45,
           child: Text(
           machines['last-updated'].substring(5, 7) +
               "/" +
@@ -159,7 +159,7 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
       
       DataCell(
         Container(
-          width: 35,
+          width: 45,
           child: Text(
           machines['last-cleaned'].substring(5, 7) +
                   "/" +
