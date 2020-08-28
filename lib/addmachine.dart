@@ -33,7 +33,7 @@ class _AddMachineListState extends State<AddMachineList> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BottomAppBar(
-        color: Color(0xFF1c6b92),
+        color: Color(0xFF1c6b98),
         child: Row(
           children: [
             IconButton(
@@ -43,8 +43,8 @@ class _AddMachineListState extends State<AddMachineList> {
           ],
           mainAxisAlignment: MainAxisAlignment.start,
         ),
-        notchMargin: 5.0,
-        shape: CircularNotchedRectangle(),
+        //notchMargin: 0.0,
+        //shape: CircularNotchedRectangle(),
       ),
       appBar: AppBar(
           backgroundColor: Color(0xFF1c6b92),
@@ -55,6 +55,7 @@ class _AddMachineListState extends State<AddMachineList> {
       body: MachineList(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xFF1c6b92),
+        elevation: 10,
         onPressed: () {
           showModalBottomSheet<void>(
               context: context,

@@ -53,14 +53,13 @@ class _MachineListState extends State<MachineList> {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            stops: [0.1, 0.2, 0.8, 0.9],
-            colors: [
-              Colors.white,
-              Colors.blue[50],
-              Colors.blue[100],
-              Colors.white,
-            ],
-          ),
+            stops: [.0,.4,.7,1],
+                  colors: [
+                    Color(0xFF192b32),
+                    Color(0xFF1c6b92),
+                    Color(0xFF1c6b92),
+                    Color(0xFF192b32),
+                  ]),
         ),
         child: Scaffold(
             backgroundColor: Color(0x00000000),

@@ -16,6 +16,13 @@ class _OverviewState extends State<Overview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Overview of Machines'),
+        toolbarHeight: MediaQuery.of(context).orientation == Orientation.portrait
+        ? AppBar().preferredSize.height
+        : 0,
+        backgroundColor: Color(0xFF1c6b92),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BottomAppBar(
         color: Color(0xFF1c6b92),
@@ -34,21 +41,37 @@ class _OverviewState extends State<Overview> {
       backgroundColor: Colors.lightBlue[200],
       body: Container(
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/Coolantbg.png"), fit: BoxFit.fill)),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: [.0,1],
+                  colors: [
+                    Color(0xFFdbe0e6),
+                    Color(0xFFdbe0e6),
+
+                    // #0b1c36 dark purple blue
+                    // #c74300 orange
+                    // #446280 bluish orange
+                    // #abc0df light blue
+                    // #395473
+                    // #1c6b92
+                    // #8eaec9 Light Blue
+
+                  ],
+                )),
         child: ListView(children: <Widget>[
           Column(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.fromLTRB(8, 10, 8, 0),
+                padding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
                 child: SafeArea(
-                  child: Text(
-                    'Machine Overview',
-                    style: TextStyle(
-                        fontSize: 32.0,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.white),
-                  ),
+                child: Text(
+                'Machine Overview',
+                style: TextStyle(
+                fontSize: 32.0,
+                fontWeight: FontWeight.w800,
+                color: Colors.black87),
+                 ),
                 ),
               ),
               Center(
