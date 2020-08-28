@@ -60,7 +60,7 @@ class _AddMachineListState extends State<AddMachineList> {
               context: context,
               builder: (BuildContext context) {
                 return Container(
-                  height: 250,
+                  height: 325,
                   color: Colors.white,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
