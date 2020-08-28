@@ -134,6 +134,35 @@ class _AddMachineListState extends State<AddMachineList> {
                               )),
                         ),
                       ).padding(),
+                      Center(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BatchQrCodes()));
+                          },
+                          onLongPress: () => {},
+                          child: Container(
+                              height: 50,
+                              width: 300,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  gradient: LinearGradient(colors: [
+                                    Colors.blue,
+                                    Colors.blueAccent
+                                  ])),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    ' Batch QR',
+                                    style: TextStyle(color: Colors.white),
+                                  )
+                                ],
+                              )),
+                        ),
+                      ).padding()
                     ],
                   ).padding(),
                 );
@@ -241,23 +270,23 @@ class _AddMachinePageState extends State<AddMachinePage> {
         MediaQuery.of(context).viewInsets.bottom;
     return Container(
       decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              stops: [0.1, 0.5, 0.7, 0.9],
-              colors: [
-                Colors.white,
-                Colors.blue[50],
-                Colors.lightBlue[100],
-                Colors.lightBlue[50],
-              ],
-            ),
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(00.0),
-            // the box shawdow property allows for fine tuning as aposed to shadowColor
-          ),
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          stops: [0.1, 0.5, 0.7, 0.9],
+          colors: [
+            Colors.white,
+            Colors.blue[50],
+            Colors.lightBlue[100],
+            Colors.lightBlue[50],
+          ],
+        ),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(00.0),
+        // the box shawdow property allows for fine tuning as aposed to shadowColor
+      ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start ,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
@@ -267,7 +296,7 @@ class _AddMachinePageState extends State<AddMachinePage> {
             ),
           ),
           Container(
-            height: MediaQuery.of(context).size.height *.35,
+            height: MediaQuery.of(context).size.height * .35,
             child: Column(
               children: [
                 Expanded(
