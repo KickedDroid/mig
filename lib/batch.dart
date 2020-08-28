@@ -6,10 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hive/hive.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:mig/main.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'main.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:toast/toast.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:dio/dio.dart';
 
 class BatchAddPage extends StatefulWidget {
   @override
@@ -63,12 +68,6 @@ class _BatchAddPageState extends State<BatchAddPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Color(0xFF1c6b92),
-          title: Text('Batch Add Machines',
-              style: TextStyle(
-                color: Color(0xffFFFFFF),
-              ))),
       bottomNavigationBar: BottomAppBar(
         color: Color(0xFF1c6b92),
         child: Row(
@@ -96,88 +95,54 @@ class _BatchAddPageState extends State<BatchAddPage> {
         },
       ),
       body: SafeArea(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              stops: [0.1, 0.5, 0.7, 0.9],
-              colors: [
-                Colors.white,
-                Colors.blue[50],
-                Colors.lightBlue[100],
-                Colors.lightBlue[50],
-              ],
-            ),
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(00.0),
-            // the box shawdow property allows for fine tuning as aposed to shadowColor
-          ),
-          child: ListView(
-            children: <Widget>[
-              Text(
-                'Create Multiple Machines',
-                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-              ).padding(),
-              TextFormField(
-                keyboardType: TextInputType.number,
-                controller: controller,
-                style:
-                    TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(),
-                  labelText: 'Number of Machines to Add',
-                  labelStyle: TextStyle(fontSize: 15),
-                ),
-              ).padding(),
-              TextFormField(
-                controller: controller2,
-                style:
-                    TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(),
-                  labelText: 'Name of Batch (Lathes, Mills, etc..)',
-                  labelStyle: TextStyle(fontSize: 15),
-                ),
-              ).padding(),
-              TextFormField(
-                keyboardType: TextInputType.number,
-                controller: controllerCmin,
-                style:
-                    TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(),
-                  labelText: 'Min Coolant %',
-                  labelStyle: TextStyle(fontSize: 15),
-                ),
-              ).padding(),
-              TextFormField(
-                keyboardType: TextInputType.number,
-                controller: controllerCmax,
-                style:
-                    TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(),
-                  labelText: 'Max Coolant %',
-                  labelStyle: TextStyle(fontSize: 15),
-                ),
-              ).padding(),
-              Text(
-                'This screen allows you to setup multiple machines at once. This function should be performed when first setting up your shop within the app.',
-                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-              ).padding(),
-            ],
-          ),
+        child: ListView(
+          children: <Widget>[
+            Text(
+              'Create Multiple Machines',
+              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+            ).padding(),
+            TextFormField(
+              controller: controller,
+              keyboardType: TextInputType.number,
+              style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Number of Machines to Add',
+                labelStyle: TextStyle(fontSize: 15),
+              ),
+            ).padding(),
+            TextFormField(
+              controller: controller2,
+              style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Name of Batch',
+                labelStyle: TextStyle(fontSize: 15),
+              ),
+            ).padding(),
+            TextFormField(
+              controller: controllerCmin,
+              style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Min',
+                labelStyle: TextStyle(fontSize: 15),
+              ),
+            ).padding(),
+            TextFormField(
+              controller: controllerCmax,
+              style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Max',
+                labelStyle: TextStyle(fontSize: 15),
+              ),
+            ).padding(),
+            Text(
+              'This screen allows you to setup multiple machines at once',
+              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            ).padding(),
+          ],
         ),
       ),
     );
@@ -237,6 +202,67 @@ class _BatchQrCodesState extends State<BatchQrCodes> {
     }
   }
 
+  Future<void> createPdf() async {
+    final pdf = pw.Document();
+
+    final data = await Firestore.instance
+        .collection(box.get('companyId'))
+        .getDocuments();
+    pdf.addPage(
+      pw.Page(
+        pageFormat: PdfPageFormat.a4,
+        build: (pw.Context context) {
+          return pw.Center(
+            child: pw.ListView.builder(
+              itemCount: data.documents.length,
+              itemBuilder: (context, index) {
+                DocumentSnapshot machines = data.documents[index];
+                return pw.Column(children: [
+                  pw.Text(machines['name']),
+                  pw.BarcodeWidget(
+                    barcode: pw.Barcode.qrCode(),
+                    data: machines.documentID,
+                  )
+                ]);
+              },
+            ),
+          );
+        },
+      ),
+    );
+    final tempDir = await getTemporaryDirectory();
+    final file = await new File('${tempDir.path}/batch.pdf').create();
+    await file.writeAsBytes(pdf.save());
+    await Share.file(_dataString, 'batch.pdf', pdf.save(), 'batch/pdf');
+  }
+
+  getPermission() async {
+    await Permission.photos.request();
+    var status = await Permission.photos.status;
+    print(status);
+  }
+
+  final pdf = pw.Document();
+
+  getQrCodes() async {
+    getPermission();
+    var docs = await Firestore.instance
+        .collection(box.get('companyId'))
+        .getDocuments();
+    docs.documents.forEach((document) async {
+      var response = await Dio().get(
+          "https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${document.documentID}",
+          options: Options(responseType: ResponseType.bytes));
+      final result = await ImageGallerySaver.saveImage(
+          Uint8List.fromList(response.data),
+          quality: 100,
+          name: "${document.data['name']}");
+      print(result);
+    });
+
+    Toast.show('Check Your Photos', context);
+  }
+
   var box = Hive.box('myBox');
   @override
   Widget build(BuildContext context) {
@@ -245,8 +271,8 @@ class _BatchQrCodesState extends State<BatchQrCodes> {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.share),
-            onPressed: () {
-              _captureAndSharePng();
+            onPressed: () async {
+              await getQrCodes();
             }),
         body: SafeArea(
           child: SingleChildScrollView(

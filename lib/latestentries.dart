@@ -28,9 +28,8 @@ class _LatestEntriesPageState extends State<LatestEntriesPage> {
         notchMargin: 0.0,
         shape: CircularNotchedRectangle(),
       ),
-           appBar: AppBar(
-        title: Text('Latest Entries'),
-        backgroundColor: Color(0xFF1c6b92)),
+      appBar: AppBar(
+          title: Text('Latest Entries'), backgroundColor: Color(0xFF1c6b92)),
       body: ListView(
         children: [
           ListTile(

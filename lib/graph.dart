@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:hive/hive.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:mig/historylatest.dart';
 
 class MachineGraph extends StatefulWidget {
   final String docRef;
@@ -115,6 +116,19 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HistoryLatestEntriesPage(widget.docRef),
+                ),
+              );
+            },
+            icon: Icon(Icons.filter_list),
+          )
+        ],
         title: Text('Coolant Percentage History'),
         backgroundColor: Color(0xFF1c6b92),
       ),
@@ -175,7 +189,12 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
                         titleOutsideJustification:
                             charts.OutsideJustification.middleDrawArea,
                         innerPadding: 20),
-                    charts.ChartTitle("Coolant Conc. %:  (Limits = " + widget.cMin.toStringAsFixed(0) + "% - " + widget.cMax.toStringAsFixed(0) + "%)",
+                    charts.ChartTitle(
+                        "Coolant Conc. %:  (Limits = " +
+                            widget.cMin.toStringAsFixed(0) +
+                            "% - " +
+                            widget.cMax.toStringAsFixed(0) +
+                            "%)",
                         behaviorPosition: charts.BehaviorPosition.start,
                         titleOutsideJustification:
                             charts.OutsideJustification.middleDrawArea,
@@ -183,7 +202,9 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
                     charts.SlidingViewport(),
                     charts.PanAndZoomBehavior(),
                     charts.RangeAnnotation([
-                      charts.RangeAnnotationSegment(widget.cMin+1, widget.cMax-1,
+                      charts.RangeAnnotationSegment(
+                          widget.cMin + 1,
+                          widget.cMax - 1,
                           charts.RangeAnnotationAxisType.measure,
                           //startLabel: 'Min',
                           //endLabel: 'Max',
@@ -204,18 +225,20 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
                           labelAnchor: charts.AnnotationLabelAnchor.start,
                           color:
                               charts.MaterialPalette.red.makeShades(100)[90]),
-                      charts.RangeAnnotationSegment(widget.cMin, widget.cMin+1,
+                      charts.RangeAnnotationSegment(
+                          widget.cMin,
+                          widget.cMin + 1,
                           charts.RangeAnnotationAxisType.measure,
                           startLabel: 'Min',
                           labelAnchor: charts.AnnotationLabelAnchor.start,
-                          color:
-                              charts.MaterialPalette.yellow.makeShades(100)[80]),
-                      charts.RangeAnnotationSegment(widget.cMax-1, widget.cMax,
-                          charts.RangeAnnotationAxisType.measure,
+                          color: charts.MaterialPalette.yellow
+                              .makeShades(100)[80]),
+                      charts.RangeAnnotationSegment(widget.cMax - 1,
+                          widget.cMax, charts.RangeAnnotationAxisType.measure,
                           startLabel: 'Max',
                           labelAnchor: charts.AnnotationLabelAnchor.start,
-                          color:
-                              charts.MaterialPalette.yellow.makeShades(100)[80]),
+                          color: charts.MaterialPalette.yellow
+                              .makeShades(100)[80]),
                     ]),
                   ],
                 ),
