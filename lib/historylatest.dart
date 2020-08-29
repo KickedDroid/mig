@@ -106,6 +106,7 @@ class _HistoryLatestEntriesPageState extends State<HistoryLatestEntriesPage> {
                       actionPane: SlidableDrawerActionPane(),
                       actionExtentRatio: 0.25,
                       child: Card(
+                        elevation: 10,
                         child: ListTile(
                           title: Text(
                             machines['data'] != null
