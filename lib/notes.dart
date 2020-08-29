@@ -116,37 +116,40 @@ class _NotesListState extends State<NotesList> {
             if (!snapshot.hasData) {
               return Text('Please Wait');
             } else {
-              return ListView.separated(
-                separatorBuilder: (context, index) =>
-                    Divider(color: Colors.lightBlue),
+              return ListView.builder(
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) {
                   DocumentSnapshot machines = snapshot.data.documents[index];
-                  return Slidable(
-                    secondaryActions: <Widget>[
-                      IconSlideAction(
-                        caption: 'Edit Note',
-                        color: Colors.black45,
-                        icon: Icons.edit,
-                        onTap: () => {
-                          editNote(widget.docRef, machines.documentID,
-                              machines['note'])
-                        },
-                      ),
-                      IconSlideAction(
-                        caption: 'Delete',
-                        color: Colors.red,
-                        icon: Icons.delete,
-                        onTap: () =>
-                            deleteNote(widget.docRef, machines.documentID),
-                      ),
-                    ],
-                    actionPane: SlidableDrawerActionPane(),
-                    actionExtentRatio: 0.25,
-                    child: MachineItem(
-                      notes: machines['note'],
-                      name: machines['time'],
-                    ),
+                  return Card(
+                    elevation: 10,
+                    child: (
+                      Slidable(
+                        secondaryActions: <Widget>[
+                          IconSlideAction(
+                            caption: 'Edit Note',
+                            color: Colors.black45,
+                            icon: Icons.edit,
+                            onTap: () => {
+                              editNote(widget.docRef, machines.documentID,
+                                  machines['note'])
+                            },
+                          ),
+                          IconSlideAction(
+                            caption: 'Delete',
+                            color: Colors.red,
+                            icon: Icons.delete,
+                            onTap: () =>
+                                deleteNote(widget.docRef, machines.documentID),
+                          ),
+                        ],
+                        actionPane: SlidableDrawerActionPane(),
+                        actionExtentRatio: 0.25,
+                        child: MachineItem(
+                          notes: machines['note'],
+                          name: machines['time'],
+                        ),
+                      )),
+                  
                   );
                 },
               );
@@ -230,7 +233,9 @@ class _NotesPageState extends State<NotesPage> {
                 DocumentSnapshot machines = snapshot.data.documents[index];
                 return Column(
                   children: [
-                    ListTile(
+                    Card(
+                      elevation: 10,
+                    child: ListTile(
                       title: Text(machines['name']),
                       leading: Icon(Icons.note),
                       trailing: Icon(Icons.arrow_forward_ios),
@@ -244,7 +249,8 @@ class _NotesPageState extends State<NotesPage> {
                         );
                       },
                     ),
-                    Divider(color: Colors.blueGrey)
+                    //Divider(color: Colors.blueGrey)
+                    ),
                   ],
                 );
               },
