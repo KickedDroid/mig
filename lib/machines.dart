@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
 import 'package:hive/hive.dart';
+import 'package:mig/historylatest.dart';
 import 'namechange.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -51,15 +52,20 @@ class _MachineListState extends State<MachineList> {
     return Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            stops: [.0,.4,.7,1],
-                  colors: [
-                    Color(0xFF192b32),
-                    Color(0xFF1c6b92),
-                    Color(0xFF1c6b92),
-                    Color(0xFF192b32),
-                  ]),
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              stops: [
+                .0,
+                .4,
+                .7,
+                1
+              ],
+              colors: [
+                Color(0xFF192b32),
+                Color(0xFF1c6b92),
+                Color(0xFF1c6b92),
+                Color(0xFF192b32),
+              ]),
         ),
         child: Scaffold(
             backgroundColor: Color(0x00000000),
@@ -255,6 +261,39 @@ class MachineItem extends StatelessWidget {
                           children: [
                             Text(
                               'Enter Coolant %',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white),
+                            )
+                          ],
+                        ),
+                      ),
+                    ).padding(),
+                  ),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  HistoryLatestEntriesPage(docRef)),
+                        );
+                      },
+                      onLongPress: () => {},
+                      child: Container(
+                        height: 40,
+                        width: 350,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            gradient: LinearGradient(
+                                colors: [Colors.grey, Colors.blueGrey])),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Latest Entries',
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
