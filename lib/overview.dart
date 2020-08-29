@@ -44,10 +44,12 @@ class _OverviewState extends State<Overview> {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  stops: [.0,1],
+                  stops: [.0,.2,.7,1],
                   colors: [
-                    Color(0xFFdbe0e6),
-                    Color(0xFFdbe0e6),
+                    Color(0xFF192b32),
+                    Color(0xFF1c6b92),
+                    Color(0xFF1c6b92),
+                    Color(0xFF192b32),
 
                     // #0b1c36 dark purple blue
                     // #c74300 orange
@@ -70,7 +72,7 @@ class _OverviewState extends State<Overview> {
                 style: TextStyle(
                 fontSize: 32.0,
                 fontWeight: FontWeight.w800,
-                color: Colors.black87),
+                color: Colors.white),
                  ),
                 ),
               ),
