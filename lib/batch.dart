@@ -4,8 +4,10 @@ import 'dart:ui';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:image_downloader/image_downloader.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'main.dart';
@@ -183,6 +185,8 @@ class _BatchQrCodesState extends State<BatchQrCodes> {
   GlobalKey globalKey = new GlobalKey();
   String _dataString = "Hello from this QR";
 
+  String qrText;
+
   Future<void> _captureAndSharePng() async {
     try {
       RenderRepaintBoundary boundary =
@@ -237,27 +241,47 @@ class _BatchQrCodesState extends State<BatchQrCodes> {
   }
 
   getPermission() async {
-    await Permission.photos.request();
-    var status = await Permission.photos.status;
+    await Permission.storage.request();
+    var status = await Permission.storage.status;
     print(status);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getPermission();
   }
 
   final pdf = pw.Document();
 
   getQrCodes() async {
-    getPermission();
     var docs = await Firestore.instance
         .collection(box.get('companyId'))
         .getDocuments();
     docs.documents.forEach((document) async {
-      var response = await Dio().get(
-          "https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${document.documentID}",
-          options: Options(responseType: ResponseType.bytes));
-      final result = await ImageGallerySaver.saveImage(
-          Uint8List.fromList(response.data),
-          quality: 100,
-          name: "${document.data['name']}");
-      print(result);
+      setState(() {
+        qrText = document.documentID;
+      });
+      try {
+        RenderRepaintBoundary boundary =
+            globalKey.currentContext.findRenderObject();
+        var image = await boundary.toImage(pixelRatio: 3.0);
+        ByteData byteData = await image.toByteData(format: ImageByteFormat.png);
+        Uint8List pngBytes = byteData.buffer.asUint8List();
+
+        final tempDir = await getTemporaryDirectory();
+        final file =
+            await new File('${tempDir.path}/${document.data['name']}.png')
+                .create();
+        await file.writeAsBytes(pngBytes);
+
+        await ImageGallerySaver.saveImage(pngBytes,
+            quality: 100, name: "${document.data['name']}");
+      } catch (e) {
+        print(e.toString());
+      }
+      Future.delayed(Duration(seconds: 3));
     });
 
     Toast.show('Check Your Photos', context);
@@ -266,48 +290,44 @@ class _BatchQrCodesState extends State<BatchQrCodes> {
   var box = Hive.box('myBox');
   @override
   Widget build(BuildContext context) {
-    return RepaintBoundary(
-      key: globalKey,
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.share),
-            onPressed: () async {
-              await getQrCodes();
-            }),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 1,
-                  child: StreamBuilder(
-                    stream: Firestore.instance
-                        .collection(box.get('companyId'))
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      assert(snapshot != null);
-                      if (!snapshot.hasData) {
-                        return Text('Please Wait');
-                      } else {
-                        return GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3),
-                          itemCount: snapshot.data.documents.length,
-                          itemBuilder: (context, index) {
-                            DocumentSnapshot machines =
-                                snapshot.data.documents[index];
-                            return QrItem(
-                              docRef: machines.documentID,
-                            );
-                          },
-                        );
-                      }
-                    },
-                  ),
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.share),
+          onPressed: () async {
+            await getQrCodes();
+          }),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 1,
+                child: StreamBuilder(
+                  stream: Firestore.instance
+                      .collection(box.get('companyId'))
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    assert(snapshot != null);
+                    if (!snapshot.hasData) {
+                      return Text('Please Wait');
+                    } else {
+                      return GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3),
+                        itemCount: snapshot.data.documents.length,
+                        itemBuilder: (context, index) {
+                          DocumentSnapshot machines =
+                              snapshot.data.documents[index];
+                          return QrItem(
+                            docRef: machines.documentID,
+                          );
+                        },
+                      );
+                    }
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

@@ -116,6 +116,19 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HistoryLatestEntriesPage(widget.docRef),
+                ),
+              );
+            },
+            icon: Icon(Icons.filter_list),
+          )
+        ],
         title: Text('$name History'),
         toolbarHeight:
             MediaQuery.of(context).orientation == Orientation.portrait
