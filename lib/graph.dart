@@ -142,9 +142,10 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
   }
 
   Widget _buildBody(BuildContext context) {
+    var box = Hive.box('myBox');
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance
-          .collection('companies')
+          .collection(box.get('companyId'))
           .document("${widget.docRef}")
           .collection('history')
           .snapshots(),
