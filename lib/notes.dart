@@ -121,7 +121,7 @@ class _NotesListState extends State<NotesList> {
                 itemBuilder: (context, index) {
                   DocumentSnapshot machines = snapshot.data.documents[index];
                   return Card(
-                    elevation: 10,
+                    elevation: 5,
                     child: (
                       Slidable(
                         secondaryActions: <Widget>[
@@ -234,7 +234,7 @@ class _NotesPageState extends State<NotesPage> {
                 return Column(
                   children: [
                     Card(
-                      elevation: 10,
+                      elevation: 5,
                     child: ListTile(
                       title: Text(machines['name']),
                       leading: Icon(Icons.note),

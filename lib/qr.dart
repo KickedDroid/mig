@@ -103,10 +103,15 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
 
   final cminController = TextEditingController();
   final cmaxController = TextEditingController();
+  final ctargetController = TextEditingController();
+  final cuwarningController = TextEditingController();
+  final clwarningController = TextEditingController();
 
   String cMin;
-
   String cMax;
+  String cTarget;
+  String cUwarning;
+  String cLwarning;
 
   Widget _handleWidget() {
     return ValueListenableBuilder(
@@ -119,32 +124,96 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
           return Container(
             child: Column(
               children: [
-                TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      cMin = value;
-                    });
-                  },
-                  keyboardType: TextInputType.number,
-                  controller: controller,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Min Coolant % (Optional)',
-                      labelStyle: TextStyle(fontSize: 15)),
-                ).padding(),
-                TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      cMax = value;
-                    });
-                  },
-                  keyboardType: TextInputType.number,
-                  controller: controller,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Max Coolant % (Optional)',
-                      labelStyle: TextStyle(fontSize: 15)),
-                ).padding()
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        cTarget = value;
+                      });
+                    },
+                    keyboardType: TextInputType.number,
+                    controller: controller,
+                    decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(),
+                        labelText: 'Target Coolant % (Optional)',
+                        labelStyle: TextStyle(fontSize: 15)),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        cMin = value;
+                      });
+                    },
+                    keyboardType: TextInputType.number,
+                    controller: controller,
+                    decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(),
+                        labelText: 'Min Coolant % (Optional)',
+                        labelStyle: TextStyle(fontSize: 15)),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        cMax = value;
+                      });
+                    },
+                    keyboardType: TextInputType.number,
+                    controller: controller,
+                    decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(),
+                        labelText: 'Max Coolant % (Optional)',
+                        labelStyle: TextStyle(fontSize: 15)),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        cLwarning = value;
+                      });
+                    },
+                    keyboardType: TextInputType.number,
+                    controller: controller,
+                    decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(),
+                        labelText: 'Lower Warning % (Optional)',
+                        labelStyle: TextStyle(fontSize: 15)),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        cUwarning = value;
+                      });
+                    },
+                    keyboardType: TextInputType.number,
+                    controller: controller,
+                    decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(),
+                        labelText: 'Upper Warning % (Optional)',
+                        labelStyle: TextStyle(fontSize: 15)),
+                  ),
+                ),
               ],
             ),
           );
@@ -157,6 +226,9 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
     setState(() {
       cMin = cminController.text;
       cMax = cmaxController.text;
+      cTarget = ctargetController.text;
+      cUwarning = cuwarningController.text;
+      cLwarning = clwarningController.text;
     });
   }
 
@@ -173,151 +245,188 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
         iconTheme: IconThemeData(color: Colors.white),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  '${widget.name}',
-                  style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
+        child: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                stops: [0.1, 0.5, 0.7, 0.9],
+                colors: [
+                  Colors.white,
+                  Colors.blue[50],
+                  Colors.lightBlue[100],
+                  Colors.lightBlue[200],
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(12, 2, 8, 4),
-                child: Text(
-                  "Enter Coolant Percentage",
-                  style: TextStyle(
-                      fontSize: 16,
-                      //fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
-              ),
-              TextField(
-                onChanged: (value) {
-                  setState(() {
-                    data = value;
-                  });
-                },
-                keyboardType: TextInputType.number,
-                controller: controller,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Enter Coolant Percentage',
-                    labelStyle: TextStyle(fontSize: 15)),
-              ).padding(),
-              //Text('Optional'),
-              TextField(
-                onChanged: (value) {
-                  setState(() {
-                    notes = value;
-                  });
-                },
-                controller: controller,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Add any notes (Optional)',
-                    labelStyle: TextStyle(fontSize: 15)),
-              ).padding(),
-              Container(child: _handleWidget()),
-              SwitchListTile(
-                  title: Text(
-                    "Was The Sump Cleaned?",
-                    //style: whiteBoldText,
+
+              color: Colors.white,
+
+              borderRadius: BorderRadius.circular(00.0),
+
+              // the box shawdow property allows for fine tuning as aposed to shadowColor
+            ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    '${widget.name}',
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
                   ),
-                  value: cleaned,
-                  onChanged: (val) {
-                    setState(() {
-                      cleaned = val;
-                    });
-                  }),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        var box = Hive.box('myBox');
-                        if (data != null) {
-                          Firestore.instance
-                              .collection(box.get('companyId'))
-                              .document("${widget.docRef}")
-                              .updateData({
-                            "coolant-percent": "$data",
-                            "last-updated": "$time"
-                          });
-                          Firestore.instance
-                              .collection(box.get('companyId'))
-                              .document("${widget.docRef}")
-                              .collection('history')
-                              .document("$time")
-                              .setData({"data": "$data", "time": "$time"});
-                        }
-                        if (notes != null) {
-                          Firestore.instance
-                              .collection(box.get('companyId'))
-                              .document("${widget.docRef}")
-                              .collection("notes")
-                              .document("$time")
-                              .setData({"note": "$notes", "time": "$time"});
-                        }
-
-                        if (cleaned != false) {
-                          Firestore.instance
-                              .collection(box.get('companyId'))
-                              .document("${widget.docRef}")
-                              .updateData({"last-cleaned": "$time"});
-                        }
-
-                        if (cMin != null) {
-                          Firestore.instance
-                              .collection(box.get('companyId'))
-                              .document("${widget.docRef}")
-                              .updateData({"c-min": "$cMin"});
-                        }
-                        if (cMax != null) {
-                          Firestore.instance
-                              .collection(box.get('companyId'))
-                              .document("${widget.docRef}")
-                              .updateData({"c-max": "$cMax"});
-                        }
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                          height: 50,
-                          width: 300,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(colors: [
-                                Colors.blueAccent[700],
-                                Colors.blue
-                              ])),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.cloud_upload,
-                                color: Colors.white,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  'Update',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              )
-                            ],
-                          )),
-                    ),
-                  ],
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                  child: Text(
+                    "Enter Coolant Percentage",
+                    style: TextStyle(
+                        fontSize: 16,
+                        //fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        data = value;
+                      });
+                    },
+                    keyboardType: TextInputType.number,
+                    controller: controller,
+                    decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(),
+                        labelText: 'Enter Coolant Percentage',
+                        labelStyle: TextStyle(fontSize: 15)),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        notes = value;
+                      });
+                    },
+                    controller: controller,
+                    decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(),
+                        labelText: 'Add any notes (Optional)',
+                        labelStyle: TextStyle(fontSize: 15)),
+                  ),
+                ),
+                Container(child: _handleWidget()),
+                SwitchListTile(
+                    title: Text(
+                      "Was The Sump Cleaned?",
+                      //style: whiteBoldText,
+                    ),
+                    value: cleaned,
+                    onChanged: (val) {
+                      setState(() {
+                        cleaned = val;
+                      });
+                    }),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          var box = Hive.box('myBox');
+                          if (data != null) {
+                            Firestore.instance
+                                .collection(box.get('companyId'))
+                                .document("${widget.docRef}")
+                                .updateData({
+                              "coolant-percent": "$data",
+                              "last-updated": "$time"
+                            });
+                            Firestore.instance
+                                .collection(box.get('companyId'))
+                                .document("${widget.docRef}")
+                                .collection('history')
+                                .document("$time")
+                                .setData({"data": "$data", "time": "$time"});
+                          }
+                          if (notes != null) {
+                            Firestore.instance
+                                .collection(box.get('companyId'))
+                                .document("${widget.docRef}")
+                                .collection("notes")
+                                .document("$time")
+                                .setData({"note": "$notes", "time": "$time"});
+                          }
+
+                          if (cleaned != false) {
+                            Firestore.instance
+                                .collection(box.get('companyId'))
+                                .document("${widget.docRef}")
+                                .updateData({"last-cleaned": "$time"});
+                          }
+
+                          if (cTarget != null) {
+                            Firestore.instance
+                                .collection(box.get('companyId'))
+                                .document("${widget.docRef}")
+                                .updateData({"c-target": "$cTarget"});
+                          }
+
+                          if (cUwarning != null) {
+                            Firestore.instance
+                                .collection(box.get('companyId'))
+                                .document("${widget.docRef}")
+                                .updateData({"c-uwarning": "$cUwarning"});
+                          }
+                          if (cLwarning != null) {
+                            Firestore.instance
+                                .collection(box.get('companyId'))
+                                .document("${widget.docRef}")
+                                .updateData({"c-lwarning": "$cLwarning"});
+                          }
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                            height: 50,
+                            width: 300,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                gradient: LinearGradient(colors: [
+                                  Colors.blueAccent[700],
+                                  Colors.blue
+                                ])),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.cloud_upload,
+                                  color: Colors.white,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'Update',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                )
+                              ],
+                            )),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

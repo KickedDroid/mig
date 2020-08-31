@@ -23,15 +23,23 @@ class _UpdateMachinePageState extends State<UpdateMachinePageQr> {
 
   final cminController = TextEditingController();
   final cmaxController = TextEditingController();
+  final ctargetController = TextEditingController();
+  final cuwarningController = TextEditingController();
+  final clwarningController = TextEditingController();
 
   String cMin;
-
   String cMax;
+  String cTarget;
+  String cUwarning;
+  String cLwarning;
 
   void getInputData() {
     setState(() {
       cMin = cminController.text;
       cMax = cmaxController.text;
+      cTarget = ctargetController.text;
+      cUwarning = cuwarningController.text;
+      cLwarning = clwarningController.text;
     });
   }
 
@@ -56,7 +64,7 @@ class _UpdateMachinePageState extends State<UpdateMachinePageQr> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Text(
                     "Enter Coolant Percentage",
                     style: TextStyle(

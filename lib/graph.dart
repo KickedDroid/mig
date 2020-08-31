@@ -9,8 +9,11 @@ class MachineGraph extends StatefulWidget {
   final String docRef;
   final double cMin;
   final double cMax;
+  final double cTarget;
+  final double cUwarning;
+  final double cLwarning;
 
-  MachineGraph(this.docRef, this.cMin, this.cMax);
+  MachineGraph(this.docRef, this.cMin, this.cMax, this.cTarget, this.cUwarning, this.cLwarning);
 
   @override
   _MachineGraphState createState() => _MachineGraphState();
@@ -22,7 +25,7 @@ class _MachineGraphState extends State<MachineGraph> {
     return SafeArea(
       child: Container(
           child: Scaffold(
-        body: HistoryHomePage(widget.docRef, widget.cMin, widget.cMax),
+        body: HistoryHomePage(widget.docRef, widget.cMin, widget.cMax, widget.cTarget, widget.cUwarning, widget.cLwarning),
       )),
     );
   }
@@ -44,8 +47,11 @@ class HistoryHomePage extends StatefulWidget {
   final String docRef;
   final double cMin;
   final double cMax;
+  final double cTarget;
+  final double cUwarning;
+  final double cLwarning;
 
-  HistoryHomePage(this.docRef, this.cMin, this.cMax);
+  HistoryHomePage(this.docRef, this.cMin, this.cMax, this.cTarget, this.cUwarning, this.cLwarning);
 
   @override
   _HistoryHomePageState createState() {
@@ -83,8 +89,8 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
       charts.Series(
         domainFn: (History history, _) => history.time,
         measureFn: (History history, _) => double.parse(history.data),
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        areaColorFn: (_, __) => charts.MaterialPalette.blue.makeShades(100)[99],
+        colorFn: (_, __) => charts.MaterialPalette.gray.makeShades(100)[1],
+        //areaColorFn: (_, __) => charts.MaterialPalette.blue.makeShades(100)[99],
         id: 'Sales',
         data: mydata,
         labelAccessorFn: (History row, _) => "${row.data}",
@@ -207,8 +213,8 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
                     charts.PanAndZoomBehavior(),
                     charts.RangeAnnotation([
                       charts.RangeAnnotationSegment(
-                          widget.cMin + 1,
-                          widget.cMax - 1,
+                          widget.cLwarning,
+                          widget.cUwarning,
                           charts.RangeAnnotationAxisType.measure,
                           //startLabel: 'Min',
                           //endLabel: 'Max',
@@ -231,18 +237,22 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
                               charts.MaterialPalette.red.makeShades(100)[90]),
                       charts.RangeAnnotationSegment(
                           widget.cMin,
-                          widget.cMin + 1,
+                          widget.cLwarning,
                           charts.RangeAnnotationAxisType.measure,
-                          startLabel: 'Min',
+                          startLabel: 'Warning',
                           labelAnchor: charts.AnnotationLabelAnchor.start,
                           color: charts.MaterialPalette.yellow
                               .makeShades(100)[80]),
-                      charts.RangeAnnotationSegment(widget.cMax - 1,
+                      charts.RangeAnnotationSegment(widget.cUwarning,
                           widget.cMax, charts.RangeAnnotationAxisType.measure,
-                          startLabel: 'Max',
+                          startLabel: 'Warning',
                           labelAnchor: charts.AnnotationLabelAnchor.start,
                           color: charts.MaterialPalette.yellow
                               .makeShades(100)[80]),
+                      charts.LineAnnotationSegment(widget.cTarget, charts.RangeAnnotationAxisType.measure,
+                          endLabel: 'Target',
+                          color: charts.MaterialPalette.green
+                              .makeShades(100)[1]),
                     ]),
                   ],
                 ),
