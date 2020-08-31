@@ -198,6 +198,10 @@ class _AddMachinePageState extends State<AddMachinePage> {
   TextEditingController controller;
   String cmin;
   String cmax;
+  String ctarget;
+  String cuwarning;
+  String clwarning;
+
 
   @override
   Widget build(BuildContext context) {
@@ -216,7 +220,10 @@ class _AddMachinePageState extends State<AddMachinePage> {
                 "last-updated": "$time",
                 "last-cleaned": "$time",
                 "c-min": "$cmin",
-                "c-max": "$cmax"
+                "c-max": "$cmax",
+                "c-target": "$ctarget",
+                "c-uwarning": "$cuwarning",
+                "c-lwarning": "$clwarning"
               });
               Firestore.instance
                   .collection(box.get('companyId'))
@@ -285,18 +292,18 @@ class _AddMachinePageState extends State<AddMachinePage> {
         borderRadius: BorderRadius.circular(00.0),
         // the box shawdow property allows for fine tuning as aposed to shadowColor
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+      child: ListView(
+        //mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
             child: Text(
-              "Add a Machine",
-              style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w400),
+              "Add a Machine", textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w400),
             ),
           ),
           Container(
-            height: MediaQuery.of(context).size.height * .35,
+            height: MediaQuery.of(context).size.height * .55,
             child: Column(
               children: [
                 Expanded(
@@ -314,6 +321,26 @@ class _AddMachinePageState extends State<AddMachinePage> {
                           fillColor: Colors.white,
                           border: OutlineInputBorder(),
                           labelText: 'Add Machine Name',
+                          labelStyle: TextStyle(fontSize: 15)),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          ctarget = value;
+                        });
+                      },
+                      keyboardType: TextInputType.number,
+                      controller: controller,
+                      decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter Target Coolant %',
                           labelStyle: TextStyle(fontSize: 15)),
                     ),
                   ),
@@ -354,6 +381,46 @@ class _AddMachinePageState extends State<AddMachinePage> {
                           fillColor: Colors.white,
                           border: OutlineInputBorder(),
                           labelText: 'Enter Max Coolant %',
+                          labelStyle: TextStyle(fontSize: 15)),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          cuwarning = value;
+                        });
+                      },
+                      keyboardType: TextInputType.number,
+                      controller: controller,
+                      decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter Upper Warning %',
+                          labelStyle: TextStyle(fontSize: 15)),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          clwarning = value;
+                        });
+                      },
+                      keyboardType: TextInputType.number,
+                      controller: controller,
+                      decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter Lower Warning %',
                           labelStyle: TextStyle(fontSize: 15)),
                     ),
                   ),

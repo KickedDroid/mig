@@ -40,7 +40,7 @@ class HistoryPage extends StatelessWidget {
                 return Column(
                   children: [
                     Card(
-                      elevation: 10,
+                      elevation: 5,
                       child: ListTile(
                         title: Text(machines['name']),
                         leading: Icon(Icons.show_chart),
@@ -52,7 +52,10 @@ class HistoryPage extends StatelessWidget {
                               builder: (context) => MachineGraph(
                                   machines.documentID,
                                   double.parse(machines['c-min']),
-                                  double.parse(machines['c-max'])),
+                                  double.parse(machines['c-max']),
+                                  double.parse(machines['c-target']),
+                                  double.parse(machines['c-uwarning']),
+                                  double.parse(machines['c-lwarning']))
                             ),
                           );
                         },

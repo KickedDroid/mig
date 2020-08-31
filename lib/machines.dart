@@ -193,27 +193,9 @@ class MachineItem extends StatelessWidget {
               ),
               expanded: Column(
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Text('Edit Name'),
-                      IconButton(
-                          icon: Icon(
-                            Icons.edit,
-                            size: 18.0,
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    ChangeNamePage(docRef, name),
-                              ),
-                            );
-                          })
-                    ],
-                  ),
-                  GestureDetector(
-                    onTap: () {
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -224,16 +206,79 @@ class MachineItem extends StatelessWidget {
                         ),
                       );
                     },
-                    child: Row(
-                      children: <Widget>[
-                        Text('Share QR Code'),
-                        QrImage(
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.black,
-                          data: docRef,
-                          size: 50,
+                      onLongPress: () => {},
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Container(
+                          height: 40,
+                          width: 350,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              gradient: LinearGradient(colors: [
+                                Color(0xFF289ad2),
+                                Color(0xFF289ad2)
+                              ])),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(Icons.select_all, color: Colors.white),
+                              ),
+                              Text(
+                                'Share QR Code',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white),
+                              )
+                            ],
+                          ),
                         ),
-                      ],
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ChangeNamePage(docRef, name),
+                              ),
+                            );
+                          },
+                      onLongPress: () => {},
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Container(
+                          height: 40,
+                          width: 350,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              gradient: LinearGradient(colors: [
+                                Color(0xFF248abd),
+                                Color(0xFF248abd)
+                              ])),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(Icons.edit, color: Colors.white),
+                              ),
+                              Text(
+                                'Edit Machine Name',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   Center(
@@ -247,29 +292,36 @@ class MachineItem extends StatelessWidget {
                         );
                       },
                       onLongPress: () => {},
-                      child: Container(
-                        height: 40,
-                        width: 350,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            gradient: LinearGradient(colors: [
-                              Colors.lightBlue[300],
-                              Colors.lightBlue[400]
-                            ])),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Enter Coolant %',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white),
-                            )
-                          ],
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Container(
+                          height: 40,
+                          width: 350,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              gradient: LinearGradient(colors: [
+                                Color(0xFF207ba7),
+                                Color(0xFF207ba7)
+                              ])),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(Icons.bubble_chart, color: Colors.white),
+                              ),
+                              Text(
+                                'Enter Coolant %',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                    ).padding(),
+                    ),
                   ),
                   Center(
                     child: GestureDetector(
@@ -282,27 +334,37 @@ class MachineItem extends StatelessWidget {
                         );
                       },
                       onLongPress: () => {},
-                      child: Container(
-                        height: 40,
-                        width: 350,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            gradient: LinearGradient(
-                                colors: [Colors.grey, Colors.blueGrey])),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Latest Entries',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white),
-                            )
-                          ],
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Container(
+                          height: 40,
+                          width: 350,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xFF1c6b92), 
+                                    Color(0xFF1c6b92)
+                                    ])),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(Icons.format_list_bulleted, color: Colors.white),
+                              ),
+                              Text(
+                                'Latest Entries',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                    ).padding(),
+                    ),
                   ),
                 ],
               ),

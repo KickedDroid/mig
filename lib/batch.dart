@@ -28,6 +28,9 @@ class _BatchAddPageState extends State<BatchAddPage> {
   String batchName = "";
   String cmin;
   String cmax;
+  String ctarget;
+  String cuwarning;
+  String clwarning;
 
   getTextInputData() {
     setState(() {
@@ -35,6 +38,10 @@ class _BatchAddPageState extends State<BatchAddPage> {
       batchName = controller2.text;
       cmin = controllerCmin.text;
       cmax = controllerCmax.text;
+      ctarget = controllerCtarget.text;
+      cuwarning = controllerCuwarning.text;
+      clwarning = controllerClwarning.text;
+
     });
   }
 
@@ -48,7 +55,7 @@ class _BatchAddPageState extends State<BatchAddPage> {
           FlatButton(
             child: Text('Submit'),
             onPressed: () {
-              _batchAdd(batchName, numOf, cmin, cmax);
+              _batchAdd(batchName, numOf, cmin, cmax, ctarget, cuwarning, clwarning);
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -66,10 +73,19 @@ class _BatchAddPageState extends State<BatchAddPage> {
   final TextEditingController controller2 = TextEditingController();
   final TextEditingController controllerCmin = TextEditingController();
   final TextEditingController controllerCmax = TextEditingController();
+  final TextEditingController controllerCtarget = TextEditingController();
+  final TextEditingController controllerCuwarning = TextEditingController();
+  final TextEditingController controllerClwarning = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          backgroundColor: Color(0xFF1c6b92),
+          title: Text('Batch Machine Entry',
+              style: TextStyle(
+                color: Color(0xffFFFFFF),
+              ))),
       bottomNavigationBar: BottomAppBar(
         color: Color(0xFF1c6b92),
         child: Row(
@@ -97,61 +113,149 @@ class _BatchAddPageState extends State<BatchAddPage> {
         },
       ),
       body: SafeArea(
-        child: ListView(
-          children: <Widget>[
-            Text(
-              'Create Multiple Machines',
-              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-            ).padding(),
-            TextFormField(
-              controller: controller,
-              keyboardType: TextInputType.number,
-              style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Number of Machines to Add',
-                labelStyle: TextStyle(fontSize: 15),
+        child: Container(
+          decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  stops: [0.1, 0.5, 0.7, 0.9],
+                  colors: [
+                    Colors.white,
+                    Colors.blue[50],
+                    Colors.lightBlue[100],
+                    Colors.lightBlue[200],
+                  ],
+                ),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(00.0),
+                // the box shawdow property allows for fine tuning as aposed to shadowColor
               ),
-            ).padding(),
-            TextFormField(
-              controller: controller2,
-              style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Name of Batch',
-                labelStyle: TextStyle(fontSize: 15),
+          child: ListView(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Create Multiple Machines', textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                ),
               ),
-            ).padding(),
-            TextFormField(
-              controller: controllerCmin,
-              style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Min',
-                labelStyle: TextStyle(fontSize: 15),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                child: TextFormField(
+                  controller: controller,
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(),
+                    labelText: 'Number of Machines to Add',
+                    labelStyle: TextStyle(fontSize: 15),
+                  ),
+                ),
               ),
-            ).padding(),
-            TextFormField(
-              controller: controllerCmax,
-              style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Max',
-                labelStyle: TextStyle(fontSize: 15),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                child: TextFormField(
+                  controller: controller2,
+                  style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(),
+                    labelText: 'Name of Batch',
+                    labelStyle: TextStyle(fontSize: 15),
+                  ),
+                ),
               ),
-            ).padding(),
-            Text(
-              'This screen allows you to setup multiple machines at once',
-              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-            ).padding(),
-          ],
+               Padding(
+                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                 child: TextFormField(
+                  controller: controllerCtarget,
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(),
+                    labelText: 'Target Coolant %',
+                    labelStyle: TextStyle(fontSize: 15),
+                  ),
+              ),
+               ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                child: TextFormField(
+                  controller: controllerCmax,
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(),
+                    labelText: 'Max Limit %',
+                    labelStyle: TextStyle(fontSize: 15),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                child: TextFormField(
+                  controller: controllerCmin,
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(),
+                    labelText: 'Min Limit %',
+                    labelStyle: TextStyle(fontSize: 15),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                child: TextFormField(
+                  controller: controllerCuwarning,
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(),
+                    labelText: 'Upper Warning %',
+                    labelStyle: TextStyle(fontSize: 15),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                child: TextFormField(
+                  controller: controllerClwarning,
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(),
+                    labelText: 'Lower Warning %',
+                    labelStyle: TextStyle(fontSize: 15),
+                  ),
+                ),
+              ),
+              Text(
+                'This screen allows you to setup multiple machines at once', textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+              ).padding(),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-void _batchAdd(String name, int numMachines, String cmin, String cmax) async {
+void _batchAdd(String name, int numMachines, String cmin, String cmax, String ctarget, String cuwarning, String clwarning) async {
   var box = Hive.box('myBox');
   var time = new DateTime.now();
   for (int i = 1; i <= numMachines; i++) {
@@ -166,7 +270,10 @@ void _batchAdd(String name, int numMachines, String cmin, String cmax) async {
       "last-cleaned": "$time",
       "notes": {"note": "No Notes", "time": "$time"},
       "c-min": "$cmin",
-      "c-max": "$cmax"
+      "c-max": "$cmax",
+      "c-target": "$ctarget",
+      "c-uwarning": "$cuwarning",
+      "c-lwarning": "$clwarning"
     });
   }
 }
