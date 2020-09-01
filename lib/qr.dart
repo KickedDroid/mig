@@ -35,9 +35,8 @@ class _QRViewExampleState extends State<QRViewExample> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF1c6b92),
-        title: Text('Scan Machine QR Code')
-      ),
+          backgroundColor: Color(0xFF1c6b92),
+          title: Text('Scan Machine QR Code')),
       body: Column(
         children: <Widget>[
           Expanded(
@@ -112,6 +111,19 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
   String cTarget;
   String cUwarning;
   String cLwarning;
+
+  String name;
+
+  Future<void> getName(String docRef) async {
+    var box = Hive.box('myBox');
+    var doc = await Firestore.instance
+        .collection(box.get('companyId'))
+        .document(docRef)
+        .get();
+    setState(() {
+      name = doc['name'];
+    });
+  }
 
   Widget _handleWidget() {
     return ValueListenableBuilder(
@@ -247,24 +259,24 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                stops: [0.1, 0.5, 0.7, 0.9],
-                colors: [
-                  Colors.white,
-                  Colors.blue[50],
-                  Colors.lightBlue[100],
-                  Colors.lightBlue[200],
-                ],
-              ),
-
-              color: Colors.white,
-
-              borderRadius: BorderRadius.circular(00.0),
-
-              // the box shawdow property allows for fine tuning as aposed to shadowColor
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              stops: [0.1, 0.5, 0.7, 0.9],
+              colors: [
+                Colors.white,
+                Colors.blue[50],
+                Colors.lightBlue[100],
+                Colors.lightBlue[200],
+              ],
             ),
+
+            color: Colors.white,
+
+            borderRadius: BorderRadius.circular(00.0),
+
+            // the box shawdow property allows for fine tuning as aposed to shadowColor
+          ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListView(

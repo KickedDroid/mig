@@ -15,7 +15,7 @@ class _UpdateMachinePageState extends State<UpdateMachinePageQr> {
   var time = new DateTime.now();
 
   TextEditingController controller;
-
+  String name;
   String data;
   String notes;
 
@@ -43,6 +43,25 @@ class _UpdateMachinePageState extends State<UpdateMachinePageQr> {
     });
   }
 
+  Future<void> getName(String docRef) async {
+    var box = Hive.box('myBox');
+    var doc = await Firestore.instance
+        .collection(box.get('companyId'))
+        .document(docRef)
+        .get();
+    setState(() {
+      name = doc.data['name'];
+    });
+    print(doc.data);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getName(widget.docRef);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,6 +82,13 @@ class _UpdateMachinePageState extends State<UpdateMachinePageQr> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    name ?? "Invalid Qr Code",
+                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
@@ -161,13 +187,13 @@ class _UpdateMachinePageState extends State<UpdateMachinePageQr> {
                                 .setData({"data": "$data", "time": "$time"});
                           }
                           if (notes != null) {
-                          Firestore.instance
-                              .collection(box.get('companyId'))
-                              .document("${widget.docRef}")
-                              .collection("notes")
-                              .document("$time")
-                              .setData({"note": "$notes", "time": "$time"});
-                        }
+                            Firestore.instance
+                                .collection(box.get('companyId'))
+                                .document("${widget.docRef}")
+                                .collection("notes")
+                                .document("$time")
+                                .setData({"note": "$notes", "time": "$time"});
+                          }
 
                           if (cleaned != false) {
                             Firestore.instance
