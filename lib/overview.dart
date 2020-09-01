@@ -18,9 +18,10 @@ class _OverviewState extends State<Overview> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Overview of Machines'),
-        toolbarHeight: MediaQuery.of(context).orientation == Orientation.portrait
-        ? AppBar().preferredSize.height
-        : 0,
+        toolbarHeight:
+            MediaQuery.of(context).orientation == Orientation.portrait
+                ? AppBar().preferredSize.height
+                : 0,
         backgroundColor: Color(0xFF1c6b92),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
@@ -41,56 +42,57 @@ class _OverviewState extends State<Overview> {
       backgroundColor: Colors.lightBlue[200],
       body: Container(
         decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  stops: [.0,.2,.7,1],
-                  colors: [
-                    Color(0xFF192b32),
-                    Color(0xFF1c6b92),
-                    Color(0xFF1c6b92),
-                    Color(0xFF192b32),
+            gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: [.0, .2, .7, 1],
+          colors: [
+            Color(0xFF192b32),
+            Color(0xFF1c6b92),
+            Color(0xFF1c6b92),
+            Color(0xFF192b32),
 
-                    // #0b1c36 dark purple blue
-                    // #c74300 orange
-                    // #446280 bluish orange
-                    // #abc0df light blue
-                    // #395473
-                    // #1c6b92
-                    // #8eaec9 Light Blue
-
-                  ],
-                )),
-        child: ListView(children: <Widget>[
-          Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
-                child: SafeArea(
-                child: Text(
-                'Machine Overview',
-                style: TextStyle(
-                fontSize: 32.0,
-                fontWeight: FontWeight.w800,
-                color: Colors.white),
-                 ),
-                ),
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: _buildBody(context),
+            // #0b1c36 dark purple blue
+            // #c74300 orange
+            // #446280 bluish orange
+            // #abc0df light blue
+            // #395473
+            // #1c6b92
+            // #8eaec9 Light Blue
+          ],
+        )),
+        child: Flexible(
+          child: ListView(children: <Widget>[
+            Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
+                  child: SafeArea(
+                    child: Text(
+                      'Machine Overview',
+                      style: TextStyle(
+                          fontSize: 32.0,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.white),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ]),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: _buildBody(context),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -107,10 +109,10 @@ Widget _buildBody(BuildContext context) {
       } else {
         return ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
-          
           child: Container(
             constraints: BoxConstraints(
-            maxWidth: 800.0,),
+              maxWidth: 800.0,
+            ),
             color: Colors.white,
             child: DataTable(columns: [
               DataColumn(label: Text('Name')),
@@ -140,20 +142,18 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
 
   return DataRow(
     cells: [
-      DataCell(
-        Container(
-          width: 80,
-          child: Text(
+      DataCell(Container(
+        width: 80,
+        child: Text(
           machines['name'].length > 17
-          ? machines['name'].substring(0,16) + "..."
-          : machines['name'],
+              ? machines['name'].substring(0, 16) + "..."
+              : machines['name'],
           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
-      ),
-        )),
-      DataCell(
-        Container(
-          width: 45,
-          child: Text(
+        ),
+      )),
+      DataCell(Container(
+        width: 45,
+        child: Text(
             machines['coolant-percent'] +
                 "% (" +
                 machines['c-min'] +
@@ -161,41 +161,39 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
                 machines['c-max'] +
                 ")",
             style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 12,
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
                 color: double.parse(machines['coolant-percent']) <
                             double.parse(machines['c-max']) &&
                         double.parse(machines['coolant-percent']) >
                             double.parse(machines['c-min'])
                     ? Colors.greenAccent[700]
                     : Colors.red)),
-        )),
-      DataCell(
-        Container(
-          width: 45,
-          child: Text(
+      )),
+      DataCell(Container(
+        width: 45,
+        child: Text(
           machines['last-updated'].substring(5, 7) +
               "/" +
-              machines['last-updated'].substring(8, 10),// +
-              //"/" +
-              //machines['last-updated'].substring(2, 4),
+              machines['last-updated'].substring(8, 10), // +
+          //"/" +
+          //machines['last-updated'].substring(2, 4),
           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
-      ),
-        )),
-      
-      DataCell(
-        Container(
-          width: 45,
-          child: Text(
+        ),
+      )),
+      DataCell(Container(
+        width: 45,
+        child: Text(
           machines['last-cleaned'].substring(5, 7) +
                   "/" +
-                  machines['last-cleaned'].substring(8, 10)// +
-                  //"/" +
-                  //machines['last-cleaned'].substring(2, 4) 
-                  ??
+                  machines['last-cleaned'].substring(8, 10) // +
+              //"/" +
+              //machines['last-cleaned'].substring(2, 4)
+              ??
               "No Input",
           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
-      ),
-        )),
+        ),
+      )),
     ],
   );
 }
