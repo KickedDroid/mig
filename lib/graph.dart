@@ -89,7 +89,7 @@ class _HistoryHomePageState extends State<HistoryHomePage> {
       charts.Series(
         domainFn: (History history, _) => history.time,
         measureFn: (History history, _) => double.parse(history.data),
-        colorFn: (_, __) => charts.MaterialPalette.gray.makeShades(100)[1],
+        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
         //areaColorFn: (_, __) => charts.MaterialPalette.blue.makeShades(100)[99],
         id: 'Sales',
         data: mydata,

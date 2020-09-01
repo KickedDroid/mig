@@ -83,8 +83,8 @@ class _SignInPageState extends State<SignInPage> {
   String companyId;
   bool _showPassword = true;
 
-  showToast() {
-    Toast.show("Enter Valid Email", context, duration: Toast.LENGTH_LONG);
+  showToast(String msg, {int duration, int gravity}) {
+    Toast.show(msg, context, duration: Toast.LENGTH_LONG);
   }
 
   @override
@@ -202,13 +202,13 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      if (emailData.contains("@")) {
+                      if (emailData.contains("@") && emailData.contains(".")) {
                         signIn(emailData, passData);
                         var box = Hive.box('myBox');
                         box.put('userId', emailData);
                         box.put('companyId', companyId);
                       } else {
-                        showToast();
+                        showToast("Invalid Email Address");
                       }
                     },
                     onLongPress: () => {},
@@ -240,7 +240,7 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      if (company != null) {
+                      if (companyId != null && emailData.contains("@") && emailData.contains(".")) {
                         signUp(emailData, passData);
                         var box = Hive.box('myBox');
                         box.put('companyId', companyId);
@@ -252,7 +252,7 @@ class _SignInPageState extends State<SignInPage> {
                         //  ),
                         //);
                       } else {
-                        showToast();
+                        showToast("Invalid Email Address");
                       }
                     },
                     onLongPress: () => {},
