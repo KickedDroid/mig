@@ -61,38 +61,36 @@ class _OverviewState extends State<Overview> {
             // #8eaec9 Light Blue
           ],
         )),
-        child: Flexible(
-          child: ListView(children: <Widget>[
-            Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
-                  child: SafeArea(
-                    child: Text(
-                      'Machine Overview',
-                      style: TextStyle(
-                          fontSize: 32.0,
-                          fontWeight: FontWeight.w800,
-                          color: Colors.white),
-                    ),
+        child: ListView(shrinkWrap: true, children: <Widget>[
+          Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
+                child: SafeArea(
+                  child: Text(
+                    'Machine Overview',
+                    style: TextStyle(
+                        fontSize: 32.0,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white),
                   ),
                 ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
+              ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
                     child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: _buildBody(context),
-                      ),
+                      scrollDirection: Axis.vertical,
+                      child: _buildBody(context),
                     ),
                   ),
                 ),
-              ],
-            ),
-          ]),
-        ),
+              ),
+            ],
+          ),
+        ]),
       ),
     );
   }
@@ -105,7 +103,10 @@ Widget _buildBody(BuildContext context) {
     builder: (context, snapshot) {
       assert(snapshot != null);
       if (!snapshot.hasData) {
-        return LinearProgressIndicator();
+        return SizedBox(
+          height: 2.0,
+          width: 20.0,
+          child: LinearProgressIndicator());
       } else {
         return ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
