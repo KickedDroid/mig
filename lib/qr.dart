@@ -393,7 +393,18 @@ class _UpdateMachinePageState extends State<UpdateMachinePage> {
                                 .document("${widget.docRef}")
                                 .updateData({"c-target": "$cTarget"});
                           }
-
+                          if (cMin != null) {
+                            Firestore.instance
+                                .collection(box.get('companyId'))
+                                .document("${widget.docRef}")
+                                .updateData({"c-min": "$cMin"});
+                          }
+                          if (cMax != null) {
+                            Firestore.instance
+                                .collection(box.get('companyId'))
+                                .document("${widget.docRef}")
+                                .updateData({"c-max": "$cMax"});
+                          }
                           if (cUwarning != null) {
                             Firestore.instance
                                 .collection(box.get('companyId'))
