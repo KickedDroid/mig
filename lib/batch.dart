@@ -5,10 +5,12 @@ import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:hive/hive.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_downloader/image_downloader.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:media_store/media_store.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'main.dart';
 import 'package:path_provider/path_provider.dart';
@@ -41,7 +43,6 @@ class _BatchAddPageState extends State<BatchAddPage> {
       ctarget = controllerCtarget.text;
       cuwarning = controllerCuwarning.text;
       clwarning = controllerClwarning.text;
-
     });
   }
 
@@ -55,7 +56,8 @@ class _BatchAddPageState extends State<BatchAddPage> {
           FlatButton(
             child: Text('Submit'),
             onPressed: () {
-              _batchAdd(batchName, numOf, cmin, cmax, ctarget, cuwarning, clwarning);
+              _batchAdd(
+                  batchName, numOf, cmin, cmax, ctarget, cuwarning, clwarning);
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -115,27 +117,28 @@ class _BatchAddPageState extends State<BatchAddPage> {
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  stops: [0.1, 0.5, 0.7, 0.9],
-                  colors: [
-                    Colors.white,
-                    Colors.blue[50],
-                    Colors.lightBlue[100],
-                    Colors.lightBlue[200],
-                  ],
-                ),
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(00.0),
-                // the box shawdow property allows for fine tuning as aposed to shadowColor
-              ),
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              stops: [0.1, 0.5, 0.7, 0.9],
+              colors: [
+                Colors.white,
+                Colors.blue[50],
+                Colors.lightBlue[100],
+                Colors.lightBlue[200],
+              ],
+            ),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(00.0),
+            // the box shawdow property allows for fine tuning as aposed to shadowColor
+          ),
           child: ListView(
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'Create Multiple Machines', textAlign: TextAlign.center,
+                  'Create Multiple Machines',
+                  textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -144,7 +147,8 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 child: TextFormField(
                   controller: controller,
                   keyboardType: TextInputType.number,
-                  style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+                  style:
+                      TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
@@ -158,7 +162,8 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
                 child: TextFormField(
                   controller: controller2,
-                  style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+                  style:
+                      TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
@@ -168,12 +173,13 @@ class _BatchAddPageState extends State<BatchAddPage> {
                   ),
                 ),
               ),
-               Padding(
-                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-                 child: TextFormField(
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                child: TextFormField(
                   controller: controllerCtarget,
                   keyboardType: TextInputType.number,
-                  style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+                  style:
+                      TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
@@ -181,14 +187,15 @@ class _BatchAddPageState extends State<BatchAddPage> {
                     labelText: 'Target Coolant %',
                     labelStyle: TextStyle(fontSize: 15),
                   ),
+                ),
               ),
-               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
                 child: TextFormField(
                   controller: controllerCmax,
                   keyboardType: TextInputType.number,
-                  style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+                  style:
+                      TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
@@ -203,7 +210,8 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 child: TextFormField(
                   controller: controllerCmin,
                   keyboardType: TextInputType.number,
-                  style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+                  style:
+                      TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
@@ -218,7 +226,8 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 child: TextFormField(
                   controller: controllerCuwarning,
                   keyboardType: TextInputType.number,
-                  style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+                  style:
+                      TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
@@ -233,7 +242,8 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 child: TextFormField(
                   controller: controllerClwarning,
                   keyboardType: TextInputType.number,
-                  style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+                  style:
+                      TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
@@ -244,7 +254,8 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 ),
               ),
               Text(
-                'This screen allows you to setup multiple machines at once', textAlign: TextAlign.center,
+                'This screen allows you to setup multiple machines at once',
+                textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
               ).padding(),
             ],
@@ -255,7 +266,8 @@ class _BatchAddPageState extends State<BatchAddPage> {
   }
 }
 
-void _batchAdd(String name, int numMachines, String cmin, String cmax, String ctarget, String cuwarning, String clwarning) async {
+void _batchAdd(String name, int numMachines, String cmin, String cmax,
+    String ctarget, String cuwarning, String clwarning) async {
   var box = Hive.box('myBox');
   var time = new DateTime.now();
   for (int i = 1; i <= numMachines; i++) {
@@ -367,28 +379,12 @@ class _BatchQrCodesState extends State<BatchQrCodes> {
         .collection(box.get('companyId'))
         .getDocuments();
     docs.documents.forEach((document) async {
-      setState(() {
-        qrText = document.documentID;
-      });
-      try {
-        RenderRepaintBoundary boundary =
-            globalKey.currentContext.findRenderObject();
-        var image = await boundary.toImage(pixelRatio: 3.0);
-        ByteData byteData = await image.toByteData(format: ImageByteFormat.png);
-        Uint8List pngBytes = byteData.buffer.asUint8List();
-
-        final tempDir = await getTemporaryDirectory();
-        final file =
-            await new File('${tempDir.path}/${document.data['name']}.png')
-                .create();
-        await file.writeAsBytes(pngBytes);
-
-        await ImageGallerySaver.saveImage(pngBytes,
-            quality: 100, name: "${document.data['name']}");
-      } catch (e) {
-        print(e.toString());
-      }
-      Future.delayed(Duration(seconds: 3));
+      var response = await Dio().get(
+          "https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${document.documentID}.png",
+          options: Options(responseType: ResponseType.bytes));
+      final result =
+          await MediaStore.saveImage(Uint8List.fromList(response.data));
+      print(result);
     });
 
     Toast.show('Check Your Photos', context);
