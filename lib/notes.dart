@@ -183,6 +183,7 @@ class MachineItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
         leading: Icon(Icons.note),
+        trailing: Icon(Icons.delete_sweep),
         title: Text(
           notes,
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),

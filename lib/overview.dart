@@ -42,30 +42,12 @@ class _OverviewState extends State<Overview> {
       backgroundColor: Colors.lightBlue[200],
       body: Container(
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          stops: [.0, .2, .7, 1],
-          colors: [
-            Color(0xFF192b32),
-            Color(0xFF1c6b92),
-            Color(0xFF1c6b92),
-            Color(0xFF192b32),
-
-            // #0b1c36 dark purple blue
-            // #c74300 orange
-            // #446280 bluish orange
-            // #abc0df light blue
-            // #395473
-            // #1c6b92
-            // #8eaec9 Light Blue
-          ],
-        )),
+            color: Color(0xFF66aee4)),
         child: ListView(shrinkWrap: true, children: <Widget>[
           Column(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
+                padding: const EdgeInsets.fromLTRB(8, 10, 8, 0),
                 child: SafeArea(
                   child: Text(
                     'Machine Overview',
@@ -108,20 +90,79 @@ Widget _buildBody(BuildContext context) {
           width: 20.0,
           child: LinearProgressIndicator());
       } else {
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(10.0),
-          child: Container(
+        return Container(
             constraints: BoxConstraints(
               maxWidth: 800.0,
             ),
-            color: Colors.white,
-            child: DataTable(columns: [
-              DataColumn(label: Text('Name')),
-              DataColumn(label: Text('Coolant %')),
-              DataColumn(label: Text('Last\nUpdate')),
-              DataColumn(label: Text('Last\nCleaned')),
-            ], rows: _buildList(context, snapshot.data.documents)),
+            
+            child: Card(
+              elevation: 5,
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
           ),
+
+
+              child: DataTable(columns: [
+                DataColumn(
+              label: Container(
+                child: SizedBox(
+                  width: 50,
+                  child: Text(
+                    'Name',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12, color: Color(0xFF222222),
+                    ),
+                  ),
+                ),
+              ),
+          ),
+                DataColumn(
+              label: Container(
+                child: SizedBox(
+                  width: 60,
+                  child: Text(
+                    'Coolant %',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12, color: Color(0xFF222222),
+                    ),
+                  ),
+                ),
+              ),
+          ),
+                 DataColumn(
+              label: Container(
+                child: SizedBox(
+                  width: 50,
+                  child: Text(
+                    'Last\nUpdate',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12, color: Color(0xFF222222),
+                    ),
+                  ),
+                ),
+              ),
+          ),
+                DataColumn(
+              label: Container(
+                child: SizedBox(
+                  width: 60,
+                  child: Text(
+                    'Last\nCleaned',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12, color: Color(0xFF222222),
+                    ),
+                  ),
+                ),
+              ),
+          ),
+              ], rows: _buildList(context, snapshot.data.documents)),
+            ),
+          
         );
       }
     },
@@ -149,7 +190,7 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
           machines['name'].length > 17
               ? machines['name'].substring(0, 16) + "..."
               : machines['name'],
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12, color: Colors.black87),
         ),
       )),
       DataCell(Container(
@@ -179,7 +220,7 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
               machines['last-updated'].substring(8, 10), // +
           //"/" +
           //machines['last-updated'].substring(2, 4),
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12, color: Colors.black87),
         ),
       )),
       DataCell(Container(
@@ -192,7 +233,7 @@ DataRow _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
               //machines['last-cleaned'].substring(2, 4)
               ??
               "No Input",
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12, color: Colors.black87),
         ),
       )),
     ],

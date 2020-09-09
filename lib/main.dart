@@ -123,6 +123,9 @@ Widget _handleWidget() {
           if (snapshot.hasData) {
             return WelcomeScreen();
           } else {
+            var box = Hive.box('myBox');
+                box.put('admin', false);
+                box.put('notif', false);
             return SignInPage();
             //return WelcomeScreen();
           }
@@ -143,7 +146,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void initState() {
     super.initState();
     flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
-    var android = new AndroidInitializationSettings('assets/logosb.png');
+    var android = new AndroidInitializationSettings('app_icon');
     var iOS = new IOSInitializationSettings();
     var initSetttings = new InitializationSettings(android, iOS);
     flutterLocalNotificationsPlugin.initialize(initSetttings,

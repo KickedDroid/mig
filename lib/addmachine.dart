@@ -334,7 +334,8 @@ class _AddMachinePageState extends State<AddMachinePage> {
                           ctarget = value;
                         });
                       },
-                      keyboardType: TextInputType.number,
+                      inputFormatters: [DecimalTextInputFormatter(decimalRange: 1)],
+                      keyboardType: TextInputType.numberWithOptions(decimal: true),
                       controller: controller,
                       decoration: InputDecoration(
                           filled: true,
@@ -354,7 +355,8 @@ class _AddMachinePageState extends State<AddMachinePage> {
                           cmin = value;
                         });
                       },
-                      keyboardType: TextInputType.number,
+                      inputFormatters: [DecimalTextInputFormatter(decimalRange: 1)],
+                      keyboardType: TextInputType.numberWithOptions(decimal: true),
                       controller: controller,
                       decoration: InputDecoration(
                           filled: true,
@@ -374,7 +376,8 @@ class _AddMachinePageState extends State<AddMachinePage> {
                           cmax = value;
                         });
                       },
-                      keyboardType: TextInputType.number,
+                      inputFormatters: [DecimalTextInputFormatter(decimalRange: 1)],
+                      keyboardType: TextInputType.numberWithOptions(decimal: true),
                       controller: controller,
                       decoration: InputDecoration(
                           filled: true,
@@ -394,7 +397,8 @@ class _AddMachinePageState extends State<AddMachinePage> {
                           cuwarning = value;
                         });
                       },
-                      keyboardType: TextInputType.number,
+                      inputFormatters: [DecimalTextInputFormatter(decimalRange: 1)],
+                      keyboardType: TextInputType.numberWithOptions(decimal: true),
                       controller: controller,
                       decoration: InputDecoration(
                           filled: true,
@@ -414,7 +418,8 @@ class _AddMachinePageState extends State<AddMachinePage> {
                           clwarning = value;
                         });
                       },
-                      keyboardType: TextInputType.number,
+                      inputFormatters: [DecimalTextInputFormatter(decimalRange: 1)],
+                      keyboardType: TextInputType.numberWithOptions(decimal: true),
                       controller: controller,
                       decoration: InputDecoration(
                           filled: true,
