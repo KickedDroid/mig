@@ -117,6 +117,7 @@ class _HistoryLatestEntriesPageState extends State<HistoryLatestEntriesPage> {
                               "(${machines['time'].substring(5, 7) + "/" + machines['time'].substring(8, 10) + "/" + machines['time'].substring(2, 4)})"),
                           //subtitle: Text('Date:  ${machines['last-updated'].substring(5,10)}'),
                           leading: Icon(Icons.assessment),
+                          trailing: Icon(Icons.delete_sweep),
                         ),
                       ),
                     );

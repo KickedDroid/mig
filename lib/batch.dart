@@ -20,6 +20,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:dio/dio.dart';
 
+
 class BatchAddPage extends StatefulWidget {
   @override
   _BatchAddPageState createState() => _BatchAddPageState();
@@ -146,7 +147,7 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
                 child: TextFormField(
                   controller: controller,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
                   style:
                       TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                   decoration: InputDecoration(
@@ -177,7 +178,7 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
                 child: TextFormField(
                   controller: controllerCtarget,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
                   style:
                       TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                   decoration: InputDecoration(
@@ -193,7 +194,7 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
                 child: TextFormField(
                   controller: controllerCmax,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
                   style:
                       TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                   decoration: InputDecoration(
@@ -209,7 +210,7 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
                 child: TextFormField(
                   controller: controllerCmin,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
                   style:
                       TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                   decoration: InputDecoration(
@@ -225,7 +226,7 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
                 child: TextFormField(
                   controller: controllerCuwarning,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
                   style:
                       TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                   decoration: InputDecoration(
@@ -241,7 +242,7 @@ class _BatchAddPageState extends State<BatchAddPage> {
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
                 child: TextFormField(
                   controller: controllerClwarning,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
                   style:
                       TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                   decoration: InputDecoration(

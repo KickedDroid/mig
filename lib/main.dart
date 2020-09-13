@@ -123,6 +123,9 @@ Widget _handleWidget() {
           if (snapshot.hasData) {
             return WelcomeScreen();
           } else {
+            var box = Hive.box('myBox');
+            box.put('admin', false);
+            box.put('notif', false);
             return SignInPage();
             //return WelcomeScreen();
           }
