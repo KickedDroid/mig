@@ -151,11 +151,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     var initSetttings = new InitializationSettings(android, iOS);
     flutterLocalNotificationsPlugin.initialize(initSetttings,
         onSelectNotification: onSelectNotification);
-    if (box.get('notif') == true) {
-      checkMachines().then((value) {
-        showNotification(value);
-      });
-    }
+    // if (box.get('notif') == true) {
+    //   checkMachines().then((value) {
+    //     showNotification(value);
+    //   });
+    // }
   }
 
   Future onSelectNotification(String payload) {
