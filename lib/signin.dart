@@ -54,8 +54,9 @@ class _SignInPageState extends State<SignInPage> {
 
   Future<FirebaseUser> signIn(String email, String password) async {
     try {
-      FirebaseUser user = (await _auth.signInWithEmailAndPassword(
-          email: email, password: password)) as FirebaseUser;
+      FirebaseUser user = await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) => value.user);
       assert(user != null);
       assert(await user.getIdToken() != null);
       final FirebaseUser currentUser = await _auth.currentUser();
@@ -240,7 +241,9 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      if (companyId != null && emailData.contains("@") && emailData.contains(".")) {
+                      if (companyId != null &&
+                          emailData.contains("@") &&
+                          emailData.contains(".")) {
                         signUp(emailData, passData);
                         var box = Hive.box('myBox');
                         box.put('companyId', companyId);

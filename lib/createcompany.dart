@@ -183,6 +183,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                         var box = Hive.box('myBox');
 
                         box.put('companyId', companyId);
+                        box.put('userId', emailData);
 
                         //createCompany(companyId);
 

@@ -176,18 +176,23 @@ class _UserAccountState extends State<UserAccount> {
                         });
                   },
                 ),
-                SwitchListTile(
-                  title: Text(
-                    "Push Notifications",
-                    //style: whiteBoldText,
-                  ),
-                  subtitle: Text(
-                    "Off",
-                    //style: greyTExt,
-                  ),
-                  value: false,
-                  onChanged: (val) {},
-                ),
+                ValueListenableBuilder(
+                  valueListenable: Hive.box('myBox').listenable(),
+                  builder: (context, box, widget) {
+                    return SwitchListTile(
+                        title: Text(
+                          "Notifications",
+                          //style: whiteBoldText,
+                        ),
+                        subtitle: Text(box.get('notif') ?? false ? "on" : "off"
+                            //style: greyTExt,
+                            ),
+                        value: box.get('notif') ?? false,
+                        onChanged: (val) {
+                          box.put('notif', val);
+                        });
+                  },
+                )
               ],
             ),
           ),

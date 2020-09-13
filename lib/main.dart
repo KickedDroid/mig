@@ -143,23 +143,23 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void initState() {
     super.initState();
     flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
-    var android = new AndroidInitializationSettings('assets/logosb.png');
+    var android = new AndroidInitializationSettings('@mipmap/ic_launcher');
     var iOS = new IOSInitializationSettings();
     var initSetttings = new InitializationSettings(android, iOS);
     flutterLocalNotificationsPlugin.initialize(initSetttings,
         onSelectNotification: onSelectNotification);
-    checkMachines().then((value) {
-      showNotification(value);
-    });
+    if (box.get('notif') == true) {
+      checkMachines().then((value) {
+        showNotification(value);
+      });
+    }
   }
 
   Future onSelectNotification(String payload) {
-    debugPrint("payload : $payload");
-    showDialog(
-      context: context,
-      builder: (_) => new AlertDialog(
-        title: new Text('Notification'),
-        content: new Text('$payload'),
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AddMachineList(),
       ),
     );
   }
