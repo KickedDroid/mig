@@ -41,18 +41,18 @@ class _UserAccountState extends State<UserAccount> {
         builder: (_) => new AlertDialog(
               title: new Text("Change Company ID"),
               content: TextField(
-                controller: nameController,
+                //controller: nameController,
               ),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('Close me!'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    getInputData();
-                    box.put("companyId", newCompanyId);
-                  },
-                )
-              ],
+              //actions: <Widget>[
+                //FlatButton(
+                  //child: Text('Close me!'),
+                  // onPressed: () {
+                  //   Navigator.of(context).pop();
+                  //   getInputData();
+                  //   box.put("companyId", newCompanyId);
+                  // },
+                //)
+              //],
             ));
   }
 

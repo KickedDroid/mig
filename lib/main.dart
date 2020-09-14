@@ -9,7 +9,6 @@ import 'package:mig/history.dart';
 import 'package:mig/initialpage.dart';
 import 'package:mig/latestentries.dart';
 import 'package:mig/diluted.dart';
-import 'package:mig/notif.dart';
 import 'package:mig/strongcoolant.dart';
 import 'package:mig/qr.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -25,7 +24,6 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'graph.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 main() async {
   await Hive.initFlutter();
@@ -125,7 +123,6 @@ Widget _handleWidget() {
           } else {
             var box = Hive.box('myBox');
             box.put('admin', false);
-            box.put('notif', false);
             return InitialPage();
             //return WelcomeScreen();
           }
@@ -133,49 +130,9 @@ Widget _handleWidget() {
       });
 }
 
-class WelcomeScreen extends StatefulWidget {
-  @override
-  _WelcomeScreenState createState() => _WelcomeScreenState();
-}
-
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class WelcomeScreen extends StatelessWidget {
   final GlobalKey _scaffoldKey = new GlobalKey();
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
-  @override
-  void initState() {
-    super.initState();
-    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
-    var android = new AndroidInitializationSettings('@mipmap/ic_launcher');
-    var iOS = new IOSInitializationSettings();
-    var initSetttings = new InitializationSettings(android, iOS);
-    flutterLocalNotificationsPlugin.initialize(initSetttings,
-        onSelectNotification: onSelectNotification);
-    // if (box.get('notif') == true) {
-    //   checkMachines().then((value) {
-    //     showNotification(value);
-    //   });
-    // }
-  }
-
-  Future onSelectNotification(String payload) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => AddMachineList(),
-      ),
-    );
-  }
-
-  showNotification(String payload) async {
-    var android = new AndroidNotificationDetails(
-        'channel id', 'channel NAME', 'CHANNEL DESCRIPTION',
-        priority: Priority.High, importance: Importance.Max);
-    var iOS = new IOSNotificationDetails();
-    var platform = new NotificationDetails(android, iOS);
-    await flutterLocalNotificationsPlugin
-        .show(0, '$payload Needs Updating', '', platform, payload: '$payload');
-  }
 
   String result = "Scan a Qr Code to begin";
 

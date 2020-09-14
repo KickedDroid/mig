@@ -46,7 +46,6 @@ dependencies:
   gallery_saver: ^2.0.1
   image_downloader: ^0.20.0
   media_store: '^1.0.0'
-  flutter_local_notifications: ^1.4.4+4
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
