@@ -41,8 +41,15 @@ class _SignInPageState extends State<SignInPage> {
 
   Future<FirebaseUser> signUp(email, password) async {
     try {
-      FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
-          email: email, password: password)) as FirebaseUser;
+      FirebaseUser user = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => WelcomeScreen()),
+        );
+        return value.user;
+      });
       assert(user != null);
       assert(await user.getIdToken() != null);
       return user;
@@ -56,7 +63,13 @@ class _SignInPageState extends State<SignInPage> {
     try {
       FirebaseUser user = await _auth
           .signInWithEmailAndPassword(email: email, password: password)
-          .then((value) => value.user);
+          .then((value) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => WelcomeScreen()),
+        );
+        return value.user;
+      });
       assert(user != null);
       assert(await user.getIdToken() != null);
       final FirebaseUser currentUser = await _auth.currentUser();
@@ -208,8 +221,6 @@ class _SignInPageState extends State<SignInPage> {
                         var box = Hive.box('myBox');
                         box.put('userId', emailData);
                         box.put('companyId', companyId);
-                        box.put('admin', false);
-                        box.put('notif', false);
                       } else {
                         showToast("Invalid Email Address");
                       }
@@ -250,7 +261,6 @@ class _SignInPageState extends State<SignInPage> {
                         var box = Hive.box('myBox');
                         box.put('companyId', companyId);
                         box.put('admin', false);
-                        box.put('notif', false);
                         //Navigator.push(
                         //  context,
                         //  MaterialPageRoute(

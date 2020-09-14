@@ -126,7 +126,7 @@ Widget _handleWidget() {
             var box = Hive.box('myBox');
             box.put('admin', false);
             box.put('notif', false);
-            return SignInPage();
+            return InitialPage();
             //return WelcomeScreen();
           }
         }
