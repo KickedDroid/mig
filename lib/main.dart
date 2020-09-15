@@ -81,14 +81,14 @@ class MyApp extends StatelessWidget {
         '/Overview': (BuildContext context) => new Overview(),
         '/History': (BuildContext context) => HistoryPage(),
         '/FAQ': (BuildContext context) => WebviewScaffold(
-            url: 'https://168mfg.com/system/',
+            url: 'https://168mfg.com/faq/',
             appBar: AppBar(title: Text('Webview'))),
         '/PPO': (BuildContext context) => WebviewScaffold(
-            url: 'https://cncdirt.com/privacypolicy/',
+            url: 'https://168mfg.com/privacypolicy/',
             appBar: AppBar(title: Text('Webview'))),
         '/TDC': (BuildContext context) => WebviewScaffold(
               url:
-                  'https://www.termsfeed.com/blog/sample-terms-and-conditions-template/',
+                  'https://168mfg.com/termsandconditions/',
               appBar: AppBar(
                 title: Text('Webview'),
               ),
